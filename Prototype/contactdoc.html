@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <link rel = "stylesheet" type="text/css" href="style-contact-docs.css">
+        <link rel = "stylesheet" type="text/css" href="style-menu.css">
+        <link rel = "stylesheet" type="text/css" href="scrollbar.css">
+        <link rel = "stylesheet" type="text/css" href="font-imports.css">
+        <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
+        <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
+        <link rel = "stylesheet" type="text/css" href="style-doctor.css">
+        
+    </head>
+    <body id = "scroll-style" class = "page-content">
+        <div class="fixed">
+          <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
+            <ul class="title-area">
+                <!-- Title Area -->
+                <li class="name">
+                    <img id ="clickHealth-logo" src ="Assets/clickHealth.png"/>
+                </li>
+                <li class="toggle-topbar menu-icon">
+                    <a href="#">
+                        <span>ClickHealth Menu</span>
+                    </a>
+                </li>
+            </ul>
+
+            <section class="top-bar-section" id = "clickHealth-menu">
+                <!-- Right Nav Section -->
+                <input id = "search-box" input="text" placeholder=" Search Here ">
+                        <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a>
+                <ul class="right">
+                    <li class="divider"></li>
+                    <li><a href="user-appointments.html">APPOINTMENTS</a></li>
+                    <li class="divider"></li>
+                    <li><a href="hospitals.html">HOSPITALS</a></li>
+                    <li class="divider"></li>
+                    <li><a href="availabledocs.html">DOCTORS</a></li>
+                    <li class ="active-button" style= "margin-right: 10px;" ><a href="contactdoc.html">CONTACT</a></li>
+                </ul>
+            </section>
+        </nav>
+        </div>
+        <div class = "content-wrapper">
+            <section id = "main-content">
+                <div class = "left-bar">
+                    <div class = "row">
+                        <div class = "large-5 columns" style=" margin-top: 70px; padding-left: 0px; margin-right: 0px;">
+                            <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
+                        </div>
+                        <div class = "large-7 columns" id = "left-bar-name-box">
+                            <label id = "left-bar-name">Shark Tan</label>
+                            <a href = "user-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
+                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div id = "mid-content" class = "row">
+                        <div id="form-content" class="large-12 columns">
+                        <div class="row" >
+                            <div class="large-12 columns">
+                            <p>Hospital Name: MakatiMed<br>Hospital Address: Ayala Ave, Makati<br> Doctor Name: Dr. Shayane Tan<br>Specialization: Pediatrics<br>Specialization Details: Pediatrics is the field of medicine for children. Areas of Concern include fever, colds, vaccinations, etc.</p>
+                            </div>
+                        </div>
+                            <hr>
+                        <div class="row">
+                            <div class="large-12 columns">
+                            <p>Name: Christian Cote<br>Contact Number: 09xx-xxx-xxxx<br>Email: myemail@provider.com</p>
+                            <label>Date of Appointment:    </label><input type = "date">
+                            
+                            <label>Area of Concern: </label>
+                            <select>
+                                <option>Vaccination</option>
+                                <option>Check-up</option>
+                                <option>Therapy</option>
+                                <option>Medication</option>
+                            </select>
+                            
+                            <label>Remarks: </label><br><textarea cols = "45" rows = "6"></textarea>
+                            
+                            <input type="button" class = "contact-button" value="Submit">
+                            </div>
+                        </div>
+                  </div>
+                </div>
+            </section>
+        </div>
+
+          <script src="Foundation/js/vendor/jquery.js"></script>
+          <script src="Foundation/js/foundation.min.js"></script>
+          <script src="Foundation/js/foundation/foundation.js"></script>
+          <script src="Foundation/js/foundation/foundation.topbar.js"></script>
+          <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
+
+          <script type="text/javascript"> 
+            $(document).foundation();
+          </script>
+          <script>
+            $(document).ready(function(){
+                var bodyheight = $(window).height();
+                $(".windowheight").css('min-height', bodyheight);
+                $(window).resize(function(){
+                var bodyheight = $(window).height();
+                $(".windowheight").css('min-height', bodyheight);
+                });
+            });
+
+      
+            $(function() {
+              $('a[href*=#]:not([href=#])').click(function() {
+                if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                  var target = $(this.hash);
+                  target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                  if (target.length) {
+                    $('html,body').animate({
+                      scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                  }
+                }
+              });
+            });
+         
+            function clicked(i)
+            {
+                switch(i)
+                {
+                    case 1: alert("You clicked Contact");
+                        break;
+                    case 2: alert("You clicked Guidelines");
+                        break;
+                    case 3: alert("You clicked Hospitals");
+                        break;
+                    case 4: alert("You clicked About");
+                        break;
+                    case 5: alert("List of specializations here.");
+                }
+            }
+        </script>
+        
+    </body>
+</html>
