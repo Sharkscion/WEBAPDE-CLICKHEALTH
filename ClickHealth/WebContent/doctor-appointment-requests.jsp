@@ -1,8 +1,8 @@
 <html>
     <head>
-        <link rel = "stylesheet" type="text/css" href="style-menu.css">
-        <link rel = "stylesheet" type="text/css" href="style-scrollbar.css">
-        <link rel = "stylesheet" type="text/css" href="style-appointment.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/style-menu.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/style-scrollbar.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/style-appointment.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
         

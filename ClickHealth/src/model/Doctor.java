@@ -6,7 +6,7 @@ public class Doctor extends User {
 	private String specialization;
 	
 	public Doctor(int userID, String username, String email, String password,
-			String lastname, String firstname, String type, int licenseID, char gender, String specialization) {
+			String lastname, String firstname, String type, int licenseID, String specialization) {
 		super(userID, username, email, password, lastname, firstname, type);
 		// TODO Auto-generated constructor stub
 		

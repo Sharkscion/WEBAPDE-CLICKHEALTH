@@ -13,35 +13,34 @@ import Controller.Controller;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    
-	public LoginServlet() {
+
+    private static final long serialVersionUID = 1L;
+
+    public LoginServlet() {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-    	
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{		
-		
-		Controller c = new Controller();
-		User user = c.getUser(request.getParameter("logusername"), request.getParameter("logpassword"));
-		System.out.println("Username " + request.getParameter("logusername"));
-		System.out.println("Password " + request.getParameter("logpassword"));
-		
-		System.out.println("From db " + user.getType());
-		if(user != null)
-		{
-			if(user.getType().equals("patient"))
-				response.sendRedirect("hospitals.jsp");
-			else if(user.getType().equals("doctor"))
-				response.sendRedirect("doctor-appointment-requests.jsp");
-		}
-		else
-			response.sendRedirect("index.jsp");
-	}
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Controller c = new Controller();
+        User user = c.getUser(request.getParameter("logusername"), request.getParameter("logpassword"));
+        System.out.println("Username " + request.getParameter("logusername"));
+        System.out.println("Password " + request.getParameter("logpassword"));
+
+        System.out.println("From db " + user.getType());
+        if (user != null) {
+            if (user.getType().equals("patient")) {
+                response.sendRedirect("hospitals.jsp");
+            } else if (user.getType().equals("doctor")) {
+                response.sendRedirect("doctor-appointment-requests.jsp");
+            }
+        } else {
+            response.sendRedirect("index.jsp");
+        }
+    }
 
 }

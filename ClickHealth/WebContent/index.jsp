@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head> 
@@ -13,20 +13,20 @@
     <body id = "scroll-style">
         <br>
         <div class = "intro-page">
-             <div class="contain-to-grid sticky"> 
-              <nav class="top-bar" id = "menu" data-topbar>
-                  <ul class="title-area">
-                    <!-- Title Area -->
-                    <li class="name"><img id ="logo" src ="Assets/clickHealth2.png"/> </li>
-                  </ul>
-                
+            <div class="contain-to-grid sticky"> 
+                <nav class="top-bar" id = "menu" data-topbar>
+                    <ul class="title-area">
+                        <!-- Title Area -->
+                        <li class="name"><img id ="logo" src ="Assets/clickHealth2.png"/> </li>
+                    </ul>
+
                     <ul class="right">
                         <li><a href= "#" data-dropdown="user-dropdown" class="radius button button-padding nav-button" >Sign Up</a></li>
                         <li><a href= "#" data-dropdown="login-dropdown" class="radius button button-padding nav-button" >Login</a></li> 
-                  </ul>
-              </nav>
-		     </div>  
-        
+                    </ul>
+                </nav>
+            </div>  
+
             <div class = "row" >
                 <center>
                     <h1 id = "tagLine"> A few clicks a day keeps the sickness away!</h1>
@@ -36,8 +36,8 @@
 
             <div class = "row bottom-bar">
                 <center><img class = "line-LearnMore" src = "Assets/leftLine.png"> 
-                        <a href = "#About" class = "hvr-float" style = "font-size: 15px"> Learn More</a>
-                        <img class = "line-LearnMore" src = "Assets/rightLine.png">
+                    <a href = "#About" class = "hvr-float" style = "font-size: 15px"> Learn More</a>
+                    <img class = "line-LearnMore" src = "Assets/rightLine.png">
                 </center>
             </div>
         </div>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-         <div class = "about-page-2">
+        <div class = "about-page-2">
             <div class = "row">
                 <div class = "large-12 columns">
                     <h1>What can I find in ClickHealth?</h1>
@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class = "about-page-3">
             <div class = "row">
                 <div class = "large-12 columns dp">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class = "team-page">
             <!-- /<a name = ""></a> -->
             <div class = "row">
@@ -81,7 +81,7 @@
             <br>
             <div class = "row">
                 <div class = "large-4 columns demo-3">
-                     <figure>
+                    <figure>
                         <img src = "Assets/shay.png"/>
                         <figcaption>
                             <h2>I AM SHAYANE!</h2>
@@ -90,7 +90,7 @@
                     </figure>
                 </div>
                 <div class = "large-4 columns demo-3">
-                     <figure>
+                    <figure>
                         <img src ="Assets/xgb.png"/>
                         <figcaption>
                             <h2>I AM CHRISTIAN!</h2>
@@ -99,7 +99,7 @@
                     </figure>
                 </div>
                 <div class = "large-4 columns demo-3">
-                     <figure>
+                    <figure>
                         <img src = "Assets/winona.png"/>
                         <figcaption>
                             <h2>I AM WINONA!</h2>
@@ -119,17 +119,17 @@
                 De La Salle University, 2401 Taft Avenue, Malate, Manila, Philippines
             </div>
         </div>
-        
+
         <!-- Login Drop Down -->
         <div id ="login-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
-          <!--  <form  action="doctor-account.html" method="get">  -->
-          	<form action = "LoginServlet" method = "post" onsubmit = "return validateLogin()">	
+            <!--  <form  action="doctor-account.html" method="get">  -->
+            <form action = "LoginServlet" method = "post" onsubmit = "return validateLogin()">	
                 <label>Username</label><input type="text" id = "logusername" name="logusername" placeholder="userName123" tabindex="1"/>
                 <label>Password</label><input type="password" id= "logpassword" name="logpassword" placeholder="********" tabindex="2"/>
                 <input type="submit" class="form-login-button" value="Login" tabindex="3"/>
-          </form>
+            </form>
         </div>
-         <!-- User Sign In Drop Down -->
+        <!-- User Sign In Drop Down -->
         <div id ="user-dropdown" class="f-dropdown small content form-dropdown user-form" data-dropdown-content>
             <h5>SIGN UP AS: </h5> 
             <ul>
@@ -137,122 +137,123 @@
                 <li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> Doctor </a> </li>
             </ul>
         </div>
-          <!-- PATIENT SIGN UP MODAL -->
-          <div id = "signUp-patient-modal" class="reveal-modal small form" data-reveal>
-              <h2>Patient: Sign Up</h2> 
-              <div class = "row">
-                  <div class = "large-6 columns">
-                      <label> Firstname: </label> <input type = "text" id = "pFName" name = "pFName" placeholder="">
-                      <label> Username: </label><input type = "text" id = "pUName" name = "pUName" placeholder = "userName123">
-                  </div>
-                  <div class = "large-6 columns">
-                      <label> Lastname: </label> <input type = "text" id = "pLName" name = "pLName">
-                      <label> E-mail: </label><input type = "email" id = "pEmail" name = "pEmail" placeholder = "example@example.com">
-                  </div>
-              </div>
-                <div class = "row" style = "margin-left: 15px;" >
-                    <label> Address: </label> 
-                     <div class = "large-6 columns"><input type = "text" id = "street" placeholder = "street"></div>
-                     <div class = "large-6 columns"><input type = "text" id = "city" placeholder = "city"></div>
+        <!-- PATIENT SIGN UP MODAL -->
+        <div id = "signUp-patient-modal" class="reveal-modal small form" data-reveal>
+            <h2>Patient: Sign Up</h2> 
+            <div class = "row">
+                <div class = "large-6 columns">
+                    <label> Firstname: </label> <input type = "text" id = "pFName" name = "pFName" placeholder="">
+                    <label> Username: </label><input type = "text" id = "pUName" name = "pUName" placeholder = "userName123">
                 </div>
-             
-              <div class = "row"><label> Password: </label><input type = "password" id = "pPassword" name = "pPassword"> </div>
-              <div class = "row"><label> Confirmation Password: </label><input type = "password" id = "PConfirm_pswd" name = "PConfirm_pswd"></div>
-             
-               <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
-              <a class="close-reveal-modal">&#215;</a>
-          </div>
-        
-         <!--DOCTOR MODAL -->
-          <div id = "signUp-doctor-modal" class="reveal-modal small form" data-reveal>
-              <h2>Doctor: Sign Up</h2> 
-              <div class = "row">
-                  <div class = "large-6 columns">
-                      <label> Firstname: </label> <input type = "text" id = "DFName" name = "DFName">
-                  </div>
-                  <div class = "large-6 columns">
-                      <label> Lastname: </label> <input type = "text" id = "DLName" name = "DLName">
-                  </div>
-              </div>
-              
-                <div class="row">
-                    <div class="large-6 columns">
-                      <label> Doctor License ID: </label> <input type = "text" id = "DLicense" name = "DLicense">
-                    </div>
+                <div class = "large-6 columns">
+                    <label> Lastname: </label> <input type = "text" id = "pLName" name = "pLName">
+                    <label> E-mail: </label><input type = "email" id = "pEmail" name = "pEmail" placeholder = "example@example.com">
                 </div>
-              <div class = "row">
-                  <div clas ="large-12 columns" style = "margin-left: 15px;">
-                       <label> Username: </label><input type = "text" id = "DUName" name = "DUName" placeholder = "userName123">
-                  </div>
-              </div>
-              <div class = "row">
-                  <div clas ="large-12 columns" style = "margin-left: 15px;">
-                      <label> E-mail: </label><input type = "email" id = "DEmail" name = "DEmail" placeholder = "example@example.com">
-                  </div>
-              </div>
-              <div class = "row">
-                  <div class = "large-6 columns">
+            </div>
+            <div class = "row" style = "margin-left: 15px;" >
+                <label> Address: </label> 
+                <div class = "large-6 columns"><input type = "text" id = "street" placeholder = "street"></div>
+                <div class = "large-6 columns"><input type = "text" id = "city" placeholder = "city"></div>
+            </div>
+
+            <div class = "row"><label> Password: </label><input type = "password" id = "pPassword" name = "pPassword"> </div>
+            <div class = "row"><label> Confirmation Password: </label><input type = "password" id = "PConfirm_pswd" name = "PConfirm_pswd"></div>
+
+            <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
+
+        <!--DOCTOR MODAL -->
+        <div id = "signUp-doctor-modal" class="reveal-modal small form" data-reveal>
+            <h2>Doctor: Sign Up</h2> 
+            <div class = "row">
+                <div class = "large-6 columns">
+                    <label> Firstname: </label> <input type = "text" id = "DFName" name = "DFName">
+                </div>
+                <div class = "large-6 columns">
+                    <label> Lastname: </label> <input type = "text" id = "DLName" name = "DLName">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 columns">
+                    <label> Doctor License ID: </label> <input type = "text" id = "DLicense" name = "DLicense">
+                </div>
+            </div>
+            <div class = "row">
+                <div clas ="large-12 columns" style = "margin-left: 15px;">
+                    <label> Username: </label><input type = "text" id = "DUName" name = "DUName" placeholder = "userName123">
+                </div>
+            </div>
+            <div class = "row">
+                <div clas ="large-12 columns" style = "margin-left: 15px;">
+                    <label> E-mail: </label><input type = "email" id = "DEmail" name = "DEmail" placeholder = "example@example.com">
+                </div>
+            </div>
+            <div class = "row">
+                <div class = "large-6 columns">
                     <label> Password: </label><input type = "password" id = "DPassword" name = "password">
-                  </div>
-                  <div class = "large-6 columns">
+                </div>
+                <div class = "large-6 columns">
                     <label> Confirmation Password: </label><input type = "password" id = "DConfirm_pswd" name = "DConfirm_pswd">
-                  </div>
-              </div>
-                  
-                  <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
-              
-              <a class="close-reveal-modal">&#215;</a>
-          </div>
-        
-          <script src="Foundation/js/vendor/jquery.js"></script>
-          <script src="Foundation/js/foundation/foundation.js"></script>
-          <script src="Foundation/js/foundation/foundation.topbar.js"></script>
-          <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
-          <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
-          <script type="text/javascript"> 
-            $(document).foundation();
-              
-            $(document).ready(function(){
-                var bodyheight = $(window).height();
-                $(".windowheight").css('min-height', bodyheight);
-                $(window).resize(function(){
-                var bodyheight = $(window).height();
-                $(".windowheight").css('min-height', bodyheight);
+                </div>
+            </div>
+
+            <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
+
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
+
+        <script src="Foundation/js/vendor/jquery.js"></script>
+        <script src="Foundation/js/foundation/foundation.js"></script>
+        <script src="Foundation/js/foundation/foundation.topbar.js"></script>
+        <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
+        <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
+        <script type="text/javascript">
+                $(document).foundation();
+
+                $(document).ready(function() {
+                    var bodyheight = $(window).height();
+                    $(".windowheight").css('min-height', bodyheight);
+                    $(window).resize(function() {
+                        var bodyheight = $(window).height();
+                        $(".windowheight").css('min-height', bodyheight);
+                    });
+                });
+
+        </script>
+
+
+        <script>
+
+            $(function() {
+                $('a[href*=#]:not([href=#])').click(function() {
+                    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        if (target.length) {
+                            $('html,body').animate({
+                                scrollTop: target.offset().top
+                            }, 1000);
+                            return false;
+                        }
+                    }
                 });
             });
 
-          </script>
-
-    
-          <script>
-  
-            $(function() {
-              $('a[href*=#]:not([href=#])').click(function() {
-                if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                  var target = $(this.hash);
-                  target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                  if (target.length) {
-                    $('html,body').animate({
-                      scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                  }
-                }
-              });
-            });
-            
             function validateLogin()
             {
-       			if(document.getElementById("logusername").value.length<1 || document.getElementById("logpassword").value.length<1)       			
-       			{	alert("Please fill up all fields.");
-       				return false;	
-       			}
-         		return true;
+                if (document.getElementById("logusername").value.length < 1 || document.getElementById("logpassword").value.length < 1)
+                {
+                    alert("Please fill up all fields.");
+                    return false;
+                }
+                return true;
             }
-          </script>
+        </script>
 
-        
+
     </body>
-    
-  
+
+
 </html>
