@@ -58,7 +58,6 @@ DROP TABLE IF EXISTS `doctor`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `doctor` (
   `licenseID` int(11) NOT NULL,
-  `gender` char(1) NOT NULL,
   `specialization` varchar(100) NOT NULL,
   `user_ID` int(11) NOT NULL,
   UNIQUE KEY `licenseID_UNIQUE` (`licenseID`),
@@ -73,7 +72,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (201545,'M','Pediatrician',2);
+INSERT INTO `doctor` VALUES (201545,'Pediatrician',2);
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-16 21:44:14
+-- Dump completed on 2015-03-17  0:03:53
