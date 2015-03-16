@@ -1,0 +1,209 @@
+CREATE DATABASE  IF NOT EXISTS `clickhealth` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `clickhealth`;
+-- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
+--
+-- Host: localhost    Database: clickhealth
+-- ------------------------------------------------------
+-- Server version	5.6.17
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `appointments` (
+  `appointmentsID` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(100) NOT NULL,
+  `concern` varchar(100) NOT NULL,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  `patient_ID` int(11) NOT NULL,
+  `doctor_ID` int(11) NOT NULL,
+  UNIQUE KEY `appointmentsID_UNIQUE` (`appointmentsID`),
+  KEY `patientID_idx` (`patient_ID`),
+  KEY `doctorID` (`doctor_ID`),
+  CONSTRAINT `doctorID` FOREIGN KEY (`doctor_ID`) REFERENCES `doctor` (`licenseID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `patientID` FOREIGN KEY (`patient_ID`) REFERENCES `patient` (`patientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointments`
+--
+
+LOCK TABLES `appointments` WRITE;
+/*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctor`
+--
+
+DROP TABLE IF EXISTS `doctor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `doctor` (
+  `licenseID` int(11) NOT NULL,
+  `gender` char(1) NOT NULL,
+  `specialization` varchar(100) NOT NULL,
+  `user_ID` int(11) NOT NULL,
+  UNIQUE KEY `licenseID_UNIQUE` (`licenseID`),
+  KEY `userID_idx` (`user_ID`),
+  CONSTRAINT `userID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctor`
+--
+
+LOCK TABLES `doctor` WRITE;
+/*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
+INSERT INTO `doctor` VALUES (201545,'M','Pediatrician',2);
+/*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctorschedule`
+--
+
+DROP TABLE IF EXISTS `doctorschedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `doctorschedule` (
+  `scheduleID` int(11) NOT NULL AUTO_INCREMENT,
+  `scheduleDate` varchar(45) NOT NULL,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  `isAvailable` tinyint(1) NOT NULL,
+  `doctorScheduleID` int(11) NOT NULL,
+  `hospitalScheduleID` int(11) NOT NULL,
+  PRIMARY KEY (`scheduleID`),
+  UNIQUE KEY `scheduleID_UNIQUE` (`scheduleID`),
+  UNIQUE KEY `hospitalScheduleID_UNIQUE` (`hospitalScheduleID`),
+  UNIQUE KEY `doctorScheduleID_UNIQUE` (`doctorScheduleID`),
+  CONSTRAINT `doctorScheduleID` FOREIGN KEY (`doctorScheduleID`) REFERENCES `doctor` (`licenseID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `hospitalScheduleID` FOREIGN KEY (`hospitalScheduleID`) REFERENCES `hospital` (`hospitalID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctorschedule`
+--
+
+LOCK TABLES `doctorschedule` WRITE;
+/*!40000 ALTER TABLE `doctorschedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `doctorschedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hospital`
+--
+
+DROP TABLE IF EXISTS `hospital`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hospital` (
+  `hospitalID` int(11) NOT NULL AUTO_INCREMENT,
+  `hospitalName` varchar(100) NOT NULL,
+  `hospitalStreet` varchar(100) NOT NULL,
+  `hospitalCity` varchar(100) NOT NULL,
+  PRIMARY KEY (`hospitalID`),
+  UNIQUE KEY `hospitalID_UNIQUE` (`hospitalID`),
+  UNIQUE KEY `hospitalName_UNIQUE` (`hospitalName`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hospital`
+--
+
+LOCK TABLES `hospital` WRITE;
+/*!40000 ALTER TABLE `hospital` DISABLE KEYS */;
+INSERT INTO `hospital` VALUES (1,'Makati Med','Armosolo Street','Makati City'),(2,'Chinese General Hospital','Blumentritt Street','Manila');
+/*!40000 ALTER TABLE `hospital` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patient`
+--
+
+DROP TABLE IF EXISTS `patient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient` (
+  `patientID` int(11) NOT NULL AUTO_INCREMENT,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `user_ID` int(11) NOT NULL,
+  UNIQUE KEY `patientID_UNIQUE` (`patientID`),
+  KEY `useID_idx` (`user_ID`),
+  CONSTRAINT `useID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patient`
+--
+
+LOCK TABLES `patient` WRITE;
+/*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `userID_UNIQUE` (`userID`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'shayaneTan','shayane_tan@yahoo.com','shayane','Tan','Shayane','patient'),(2,'xgbCote','xgb_cote@yahoo.com','winona','Cote','Xgb','doctor'),(3,'winonaErive','winona_erive@yahoo.com','xgb','Erive','Winona','patient');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-03-16 21:44:14
