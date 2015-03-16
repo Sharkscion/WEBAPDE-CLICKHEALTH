@@ -1,0 +1,10 @@
+XGB Changelog:
+2:06AM 03/17/2015
+
+-Modified DAO interface
+-Did PatientDAO
+-Did DoctorDAO
+-Did HospitalDAO
+-Modified Doctor Model
+-Changed CSS src for the JSPs
+(Reason kung bakit sabog yung layout =)))
