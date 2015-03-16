@@ -1,0 +1,94 @@
+#HeadDiv
+{
+    background-color: #a82159;
+    width: auto;
+    height: 50;
+    float: top;
+}
+#BGDiv
+{
+    background-color: #c6d4e1;
+    width: auto;
+    height: 95%;
+
+}
+
+#form-content
+{
+    background: #fff;
+    height: 730px;
+    font-family:  century gothic, sans-serif;
+    padding-top:15px;
+    margin-bottom: 30px; 
+}
+
+#BodDiv
+{
+    top: 30%;
+    background-color: #b7e7e4;
+    width: 90%;
+    height: 30%;
+    margin-left: 5%;
+    padding-bottom: 10;
+    margin-top: -1%;
+    
+    color: #a82159;
+    text-align: left;
+    font-family: Handlee;
+    font-size: 22px;
+}
+#DetailsDiv
+{
+    background-color: #7ec2ab;
+    width: 90%;
+    height: 57%;
+    margin-left: 5%;
+    margin-top: 1%;
+    
+    color: #a82159;
+    text-align: left;
+    font-family: Handlee;
+    font-size: 22px;
+}
+.headbutton
+{
+    float: right;
+    margin-top: 10px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    text-decoration: none;
+    outline:none;
+    color: white;
+    font-family: Handlee;
+    font-size: 25px;
+}
+.contact-button
+{
+    border-radius: 3px;
+    margin-top: 4px;
+    margin-left: 40%;
+    background-color: #44749d;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: white;
+    font-family: Slabs;
+    font-size: 20px;
+}
+.column-contact-content
+{
+    margin-left: 10%;
+    margin-top: 0;
+    background: #ebe7e0;
+}
+
+@font-face
+{
+    font-family: 'Handlee';
+    src: local('Handlee-Regular');
+    
+}

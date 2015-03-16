@@ -1,0 +1,43 @@
+#settings-content{
+    background: #fff;
+    height: auto;
+    font-family:  century gothic, sans-serif;
+    padding-top:15px;
+    padding-bottom: 20px;
+    margin-bottom: 30px; 
+    padding-left: 16px;
+}
+
+.account-form{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.account-current p{
+    color: #9D9DA0;
+    font-weight:bold ;
+}
+
+.account-label p{
+    font-size: 15px;
+}
+
+.account-button
+{
+    border-radius: 3px;
+    margin: auto;
+    margin-top: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #44749d;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    float: right;
+    outline:none;
+    color: white;
+    font-family: century gothic, sans-serif;
+    font-size: 15px;
+}
