@@ -28,16 +28,20 @@ CREATE TABLE `appointments` (
   `appointmentsID` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(100) NOT NULL,
   `concern` varchar(100) NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
+  `startTime` time NOT NULL,
+  `appointmentDate` date NOT NULL,
   `patient_ID` int(11) NOT NULL,
   `doctor_ID` int(11) NOT NULL,
+  `hospital_ID` int(11) NOT NULL,
+  PRIMARY KEY (`appointmentsID`),
   UNIQUE KEY `appointmentsID_UNIQUE` (`appointmentsID`),
   KEY `patientID_idx` (`patient_ID`),
   KEY `doctorID` (`doctor_ID`),
+  KEY `hospitalID_idx` (`hospital_ID`),
   CONSTRAINT `doctorID` FOREIGN KEY (`doctor_ID`) REFERENCES `doctor` (`licenseID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `hospitalID` FOREIGN KEY (`hospital_ID`) REFERENCES `hospital` (`hospitalID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `patientID` FOREIGN KEY (`patient_ID`) REFERENCES `patient` (`patientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +50,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (1,'pending','GUTOM','10:00:00','2015-10-05',1,201545,2),(2,'pending','SIAO LONG PAO','10:00:00','2015-07-17',1,201545,1),(3,'approved','migraine','10:00:00','2008-05-05',1,201545,2);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,6 +65,7 @@ CREATE TABLE `doctor` (
   `licenseID` int(11) NOT NULL,
   `specialization` varchar(100) NOT NULL,
   `user_ID` int(11) NOT NULL,
+  PRIMARY KEY (`licenseID`),
   UNIQUE KEY `licenseID_UNIQUE` (`licenseID`),
   KEY `userID_idx` (`user_ID`),
   CONSTRAINT `userID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -124,7 +130,7 @@ CREATE TABLE `hospital` (
   PRIMARY KEY (`hospitalID`),
   UNIQUE KEY `hospitalID_UNIQUE` (`hospitalID`),
   UNIQUE KEY `hospitalName_UNIQUE` (`hospitalName`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,6 +155,7 @@ CREATE TABLE `patient` (
   `street` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
   `user_ID` int(11) NOT NULL,
+  PRIMARY KEY (`patientID`),
   UNIQUE KEY `patientID_UNIQUE` (`patientID`),
   KEY `useID_idx` (`user_ID`),
   CONSTRAINT `useID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -161,6 +168,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+INSERT INTO `patient` VALUES (1,'Santo Domingo Street','Quezon City',1);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +191,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `userID_UNIQUE` (`userID`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,6 +203,32 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (1,'shayaneTan','shayane_tan@yahoo.com','shayane','Tan','Shayane','patient'),(2,'xgbCote','xgb_cote@yahoo.com','winona','Cote','Xgb','doctor'),(3,'winonaErive','winona_erive@yahoo.com','xgb','Erive','Winona','patient');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `usercontact`
+--
+
+DROP TABLE IF EXISTS `usercontact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usercontact` (
+  `userID` int(11) NOT NULL,
+  `contactNo` varchar(150) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  PRIMARY KEY (`userID`,`contactNo`,`type`),
+  CONSTRAINT `user_ID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usercontact`
+--
+
+LOCK TABLES `usercontact` WRITE;
+/*!40000 ALTER TABLE `usercontact` DISABLE KEYS */;
+INSERT INTO `usercontact` VALUES (1,'788-0297','Telephone'),(1,'shayane_tan@yahoo.com','E-mail'),(2,'xgbCote@MakatiMed.com','E-mail'),(3,'09989749388','Cellphone');
+/*!40000 ALTER TABLE `usercontact` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -205,4 +239,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-17  0:03:53
+-- Dump completed on 2015-03-23 20:25:05
