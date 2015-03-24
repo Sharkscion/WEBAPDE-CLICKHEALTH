@@ -36,32 +36,6 @@ public class Controller
 		cd = new ContactDAO();
 	}
 	
-	//public 
-	public void addAppointment(Appointment app)
-	{
-		ad.insertData((Object) app);
-	}
-	
-	public void addUser(User u)
-	{
-		ud.insertData(u);
-	}
-	
-	public void addPatient(Patient p)
-	{
-		pd.insertData(p);
-	}
-	
-	public void addDoctor(Doctor d)
-	{
-		dd.insertData(d);
-	}
-	
-	public void addDoctorSchedule(DoctorSchedule ds)
-	{
-		sd.insertData(ds);
-	}
-	
 	public Iterator<User> getAllUsers()
 	{
 		return ud.getAllData();
@@ -132,15 +106,6 @@ public class Controller
 		return ad.getUserAppointments(patientID);
 	}
 	
-	public int getHospitalID(String hospitalName)
-	{
-		return hd.getHospitalID(hospitalName);
-	}
-
-	public int getDoctorID(String doctorName)
-	{
-		return dd.getLicenseID(doctorName);
-	}
 	public Iterator<Appointment> getDoctorAppointments(String username)
 	{
 		return ad.getDoctorAppointments(username);
@@ -157,7 +122,11 @@ public class Controller
 		return cd.getUserContacts(id); 
 	}
 	
-	
+	//public 
+	public void addAppointment(Appointment app)
+	{
+		ad.insertData((Object) app);
+	}
 }
 
 

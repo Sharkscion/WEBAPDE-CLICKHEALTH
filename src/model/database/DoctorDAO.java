@@ -9,7 +9,6 @@ import java.util.Iterator;
 
 import model.Doctor;
 import model.Hospital;
-import model.Patient;
 import model.User;
 
 public class DoctorDAO implements DAOInterface {
@@ -26,35 +25,6 @@ public class DoctorDAO implements DAOInterface {
         return dD;
     }
 
-    public int getLicenseID(String doctorName)
-    {
-
-    	  Connection con = connect.getConnection();
-          int i = 0;
-          try 
-          {
-              String query = "SELECT licenseID FROM user, doctor WHERE username = ?";
-              PreparedStatement preparedStatement = con.prepareStatement(query);
-              preparedStatement.setString(1, doctorName);
-              ResultSet resultSet = preparedStatement.executeQuery();
-              if (resultSet.next()) 
-            	  i = resultSet.getInt("licenseID");
-                  
-          } catch (SQLException sqlException) {
-              sqlException.printStackTrace();
-          } finally {
-              try {
-                  if (con != null) {
-                      con.close();
-                  }
-              } catch (SQLException sqlee) {
-                  sqlee.printStackTrace();
-              }
-          }
-          
-          return i;
-        
-    }
     @Override
     public Iterator getAllData() {
         Connection con = connect.getConnection();
@@ -99,12 +69,11 @@ public class DoctorDAO implements DAOInterface {
         Doctor doc = (Doctor) obj;
         try {
 
-            String query = "INSERT INTO doctor VALUES(?,?,(SELECT userID from user WHERE username = ?));";
+            String query = "INSERT INTO doctor VALUES(?,?,?);";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            //preparedStatement.setInt(1, pat.getPatientID());
-            preparedStatement.setInt(1, doc.getLicenseID() );
+            preparedStatement.setInt(1, doc.getLicenseID());
             preparedStatement.setString(2, doc.getSpecialization());
-            preparedStatement.setString(3, doc.getUsername());
+            preparedStatement.setInt(3, doc.getUserID());
             preparedStatement.execute();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

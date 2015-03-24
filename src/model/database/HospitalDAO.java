@@ -35,7 +35,7 @@ public class HospitalDAO implements DAOInterface {
         
         try 
         {
-            String query = "SELECT * FROM hospital ORDER BY hospitalname;";
+            String query = "SELECT * FROM hospital;";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -87,33 +87,6 @@ public class HospitalDAO implements DAOInterface {
         }
     }
 
-    public int getHospitalID(String username)
-    {
-    	  Connection con = connect.getConnection();
-          int i = 0;
-          try 
-          {
-              String query = "SELECT hospitalID FROM hospital WHERE hospitalName = ?";
-              PreparedStatement preparedStatement = con.prepareStatement(query);
-              preparedStatement.setString(1, username);
-              ResultSet resultSet = preparedStatement.executeQuery();
-              if (resultSet.next()) 
-            	  i = resultSet.getInt("hospitalID");
-                  
-          } catch (SQLException sqlException) {
-              sqlException.printStackTrace();
-          } finally {
-              try {
-                  if (con != null) {
-                      con.close();
-                  }
-              } catch (SQLException sqlee) {
-                  sqlee.printStackTrace();
-              }
-          }
-          
-          return i;
-    }
     @Override
     public void updateData(Object obj) {
         // TODO Auto-generated method stub
