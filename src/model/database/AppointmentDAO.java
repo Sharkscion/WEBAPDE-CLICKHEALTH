@@ -33,8 +33,32 @@ public class AppointmentDAO implements DAOInterface{
 
 	@Override
 	public void insertData(Object obj) {
-		// TODO Auto-generated method stub
-	}
+        Connection con = connect.getConnection();
+        Appointment app = (Appointment) obj;
+        try {
+
+            String query = "INSERT INTO appointments VALUES(NULL,?,?,?,?,?,?,?);";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, app.getStatus());
+            preparedStatement.setString(2, app.getConcern());
+            preparedStatement.setTime(3, app.getStartTime());
+            preparedStatement.setDate(4, app.getAppointmentDate());
+            preparedStatement.setInt(5, app.getPatientID());
+            preparedStatement.setInt(6, app.getDoctorID());
+            preparedStatement.setInt(7, app.getHospitalID());
+            preparedStatement.execute();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqlee) {
+                sqlee.printStackTrace();
+            }
+        }
+    }
 
 	@Override
 	public void updateData(Object obj) {

@@ -39,7 +39,7 @@ public class Controller
 	//public 
 	public void addAppointment(Appointment app)
 	{
-		ad.insertData((Object) app);
+		ad.insertData(app);
 	}
 	
 	public void addUser(User u)

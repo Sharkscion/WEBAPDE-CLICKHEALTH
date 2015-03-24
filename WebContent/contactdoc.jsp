@@ -12,6 +12,7 @@
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
         <link rel = "stylesheet" type="text/css" href="style-doctor.css">
+        <link  type = "text/css" rel = "stylesheet" href = "CSS/jquery.datetimepicker.css"/>
         
     </head>
     <body id = "scroll-style" class = "page-content">
@@ -91,7 +92,6 @@
                     </div>
                 </div>
                 <div id = "mid-content" class = "row">
-                    <form action="AppointmentServlet" method="post">
                         <div id="form-content" class="large-12 columns">
                         <div class="row" >
                             <div class="large-12 columns">
@@ -106,6 +106,11 @@
                             <form action = "ContactDocServlet" method = "post">
                             <label>Date of Appointment: </label><input id="date" name = "date" type = "date">
                             
+                            <label>Start Time:</label>
+	                            <input id="datetimepicker" name = "startTime" type="text" required = ""> 
+	                            <small class="error">Schedule start time is required.</small>
+                                    
+                                    
                             <label>Area of Concern: </label>
                             <select id="dropdown" name = "dropdown">
                                 <option>Vaccination</option>
@@ -122,7 +127,6 @@
                             </div>
                         </div>
                         </div>
-                    </form>
                 </div>
             </section>
         </div>
@@ -132,6 +136,7 @@
           <script src="Foundation/js/foundation/foundation.js"></script>
           <script src="Foundation/js/foundation/foundation.topbar.js"></script>
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
+          <script src="jquery.datetimepicker.js"></script>
 		  <script src = "javascript.js"></script> 
         
     </body>
