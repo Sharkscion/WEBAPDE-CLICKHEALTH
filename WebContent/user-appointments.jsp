@@ -19,7 +19,21 @@
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
     </head>
-
+	<%
+		Controller con = new Controller();
+	    
+	    int id=-1;
+	    Cookie[] cookies = request.getCookies();
+	    for(Cookie cookie:cookies){
+	        if(cookie.getName().equals("user")){
+	            id=Integer.parseInt(cookie.getValue());
+	        }
+	    }
+	    
+	   User user = (User) con.getUserInstance(String.valueOf(id));
+	   String username = user.getUsername();
+	   
+	%>
      <body id = "scroll-style" class = "page-content">
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
@@ -59,7 +73,7 @@
                             <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name">Shark Tan</label>
+                            <label id = "left-bar-name"><%=username%></label>
                             <a href = "user-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
                             
@@ -70,17 +84,6 @@
                     <div class ="large-12 columns" id = "appointment">
                          <br>
                          <%
-                     	     Controller con = new Controller();
-                         
-	                         int id=-1;
-	                         Cookie[] cookies = request.getCookies();
-	                         for(Cookie cookie:cookies){
-	                             if(cookie.getName().equals("user")){
-	                                 id=Integer.parseInt(cookie.getValue());
-	                             }
-	                         }
-	                         
-	                        User user = (User) con.getUserInstance(String.valueOf(id));
                          	String notif;
                          	
                          	Iterator i = con.getPatientAppointments(user.getUserID());

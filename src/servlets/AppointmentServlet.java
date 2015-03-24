@@ -34,6 +34,7 @@ public class AppointmentServlet extends HttpServlet {
        
     	String docId = "";
     	String patientId = "";
+    	int pangilan = 0;
     	Cookie[] cookies = request.getCookies();
         for(Cookie cookie : cookies){
             if(cookie.getName().equals("doctor")){
@@ -45,7 +46,12 @@ public class AppointmentServlet extends HttpServlet {
         }
 
         Controller c = new Controller();
-        int pangilan = Integer.parseInt((String) request.getParameter("docID"));
+        
+        docId =  request.getParameter("docID");
+        System.out.println("DOC ID: "+ docId);
+        if(docId.equals("") == false)
+        	pangilan = Integer.parseInt((String) request.getParameter("docID"));
+        
         Iterator doctors = c.getDoctors();
         Doctor doctor = null;
         

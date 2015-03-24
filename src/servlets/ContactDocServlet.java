@@ -37,7 +37,7 @@ public class ContactDocServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("currentUser");
 		Doctor doc = (Doctor) request.getSession().getAttribute("doctor"); 
 		
-		Controller con = Controller.getInstance();
+		Controller con = new Controller();
 		con.addAppointment(new Appointment(0, "pending", concern, null,null, user.getUserID(), doc.getLicenseID(), 1/*hospitalID*/));
 		
 		//String remarks = request.getParameter("textarea");

@@ -12,12 +12,13 @@
         <link  type = "text/css" rel = "stylesheet" href = "Foundation/css/foundation.min.css">
         <link  type = "text/css" rel = "stylesheet" href = "Foundation/css/foundation.css">
         <link  type = "text/css" rel = "stylesheet" href = "Foundation/css/normalize.css">
+        <link  type = "text/css" rel = "stylesheet" href = "CSS/jquery.datetimepicker.css"/>
         <link  type = "text/css" rel = "stylesheet" href = "CSS/style-starter.css">
         <link  type = "text/css" rel = "stylesheet" href = "CSS/style-scrollbar.css">
     
     </head>
     
-    <body id = "scroll-style">
+     <body id = "scroll-style">
         <br>
         <div class = "intro-page">
             <div class="contain-to-grid sticky"> 
@@ -138,15 +139,15 @@
         </div>
         <!-- User Sign In Drop Down -->
         <div id ="user-dropdown" class="f-dropdown small content form-dropdown user-form" data-dropdown-content>
-            <h5>SIGN UP AS: </h5> 
+            <h5>-SIGN UP AS- </h5> 
             <ul>
                 <li><a href = "#" data-reveal-id="signUp-patient-modal" data-reveal> Patient </a></li>
                 <li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> Doctor </a> </li>
             </ul>
         </div>
         <!-- PATIENT SIGN UP MODAL -->
-        <div id = "signUp-patient-modal" class="reveal-modal small form" data-reveal>
-            <h2>Patient: Sign Up</h2> 
+        <div id = "signUp-patient-modal" class="reveal-modal small form" style = "width: 800px;" data-reveal>
+            <h2>SIGN UP : PATIENT</h2> 
             <div class = "row">
                 <div class = "large-6 columns">
                     <label> Firstname: </label> <input type = "text" id = "pFName" name = "pFName" placeholder="">
@@ -169,43 +170,77 @@
             <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
             <a class="close-reveal-modal">&#215;</a>
         </div>
-
-        <!--DOCTOR MODAL -->
-        <div id = "signUp-doctor-modal" class="reveal-modal small form" data-reveal>
-            <h2>Doctor: Sign Up</h2> 
+       <!--DOCTOR MODAL -->
+       <div id = "signUp-doctor-modal" class="reveal-modal small form" style = "width: 1000px;" data-reveal>
+            <h2>SIGN UP : DOCTOR</h2> 
             <div class = "row">
-                <div class = "large-6 columns">
-                    <label> Firstname: </label> <input type = "text" id = "DFName" name = "DFName">
-                </div>
-                <div class = "large-6 columns">
-                    <label> Lastname: </label> <input type = "text" id = "DLName" name = "DLName">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-6 columns">
-                    <label> Doctor License ID: </label> <input type = "text" id = "DLicense" name = "DLicense">
-                </div>
-            </div>
-            <div class = "row">
-                <div clas ="large-12 columns" style = "margin-left: 15px;">
-                    <label> Username: </label><input type = "text" id = "DUName" name = "DUName" placeholder = "userName123">
-                </div>
-            </div>
-            <div class = "row">
-                <div clas ="large-12 columns" style = "margin-left: 15px;">
-                    <label> E-mail: </label><input type = "email" id = "DEmail" name = "DEmail" placeholder = "example@example.com">
-                </div>
-            </div>
-            <div class = "row">
-                <div class = "large-6 columns">
-                    <label> Password: </label><input type = "password" id = "DPassword" name = "password">
+                <div class = "large-6 columns" style = "padding-top: 40px;">
+                    <h6 class = "doctor-SignUp-header">-Account Info-</h6>
+                    <div class = "row">
+                        <div clas ="large-12 columns" style = "margin-left: 15px;">
+                            <label> Username: </label><input type = "text" id = "DUName" name = "DUName" placeholder = "userName123">
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div clas ="large-12 columns" style = "margin-left: 15px;">
+                            <label> E-mail: </label><input type = "email" id = "DEmail" name = "DEmail" placeholder = "example@example.com">
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "large-6 columns">
+                            <label> Password: </label><input type = "password" id = "DPassword" name = "password">
+                        </div>
+                        <div class = "large-6 columns">
+                            <label> Confirmation Password: </label><input type = "password" id = "DConfirm_pswd" name = "DConfirm_pswd">
+                        </div>
+                    </div>
                 </div>
                 <div class = "large-6 columns">
-                    <label> Confirmation Password: </label><input type = "password" id = "DConfirm_pswd" name = "DConfirm_pswd">
+                    <h6 class = "doctor-SignUp-header">-Doctor Info-</h6>
+                    <div class = "row">
+                        <div class = "large-6 columns">
+                            <label> Firstname: </label> <input type = "text" id = "DFName" name = "DFName">
+                        </div>
+                        <div class = "large-6 columns">
+                            <label> Lastname: </label> <input type = "text" id = "DLName" name = "DLName">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class = "large-12 columns">
+                            <label> Doctor License ID: </label> <input type = "text" id = "DLicense" name = "DLicense">
+                        </div>
+                    </div>
+                    <h6 class = "doctor-SignUp-header">-Add One Schedule Day-</h6>
+                    <div class = "row">
+                        <div class = "large-6 columns dropdown-options">
+                             <label>Hospital:</label> 
+                             <select name = "hospital">
+                                    <option>Makati Med</option>
+                             </select>
+                        </div>
+                        <div class = "large-6 columns dropdown-options">
+                            <label>Day:</label>
+                            <select name = "schedDay">
+                                <option>M</option>
+                                <option>T</option>
+                                <option>W</option>
+                                <option>TH</option>
+                                <option>F</option>
+                                <option>S</option>
+                                <option>SU</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "large-6 columns">
+                            <label>Start Time:</label><input id="datetimepicker" name = "startTime" type="text" > 
+                        </div>
+                        <div class = "large-6 columns">
+                            <label>End Time:</label><input id="datetimepicker2" name = "endTime" type="text" > 
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
 
             <a class="close-reveal-modal">&#215;</a>
@@ -216,12 +251,14 @@
             <label>Please kindly fill up all fields! :D </label>
         </div>
         
-        <script src = "Foundation/js/vendor/jquery.js"></script>
-        <script src = "Foundation/js/foundation/foundation.js"></script>
-        <script src = "Foundation/js/foundation/foundation.topbar.js"></script>
-        <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
-        <script src = "Foundation/js/foundation/foundation.dropdown.js"></script>
-        <script src = "javascript.js"></script>
+        <script src="Foundation/js/vendor/jquery.js"></script>
+        <script src="Foundation/js/foundation/foundation.js"></script>
+        <script src="Foundation/js/foundation/foundation.topbar.js"></script>
+        <script src="Foundation/js/foundation/foundation.reveal.js"></script> 
+        <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
+        <script src="Foundation/foundation/js/vendor/custom.modernizr.js"></script>
+        <script src="jquery.datetimepicker.js"></script>
+        <script src="javascript.js"></script>
         
     </body>
 

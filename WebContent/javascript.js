@@ -12,6 +12,15 @@ $(document).ready(function(){
 	});
 });
 
+$('#datetimepicker').datetimepicker({
+    datepicker:false,
+    format:'H:i',
+    
+});
+$('#datetimepicker2').datetimepicker({
+    datepicker:false,
+    format:'H:i',
+});
 
 function addElement()
 {

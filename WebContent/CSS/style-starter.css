@@ -479,11 +479,22 @@ body
     height: 50px !important;   
 }
 
+.doctor-SignUp-header
+{
+    font-family: century gothic, sans-serif;
+    color: #e68208;
+}
 
-
-
-
-
-
+.dropdown-options select {
+   background: transparent;
+   font-family: century gothic, sans-serif;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 1;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
 
 

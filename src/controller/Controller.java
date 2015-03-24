@@ -15,16 +15,16 @@ public class Controller
 	private PatientDAO pd;
 	private ContactDAO cd;
 	private UserDAO ud;
-	private static Controller controller;
-
-	public static synchronized Controller getInstance() 
-	{
-        if (controller == null) {
-            controller = new Controller();
-        }
- 
-        return controller;
-    }
+//	private static Controller controller;
+//
+//	public static synchronized Controller getInstance() 
+//	{
+//        if (controller == null) {
+//            controller = new Controller();
+//        }
+// 
+//        return controller;
+//    }
 	public Controller()
 	{
 		ad = new AppointmentDAO();
@@ -122,6 +122,7 @@ public class Controller
 		return cd.getUserContacts(id); 
 	}
 	
+	//public 
 	public void addAppointment(Appointment app)
 	{
 		ad.insertData((Object) app);
