@@ -119,6 +119,10 @@ public class Controller
 	public Object getUserInstance(String key){
 		return (Object) ud.getData(key);
 	}
+        
+        public Object getPatientInstance(String key){
+		return (Object) pd.getData(key);
+	}
 	
 	public Object getDoctor(int key)
 	{

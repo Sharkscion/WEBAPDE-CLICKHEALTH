@@ -62,7 +62,6 @@ public class PatientDAO implements DAOInterface {
         return patients.iterator();
     }
 
-   
     @Override
     public void insertData(Object obj) {
         Connection con = connect.getConnection();
@@ -94,48 +93,32 @@ public class PatientDAO implements DAOInterface {
         // TODO Auto-generated method stub
     }
 
-    @Override
     public Object getData(String keyID) {
-        Connection con = connect.getConnection();
         Patient pat;
-        patients = new ArrayList<Patient>();
         try {
-            String query = "SELECT * FROM patient";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
+            String query = "SELECT * FROM patient WHERE user_ID =\"" + keyID + "\"";
+            PreparedStatement preparedStatement = connect.getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                String query2 = "SELECT * FROM user WHERE userID = \"" + resultSet.getInt("user_ID") + "\"";
-                PreparedStatement preparedStatement2 = con.prepareStatement(query2);
+                String query2 = "SELECT * FROM user WHERE userID =\"" + keyID + "\"";
+                PreparedStatement preparedStatement2 = connect.getConnection().prepareStatement(query2);
                 ResultSet resultSet2 = preparedStatement2.executeQuery();
-
-                if (resultSet2.next()) {
-                    pat = new Patient(resultSet.getInt("user_ID"), resultSet2.getString("username"),
+                resultSet2.next();
+                
+                pat = new Patient(resultSet.getInt("user_ID"), resultSet2.getString("username"),
                             resultSet2.getString("email"), resultSet2.getString("password"),
                             resultSet2.getString("lastname"), resultSet2.getString("firstname"),
                             resultSet2.getString("type"), resultSet.getInt("patientID"),
                             resultSet.getString("street"), resultSet.getString("city"));
-                    try {
-                        if (con != null) {
-                            con.close();
-                        }
-                    } catch (SQLException sqlee) {
-                        sqlee.printStackTrace();
-                    }
-                    return pat;
-                }
+                return pat;
             }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
 
+        } catch (SQLException e) {
+            System.out.println("ERROR in getting all users from DB");
+            e.printStackTrace();
+        }
+        connect.close();
         return null;
     }
+
 }

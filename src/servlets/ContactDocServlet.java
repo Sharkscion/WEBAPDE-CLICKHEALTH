@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import model.Appointment;
 import model.Doctor;
+import model.Patient;
 import model.User;
 
 /**
@@ -59,8 +60,9 @@ public class ContactDocServlet extends HttpServlet {
         String concern = request.getParameter("dropdown");
         User user = (User) con.getUserInstance(String.valueOf(((User)request.getSession().getAttribute("currentUser")).getUserID()));
         Doctor doc = (Doctor) request.getSession().getAttribute("doctor");
+        Patient p = (Patient)con.getPatientInstance(String.valueOf(user.getUserID()));
 
-        con.addAppointment(new Appointment(0, "pending", concern, startTime, dateObj, user.getUserID(), doc.getLicenseID(), 1));
+        con.addAppointment(new Appointment(0, "pending", concern, startTime, dateObj, p.getPatientID(), doc.getLicenseID(), 1));
 
         //String remarks = request.getParameter("textarea");
         response.sendRedirect("hospitals.jsp");
