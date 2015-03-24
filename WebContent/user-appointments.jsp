@@ -112,7 +112,7 @@
                          			String buttonAction = "removeElement('appointment','"+appointmentID+"')";
                          			
                           %>
-	                          <ul  id = "<%=appointmentID%>" class="appointment-card">
+	                          <ul  id = <%=appointmentID%> class="appointment-card">
 	                              <li>Hospital: <%=hospital%> </li>
 	                              <li>Address: <%=address%></li>
 	                              <li class = "label-spacing">Doctor: Dr. <%=doctor%></li>

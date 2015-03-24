@@ -1,18 +1,20 @@
 package model;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class DoctorSchedule {
 	private int scheduleID;
 	private String scheduleDate;
-	private Date startTime;
-	private Date endTime;
-	private boolean isAvailable;
+	private Time startTime;
+	private Time endTime;
+	private int isAvailable;
 	private int doctorScheduleID;
 	private int hospitalScheduleID;
 
-	public DoctorSchedule(int scheduleID, String scheduleDate, Date startTime, Date endTime, 
-			boolean isAvailable, int doctorScheduleID, int hospitalScheduleID)
+	public DoctorSchedule(int scheduleID, String scheduleDate, Time startTime, Time endTime, 
+			int isAvailable, int doctorScheduleID, int hospitalScheduleID)
 	{
 		this.scheduleID = scheduleID;
 		this.scheduleDate = scheduleDate;
@@ -40,27 +42,27 @@ public class DoctorSchedule {
 		this.scheduleDate = scheduleDate;
 	}
 
-	public Date getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Time startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public Time getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
 	}
 
-	public boolean isAvailable() {
+	public int isAvailable() {
 		return isAvailable;
 	}
 
-	public void setAvailable(boolean isAvailable) {
+	public void setAvailable(int isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 

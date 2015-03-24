@@ -104,7 +104,7 @@
 	                                </div>
 	                                <div class = "large-2 columns">
 	                                  <!-- <button type = "submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="<%=doc.getUserID()%>" onClick = "getID(this)"> Set Appointment </button> -->
-	                                  <input type="submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="Set Appointment" onClick = "getDocID(this);">
+	                                  <input type="submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="Set Appointment" onClick = "getID(this);">
 	                                </div>
 	                            </div>
 	                        	<hr>

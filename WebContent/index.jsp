@@ -1,4 +1,6 @@
 
+<%@page import="model.Hospital"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="controller.Controller"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
@@ -49,7 +51,7 @@
                 </center>
             </div>
         </div>
-
+<!--**************************************************ABOUT PAGE 1****************************************************************** -->
         <div class = "about-page-1">
             <a name = "About"></a>
             <div class = "row">
@@ -62,7 +64,7 @@
                 </div>  
             </div>
         </div>
-
+<!--**************************************************ABOUT PAGE 2*************************************************************** -->
         <div class = "about-page-2">
             <div class = "row">
                 <div class = "large-12 columns">
@@ -71,7 +73,7 @@
                 </div>
             </div>
         </div>
-
+<!--**************************************************ABOUT PAGE 3****************************************************************** -->
         <div class = "about-page-3">
             <div class = "row">
                 <div class = "large-12 columns dp">
@@ -80,7 +82,7 @@
                 </div>
             </div>
         </div>
-
+<!--**************************************************TEAM PAGE****************************************************************** -->
         <div class = "team-page">
             <!-- /<a name = ""></a> -->
             <div class = "row">
@@ -128,7 +130,7 @@
             </div>
         </div>
 
-        <!-- Login Drop Down -->
+<!--**************************************************Login Drop Down*************************************************************-->
         <div id ="login-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
             <!--  <form  action="doctor-account.html" method="get">  -->
             <form action = "LoginServlet" method = "post" onsubmit = "return validateLogin()">	
@@ -137,7 +139,7 @@
                 <input type="submit" class="form-login-button" value="Login" tabindex="3"/>
             </form>
         </div>
-        <!-- User Sign In Drop Down -->
+<!--*************************************************User Sign In Drop Down*******************************************************-->
         <div id ="user-dropdown" class="f-dropdown small content form-dropdown user-form" data-dropdown-content>
             <h5>-SIGN UP AS- </h5> 
             <ul>
@@ -145,104 +147,203 @@
                 <li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> Doctor </a> </li>
             </ul>
         </div>
-        <!-- PATIENT SIGN UP MODAL -->
-        <div id = "signUp-patient-modal" class="reveal-modal small form" style = "width: 800px;" data-reveal>
+<!--************************************************PATIENT SIGN UP MODAL*********************************************************-->
+        <div id = "signUp-patient-modal" class="reveal-modal small form" style = "width: 900px;" data-reveal>
             <h2>SIGN UP : PATIENT</h2> 
-            <div class = "row">
-                <div class = "large-6 columns">
-                    <label> Firstname: </label> <input type = "text" id = "pFName" name = "pFName" placeholder="">
-                    <label> Username: </label><input type = "text" id = "pUName" name = "pUName" placeholder = "userName123">
-                </div>
-                <div class = "large-6 columns">
-                    <label> Lastname: </label> <input type = "text" id = "pLName" name = "pLName">
-                    <label> E-mail: </label><input type = "email" id = "pEmail" name = "pEmail" placeholder = "example@example.com">
-                </div>
-            </div>
-            <div class = "row" style = "margin-left: 15px;" >
-                <label> Address: </label> 
-                <div class = "large-6 columns"><input type = "text" id = "street" placeholder = "street"></div>
-                <div class = "large-6 columns"><input type = "text" id = "city" placeholder = "city"></div>
-            </div>
-
-            <div class = "row" style = "margin-left: 15px;  width: 500px;"><label> Password: </label><input type = "password" id = "pPassword" name = "pPassword"> </div>
-            <div class = "row" style = "margin-left: 15px; width: 500px;"><label> Confirmation Password: </label><input type = "password" id = "PConfirm_pswd" name = "PConfirm_pswd"></div>
-
-            <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
+            <form data-abide action = "PatientRegServlet" method = "post">
+            	<div class = "row">
+	                <div class = "large-6 columns">
+		                <div class = "row">
+		                	<div class = "large-2 columns">
+		                		<label>Firstname:</label>             	
+		                	</div>
+		                    <div class = "large-8 columns">
+		                		 <input type = "text" id = "pFName" name = "pFName" required pattern = "[a-zA-Z]+">
+		                   		 <small class = "error">Firstname is required.</small>             	
+		                	</div>
+		                </div>
+		                <div class = "row">
+			                <div class = "large-2 columns">
+		                		<label>Username:</label>             	
+		                	</div>
+		                	 <div class = "large-8 columns">
+		                		 <input type = "text" id = "pUName" name = "pUName" required pattern="[a-zA-Z]+">
+		                    	<small class = "error">Username is required.</small>         	
+		                	</div>
+		                </div>
+	                </div>
+	                
+	                <div class = "large-6 columns">
+	                	<div class = "row">
+	                		<div class = "large-2 columns">
+	                			<label>Lastname:</label> 
+	                		</div>
+	                		<div class = "large-8 columns">
+	                			<input type = "text" id = "pLName" name = "pLName" required pattern = "[a-zA-Z]+">
+	                    		<small class = "error">Lastname is required.</small>
+	                		</div>
+	                	</div>
+	                    
+	                    <div class = "row">
+	                    	<div class = "large-2 columns">
+	                			 <label>E-mail:</label> 
+	                		</div>
+	                    	<div class = "large-8 columns">
+	                			<input type = "email" id = "pEmail" name = "pEmail" placeholder = "example@example.com" required>
+	                    		<small class = "error">An email address is required.</small>
+	                		</div>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	            <div class = "row">
+	                <div class = "large-2 columns">
+	                	<label>Address:</label>             	
+	                </div>
+	                <div class="large-6 columns">
+	                		<input type="text" id="street" placeholder="street" required pattern="[a-zA-Z]+" data-invalid="" aria-invalid="true">
+	                		<small class="error">Street is required.</small>
+	                	</div>	 
+	                <div class = "large-4 columns" >
+	                	<input type = "text" id = "city" placeholder = "city" required pattern="[a-zA-Z]+">
+	                	<small class="error">City is required.</small>
+	                </div>
+	            </div>
+	
+	            <div class = "row  password-field">
+	            	<div class = "large-2 columns">
+	            		<label>Password:</label>	
+	            	</div>
+	            	<div class = "large-10 columns">
+		            	<input type="password" id="pPassword" name="pPassword" aria-invalid="false" required pattern="[a-zA-Z]+">
+		            	<small class="error">Your password must match the requirements</small>
+	            	</div>
+	            </div>
+	            <div class = "row password-confirmation-field">
+	            	<div class = "large-2 columns">
+	            		<label>Confirmation Password:</label>	
+	            	</div>
+	            	<div class = "large-10 columns">
+		            	<input type = "password" id = "pConfirm_pswd" name = "pConfirm_pswd" data-equalto="pPassword" required pattern="[a-zA-Z]+">
+	            		<small class="error">The password did not match</small>
+	            	</div>
+	            </div>
+	            <input class ="form-submit-button" type = "submit" value = "Submit" onclick = "">
+            </form>
             <a class="close-reveal-modal">&#215;</a>
         </div>
-       <!--DOCTOR MODAL -->
+ <!--**************************************************DOCTOR MODAL***************************************************************-->
        <div id = "signUp-doctor-modal" class="reveal-modal small form" style = "width: 1000px;" data-reveal>
             <h2>SIGN UP : DOCTOR</h2> 
+            <form  data-abide action="DoctorRegServlet" method = "post">
             <div class = "row">
-                <div class = "large-6 columns" style = "padding-top: 40px;">
-                    <h6 class = "doctor-SignUp-header">-Account Info-</h6>
-                    <div class = "row">
-                        <div clas ="large-12 columns" style = "margin-left: 15px;">
-                            <label> Username: </label><input type = "text" id = "DUName" name = "DUName" placeholder = "userName123">
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div clas ="large-12 columns" style = "margin-left: 15px;">
-                            <label> E-mail: </label><input type = "email" id = "DEmail" name = "DEmail" placeholder = "example@example.com">
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "large-6 columns">
-                            <label> Password: </label><input type = "password" id = "DPassword" name = "password">
-                        </div>
-                        <div class = "large-6 columns">
-                            <label> Confirmation Password: </label><input type = "password" id = "DConfirm_pswd" name = "DConfirm_pswd">
-                        </div>
-                    </div>
-                </div>
-                <div class = "large-6 columns">
-                    <h6 class = "doctor-SignUp-header">-Doctor Info-</h6>
-                    <div class = "row">
-                        <div class = "large-6 columns">
-                            <label> Firstname: </label> <input type = "text" id = "DFName" name = "DFName">
-                        </div>
-                        <div class = "large-6 columns">
-                            <label> Lastname: </label> <input type = "text" id = "DLName" name = "DLName">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class = "large-12 columns">
-                            <label> Doctor License ID: </label> <input type = "text" id = "DLicense" name = "DLicense">
-                        </div>
-                    </div>
-                    <h6 class = "doctor-SignUp-header">-Add One Schedule Day-</h6>
-                    <div class = "row">
-                        <div class = "large-6 columns dropdown-options">
-                             <label>Hospital:</label> 
-                             <select name = "hospital">
-                                    <option>Makati Med</option>
-                             </select>
-                        </div>
-                        <div class = "large-6 columns dropdown-options">
-                            <label>Day:</label>
-                            <select name = "schedDay">
-                                <option>M</option>
-                                <option>T</option>
-                                <option>W</option>
-                                <option>TH</option>
-                                <option>F</option>
-                                <option>S</option>
-                                <option>SU</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "large-6 columns">
-                            <label>Start Time:</label><input id="datetimepicker" name = "startTime" type="text" > 
-                        </div>
-                        <div class = "large-6 columns">
-                            <label>End Time:</label><input id="datetimepicker2" name = "endTime" type="text" > 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <input class ="form-submit-button" type = "button" value = "Submit" onclick = "">
-
+	                <div class = "large-6 columns" style = "padding-top: 40px;">
+	                    <h6 class = "doctor-SignUp-header">-Account Info-</h6>
+	                    <div class = "row">
+	                        <div clas ="large-12 columns" style = "margin-left: 15px;">
+	                            <label> Username: </label>
+	                          	<input type = "text" id = "dUName" name = "dUName" required pattern="[a-zA-Z]+">
+		                    	<small class = "error">Username is required.</small>  
+	                        </div>
+	                    </div>
+	                    <div class = "row">
+	                        <div clas ="large-12 columns" style = "margin-left: 15px;">
+	                            <label> E-mail: </label>
+	                            <input type = "email" id = "dEmail" name = "dEmail" placeholder = "example@example.com" required pattern="[a-zA-Z]+">
+	                    		<small class = "error">An email address is required.</small>
+	                        </div>
+	                    </div>
+	                    <div class = "row">
+	                        <div class = "large-6 columns">
+	                            <label> Password: </label>
+	                            <input type = "password" id = "dPassword" name = "dPassword" required pattern="[a-zA-Z]+">
+	                            <small class="error">Password is required</small>
+	                        </div>
+	                        <div class = "large-6 columns">
+	                            <label> Confirmation Password: </label>
+	                            <input type = "password" id = "dConfirm_pswd" name = "dConfirm_pswd" data-equalto="dPassword" required pattern="[a-zA-Z]+">
+	            				<small class="error">The password did not match</small>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class = "large-6 columns">
+	                    <h6 class = "doctor-SignUp-header">-Doctor Info-</h6>
+	                    <div class = "row">
+	                        <div class = "large-6 columns">
+	                            <label> Firstname:  
+	                            	<input type = "text" id = "dFName" name = "dFName" required pattern="[a-zA-Z]+">
+	                            </label>
+	                            <small class="error">Firstname is required.</small>
+	                        </div>
+	                        <div class = "large-6 columns">
+	                            <label> Lastname: 
+	                            	<input type = "text" id = "dLName" name = "dLName" required pattern="[a-zA-Z]+">
+	                            </label> 
+	                            <small class="error">Lastname is required.</small>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class = "large-12 columns">
+	                            <label> Doctor License ID: </label> 
+	                            <input type = "text" id = "dLicense" name = "dLicense" required pattern="integer">
+	                            <small class="error">License ID must match the requirements.</small>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class = "large-12 columns">
+	                            <label> Specialization: </label> 
+	                            <input type = "text" id = "dSpec" name = "dSpec" required pattern="[a-zA-Z]+">
+	                            <small class="error">Specialization is required.</small>
+	                        </div>
+	                    </div>
+	                    <h6 class = "doctor-SignUp-header">-Add One Schedule Day-</h6>
+	                    <div class = "row">
+	                        <div class = "large-6 columns dropdown-options">
+	                             <label>Hospital:</label> 
+	                             <select name = "hospital">
+	                             		<% 
+	                             			Iterator hList = con.getAllHospitals();
+	                             			while(hList.hasNext())
+	                             			{
+	                             				Hospital h = (Hospital) hList.next();
+	                             				String hospitalName = h.getName();
+	                             		%>
+	                                    		<option><%=hospitalName%></option>
+	                                    <%
+	                             			}
+	                                    %>
+	                             </select>
+	                        </div>
+	                        <div class = "large-6 columns dropdown-options">
+	                            <label>Day:</label>
+	                            <select name = "schedDay">
+	                                <option>M</option>
+	                                <option>T</option>
+	                                <option>W</option>
+	                                <option>TH</option>
+	                                <option>F</option>
+	                                <option>S</option>
+	                                <option>SU</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class = "row">
+	                        <div class = "large-6 columns">
+	                            <label>Start Time:</label>
+	                            <input id="datetimepicker" name = "startTime" type="text" required = ""> 
+	                            <small class="error">Schedule start time is required.</small>
+	                        </div>
+	                        <div class = "large-6 columns">
+	                            <label>End Time:</label>
+	                            <input id="datetimepicker2" name = "endTime" type="text" required> 
+	                            <small class="error">Schedule end time is required.</small>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	            <input class ="form-submit-button" type = "submit" value = "Submit" onclick = "" style = "margin-left: auto; margin-right: auto;">
+			</form>
             <a class="close-reveal-modal">&#215;</a>
         </div>
         
@@ -250,15 +351,18 @@
         <div class='reveal-modal' id='blankFields-modal' data-reveal>
             <label>Please kindly fill up all fields! :D </label>
         </div>
-        
+<!--**************************************************SCRIPTS****************************************************************** -->
         <script src="Foundation/js/vendor/jquery.js"></script>
         <script src="Foundation/js/foundation/foundation.js"></script>
         <script src="Foundation/js/foundation/foundation.topbar.js"></script>
         <script src="Foundation/js/foundation/foundation.reveal.js"></script> 
         <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
         <script src="Foundation/foundation/js/vendor/custom.modernizr.js"></script>
+		<script src="Foundation/js/foundation/foundation.abide.js"></script>
         <script src="jquery.datetimepicker.js"></script>
         <script src="javascript.js"></script>
+        
+       
         
     </body>
 
