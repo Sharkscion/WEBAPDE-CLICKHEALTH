@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS `doctorschedule`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `doctorschedule` (
   `scheduleID` int(11) NOT NULL AUTO_INCREMENT,
-  `scheduleDate` date NOT NULL,
+  `scheduleDate` varchar(11) NOT NULL,
   `startTime` time NOT NULL,
   `endTime` time NOT NULL,
   `isAvailable` int(11) NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE `doctorschedule` (
 
 LOCK TABLES `doctorschedule` WRITE;
 /*!40000 ALTER TABLE `doctorschedule` DISABLE KEYS */;
-INSERT INTO `doctorschedule` VALUES (1,'2015-06-07','10:00:00','16:00:00',1,201545,1),(2,'2015-07-17','10:00:00','16:00:00',1,201556,2),(3,'2015-09-18','10:00:00','16:00:00',1,1130088,3),(4,'2015-08-08','10:00:00','16:00:00',1,201545,2);
+INSERT INTO `doctorschedule` VALUES (1,'M','10:00:00','16:00:00',1,201545,1),(2,'W','10:00:00','16:00:00',1,201556,2),(3,'W','10:00:00','16:00:00',1,1130088,3),(4,'W','10:00:00','16:00:00',1,201545,2);
 /*!40000 ALTER TABLE `doctorschedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-24 10:59:26
+-- Dump completed on 2015-03-24 23:31:36
