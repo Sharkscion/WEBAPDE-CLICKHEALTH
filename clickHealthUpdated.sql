@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `appointments`;
 CREATE TABLE `appointments` (
   `appointmentsID` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(100) NOT NULL,
-  `concern` varchar(100) NOT NULL,
+  `concern` varchar(255) NOT NULL,
   `startTime` time NOT NULL,
   `appointmentDate` date NOT NULL,
   `patient_ID` int(11) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `appointments` (
   CONSTRAINT `doctorID` FOREIGN KEY (`doctor_ID`) REFERENCES `doctor` (`licenseID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `hospitalID` FOREIGN KEY (`hospital_ID`) REFERENCES `hospital` (`hospitalID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `patientID` FOREIGN KEY (`patient_ID`) REFERENCES `patient` (`patientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +50,6 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (1,'pending','GUTOM','10:00:00','2015-10-05',1,201545,2),(2,'pending','SIAO LONG PAO','10:00:00','2015-07-17',1,201545,1),(3,'approved','migraine','10:00:00','2008-05-05',1,201545,2);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +77,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (201545,'Pediatrician',2),(201556,'Optometrist',4),(1130088,'DoctorQuakQuak',5);
+INSERT INTO `doctor` VALUES (113456,'QuakQuak',4);
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +102,7 @@ CREATE TABLE `doctorschedule` (
   KEY `hospital_ID_idx` (`hospitalScheduleID`),
   CONSTRAINT `doctor_ID` FOREIGN KEY (`doctorScheduleID`) REFERENCES `doctor` (`licenseID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `hospital_ID` FOREIGN KEY (`hospitalScheduleID`) REFERENCES `hospital` (`hospitalID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +111,7 @@ CREATE TABLE `doctorschedule` (
 
 LOCK TABLES `doctorschedule` WRITE;
 /*!40000 ALTER TABLE `doctorschedule` DISABLE KEYS */;
-INSERT INTO `doctorschedule` VALUES (1,'M','10:00:00','16:00:00',1,201545,1),(2,'W','10:00:00','16:00:00',1,201556,2),(3,'W','10:00:00','16:00:00',1,1130088,3),(4,'W','10:00:00','16:00:00',1,201545,2);
+INSERT INTO `doctorschedule` VALUES (1,'W','10:00:00','13:00:00',1,113456,1);
 /*!40000 ALTER TABLE `doctorschedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,13 +124,13 @@ DROP TABLE IF EXISTS `hospital`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `hospital` (
   `hospitalID` int(11) NOT NULL AUTO_INCREMENT,
-  `hospitalName` varchar(100) NOT NULL,
-  `hospitalStreet` varchar(100) NOT NULL,
-  `hospitalCity` varchar(100) NOT NULL,
+  `hospitalName` varchar(255) NOT NULL,
+  `hospitalStreet` varchar(255) NOT NULL,
+  `hospitalCity` varchar(255) NOT NULL,
   PRIMARY KEY (`hospitalID`),
   UNIQUE KEY `hospitalID_UNIQUE` (`hospitalID`),
   UNIQUE KEY `hospitalName_UNIQUE` (`hospitalName`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +139,7 @@ CREATE TABLE `hospital` (
 
 LOCK TABLES `hospital` WRITE;
 /*!40000 ALTER TABLE `hospital` DISABLE KEYS */;
-INSERT INTO `hospital` VALUES (1,'Makati Med','Armosolo Street','Makati City'),(2,'Chinese General Hospital','Blumentritt Street','Manila'),(3,'Manila Med','UN Avenue','Manila');
+INSERT INTO `hospital` VALUES (1,'Makati Med','Armosolo Street','Makati City'),(2,'Philippine Orthopedic Center','Maria Clara corner Banawe Streets','Quezon City'),(3,'General Miguel Malvar Medical Foundation Hospital','Commonwealth Avenue','Quezon City'),(4,'Chinese General Hospital and Medical Center','Blumentritt Road, Santa Cruz','Manila'),(5,'Manila Doctors\' Hospital','United Nations Avenue, Ermita','Manila'),(6,'Ospital ng Tondo','Jose Abad Santos Avenue, Tondo','Manila'),(7,'Philippine General Hospital','Taft Avenue, Ermita','Manila'),(8,'Mary Immaculate Hospital','E. Rodriguez Avenue, Bagong Ilog','Pasig'),(9,'Pasig Doctors Medical Center','254 A. Rodriguez Avenue, Manggahan','Pasig'),(10,'The Medical City','Ortigas Avenue','Pasig');
 /*!40000 ALTER TABLE `hospital` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,14 +152,14 @@ DROP TABLE IF EXISTS `patient`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient` (
   `patientID` int(11) NOT NULL AUTO_INCREMENT,
-  `street` varchar(100) NOT NULL,
-  `city` varchar(100) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
   `user_ID` int(11) NOT NULL,
   PRIMARY KEY (`patientID`),
   UNIQUE KEY `patientID_UNIQUE` (`patientID`),
   KEY `useID_idx` (`user_ID`),
   CONSTRAINT `useID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +168,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (1,'Santo Domingo Street','Quezon City',1);
+INSERT INTO `patient` VALUES (1,'Santo Domingo Street','Quezon City',1),(2,'Wealth Street','Commonwealth City',2),(3,'Roosevelt Station','Quezon City',3);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +191,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `userID_UNIQUE` (`userID`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,7 +200,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'shayaneTan','shayane_tan@yahoo.com','shayane','Tan','Shayane','patient'),(2,'xgbCote','xgb_cote@yahoo.com','winona','Cote','Xgb','doctor'),(3,'winonaErive','winona_erive@yahoo.com','xgb','Erive','Winona','patient'),(4,'randomDoc','randomDoc@yahoo.com','random','Random','Doc','doctor'),(5,'chengDoc','chengDoc@gmail.com','cheng','Cheng','Doc','doctor');
+INSERT INTO `user` VALUES (1,'shayaneTan','shayaneTan@yahoo.com','4f90af664b826235d33870f893cd2cf8bfad8043','Tan','Shayane','patient'),(2,'zedAng','zed_lester@yahoo.com','5821b64a451562259b97b81a520ee86732b78a62','Ang','Zed Lester','patient'),(3,'xgbCote','xgbCote@yahoo.com','93c7ece9a9f864e502027712c6347cbaa158206d','Cote','XGB','patient'),(4,'ChengQuak','cheng_kristoffer@yahoo.com','f3b1fb677169f273e0bcc1786517c8a2687adcac','Cheng','Jan Kristoffer','doctor');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +226,7 @@ CREATE TABLE `usercontact` (
 
 LOCK TABLES `usercontact` WRITE;
 /*!40000 ALTER TABLE `usercontact` DISABLE KEYS */;
-INSERT INTO `usercontact` VALUES (1,'788-0297','Telephone'),(1,'shayane_tan@yahoo.com','E-mail'),(2,'xgbCote@MakatiMed.com','E-mail'),(3,'09989749388','Cellphone'),(4,'09984756667','Cellphone'),(4,'randomDoc@yahoo.com','E-mail');
+INSERT INTO `usercontact` VALUES (1,'shayaneTan@yahoo.com','E-mail'),(2,'zed_lester@yahoo.com','E-mail'),(3,'xgbCote@yahoo.com','E-mail'),(4,'cheng_kristoffer@yahoo.com','E-mail');
 /*!40000 ALTER TABLE `usercontact` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -240,4 +239,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-24 23:31:36
+-- Dump completed on 2015-03-25  1:13:27
