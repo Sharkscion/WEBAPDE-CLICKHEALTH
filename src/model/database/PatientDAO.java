@@ -12,7 +12,7 @@ import model.Patient;
 
 public class PatientDAO implements DAOInterface {
 
-    private DBConnection connect;
+    private DBConnection connect = DBConnection.getInstance();
     private ArrayList<Patient> patients;
 
     private static PatientDAO pD = null;
@@ -62,18 +62,19 @@ public class PatientDAO implements DAOInterface {
         return patients.iterator();
     }
 
+   
     @Override
     public void insertData(Object obj) {
         Connection con = connect.getConnection();
         Patient pat = (Patient) obj;
         try {
 
-            String query = "INSERT INTO patient VALUES(?,?,?,?);";
+            String query = "INSERT INTO patient VALUES(NULL,?,?, (SELECT userID from user WHERE username = ?));";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, pat.getPatientID());
-            preparedStatement.setString(2, pat.getStreet());
-            preparedStatement.setString(3, pat.getCity());
-            preparedStatement.setInt(4, pat.getUserID());
+            //preparedStatement.setInt(1, pat.getPatientID());
+            preparedStatement.setString(1, pat.getStreet());
+            preparedStatement.setString(2, pat.getCity());
+            preparedStatement.setString(3, pat.getUsername());
             preparedStatement.execute();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

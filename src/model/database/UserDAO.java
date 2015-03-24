@@ -1,9 +1,13 @@
 package model.database;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.Iterator;
 
 import model.*;
@@ -73,17 +77,68 @@ public class UserDAO implements DAOInterface {
         connect.close();
         return users.iterator();
     }
-
     @Override
     public void insertData(Object obj) {
-        // TODO Auto-generated method stub
-    }
+
+		try 
+		{
+			User u = (User)obj;
+			String query = "INSERT INTO user values(NULL,?,?,?,?,?,?)";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, u.getUsername());
+			statement.setString(2, u.getEmail());
+			statement.setString(3, encryptPassword(u.getPassword()));
+			statement.setString(4, u.getLastname());
+			statement.setString(5, u.getFirstname());
+			statement.setString(6, u.getType());
+			if(statement.execute())
+			{
+				connect.close();
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new user");
+			e.printStackTrace();
+		}
+		
+		connect.close();
+	}
 
     @Override
     public void updateData(Object obj) {
         // TODO Auto-generated method stub
     }
 
+    public static String encryptPassword(String password){
+	    String sha1 = "";
+	    try{
+	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+	        crypt.reset();
+	        crypt.update(password.getBytes("UTF-8"));
+	        sha1 = byteToHex(crypt.digest());
+	    }
+	    catch(NoSuchAlgorithmException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    catch(UnsupportedEncodingException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    return sha1;
+	}
+	
+	private static String byteToHex(final byte[] hash){
+	    Formatter formatter = new Formatter();
+	    for (byte b : hash){
+	        formatter.format("%02x", b);
+	    }
+	    String result = formatter.toString();
+	    formatter.close();
+	    return result;
+	}
+	
     @Override
     public Object getData(String keyID) {
     	try {
