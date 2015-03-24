@@ -34,7 +34,7 @@ public class DoctorScheduleDAO implements DAOInterface {
 	        DoctorSchedule ds = (DoctorSchedule) obj;
 	        try {
 
-	            String query = "INSERT INTO doctorschedule VALUES(NULL,?,?,?,?,?, ?";
+	            String query = "INSERT INTO doctorschedule VALUES(NULL,?,?,?,?,?,?)";
 	            PreparedStatement preparedStatement = con.prepareStatement(query);
 	            //preparedStatement.setInt(1, pat.getPatientID());
 	            preparedStatement.setString(1, ds.getScheduleDate());

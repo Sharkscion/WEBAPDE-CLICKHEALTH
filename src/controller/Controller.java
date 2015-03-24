@@ -47,6 +47,10 @@ public class Controller
 		ud.insertData(u);
 	}
 	
+	public void addContact(UserContact uc)
+	{
+		cd.insertData(uc);
+	}
 	public void addPatient(Patient p)
 	{
 		pd.insertData(p);
@@ -61,15 +65,36 @@ public class Controller
 	{
 		sd.insertData(ds);
 	}
-	
-	public Iterator<User> getAllUsers()
+
+	public int getHospitalID(String hospitalName)
 	{
-		return ud.getAllData();
+		return hd.getHospitalID(hospitalName);
 	}
+
+	public int getDoctorID(String doctorName)
+	{
+		return dd.getLicenseID(doctorName);
+	}
+	
+	public int getUserID(String userName)
+	{
+		return ud.getUserID(userName);
+	}
+	
+	public Iterator<Appointment> getDoctorAppointments(String username)
+	{
+		return ad.getDoctorAppointments(username);
+	}
+	
 	
 	public User getUser(String username, String password)
 	{
 		return ud.validateUser(username, password);
+	}
+	
+	public Iterator<User> getAllUsers()
+	{
+		return ud.getAllData();
 	}
 	
 	public Iterator<Hospital> getAllHospitals()
@@ -130,20 +155,6 @@ public class Controller
 	public Iterator getPatientAppointments(int patientID)
 	{
 		return ad.getUserAppointments(patientID);
-	}
-	
-	public int getHospitalID(String hospitalName)
-	{
-		return hd.getHospitalID(hospitalName);
-	}
-
-	public int getDoctorID(String doctorName)
-	{
-		return dd.getLicenseID(doctorName);
-	}
-	public Iterator<Appointment> getDoctorAppointments(String username)
-	{
-		return ad.getDoctorAppointments(username);
 	}
 	
 	public String getUserUserName(int ID)

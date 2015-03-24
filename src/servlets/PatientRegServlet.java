@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Patient;
+import model.UserContact;
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import controller.Controller;
 
@@ -54,6 +55,10 @@ public class PatientRegServlet extends HttpServlet {
 		Patient p = new Patient(0, username, email, password, lastname, firstname, "patient", 0, street, city);
 		con.addUser(p);	
 		con.addPatient(p);
+		
+		UserContact c = new UserContact(con.getUserID(username), email, "E-mail");
+		con.addContact(c);
+		response.sendRedirect("index.jsp");
 	}
 
 }

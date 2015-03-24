@@ -201,11 +201,11 @@
 	                	<label>Address:</label>             	
 	                </div>
 	                <div class="large-6 columns">
-	                		<input type="text" id="street" placeholder="street" required pattern="[a-zA-Z]+" data-invalid="" aria-invalid="true">
+	                		<input type="text" id="street" name="street" placeholder="street" required pattern="[a-zA-Z]+" data-invalid="" aria-invalid="true">
 	                		<small class="error">Street is required.</small>
 	                	</div>	 
 	                <div class = "large-4 columns" >
-	                	<input type = "text" id = "city" placeholder = "city" required pattern="[a-zA-Z]+">
+	                	<input type = "text" id = "city" name="city" placeholder = "city" required pattern="[a-zA-Z]+">
 	                	<small class="error">City is required.</small>
 	                </div>
 	            </div>

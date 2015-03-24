@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Doctor;
 import model.DoctorSchedule;
+import model.UserContact;
 import controller.Controller;
 
 /**
@@ -60,13 +61,8 @@ public class DoctorRegServlet extends HttpServlet {
 		String start = request.getParameter("startTime");
 		String end = request.getParameter("endTime");
 		
-		System.out.println("START: "+ start);
-		//start+= ":00";
-		
-		DateFormat sdf = new SimpleDateFormat("hh:mm");
-		
-		
 		try {
+			DateFormat sdf = new SimpleDateFormat("hh:mm");
 			Date dateStart = sdf.parse(start);
 			Time startTime = new Time(dateStart.getTime());
 			
@@ -78,13 +74,16 @@ public class DoctorRegServlet extends HttpServlet {
 			if(license.equals("") == false)
 				licenseID = Integer.parseInt(license);
 			
-			
-			
 			Doctor d = new Doctor(0, username, email, password, lastname, firstname, "doctor", licenseID, specialization);
-			DoctorSchedule  ds = new DoctorSchedule(0, schedDay, startTime, endTime, 0, con.getDoctorID(username), con.getHospitalID(hospital));
 			con.addUser(d);
 			con.addDoctor(d);
+			
+			DoctorSchedule  ds = new DoctorSchedule(0, schedDay, startTime, endTime, 1, con.getDoctorID(username), con.getHospitalID(hospital));
 			con.addDoctorSchedule(ds);
+			
+			UserContact c = new UserContact(con.getUserID(username), email, "E-mail");
+			con.addContact(c);
+			 response.sendRedirect("index.jsp");
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

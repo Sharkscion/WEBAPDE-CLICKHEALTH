@@ -1,5 +1,6 @@
 package model.database;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,8 +89,30 @@ public class ContactDAO implements DAOInterface {
     }
 
     @Override
-    public void insertData(Object obj) {
-        // TODO Auto-generated method stub
+    public void insertData(Object obj) 
+    {
+    	Connection con = connect.getConnection();
+        UserContact c = (UserContact) obj;
+        try {
+
+            String query = "INSERT INTO usercontact VALUES(?,?,?);";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            //preparedStatement.setInt(1, pat.getPatientID());
+            preparedStatement.setInt(1, c.getUserID());
+            preparedStatement.setString(2, c.getContactInfo());
+            preparedStatement.setString(3, c.getType());
+            preparedStatement.execute();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqlee) {
+                sqlee.printStackTrace();
+            }
+        }
     }
 
     @Override

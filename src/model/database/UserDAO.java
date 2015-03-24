@@ -3,6 +3,7 @@ package model.database;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,12 +35,42 @@ public class UserDAO implements DAOInterface {
         users = new ArrayList<User>();
     }
 
+    public int getUserID(String userName)
+    {
+
+    	  Connection con = connect.getConnection();
+          int i = 0;
+          try 
+          {
+              String query = "SELECT userID FROM user WHERE username = ?";
+              PreparedStatement preparedStatement = con.prepareStatement(query);
+              preparedStatement.setString(1, userName);
+              ResultSet resultSet = preparedStatement.executeQuery();
+              if (resultSet.next()) 
+            	  i = resultSet.getInt("userID");
+                  
+          } catch (SQLException sqlException) {
+              sqlException.printStackTrace();
+          } finally {
+              try {
+                  if (con != null) {
+                      con.close();
+                  }
+              } catch (SQLException sqlee) {
+                  sqlee.printStackTrace();
+              }
+          }
+          
+          return i;
+        
+    }
+    
     public User validateUser(String username, String password) {
         try {
             String query = "SELECT * FROM User WHERE username = ? AND password = ?";
             statement = connect.getConnection().prepareStatement(query);
             statement.setString(1, username);
-            statement.setString(2, password);
+            statement.setString(2, encryptPassword(password));
             rs = statement.executeQuery();
 
             User u;

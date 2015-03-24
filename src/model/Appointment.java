@@ -17,7 +17,6 @@ public class Appointment
 	public Appointment(int ID, String status, String concern, Time startTime, Date appointmentDate, int patientID, int doctorID, int hospitalID)
 	{
 		setID(ID);
-		setStatus(status);
 		setConcern(concern);
 		setStartTime(startTime);
 		setPatientID(patientID);
