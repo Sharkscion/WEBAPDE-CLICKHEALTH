@@ -12,113 +12,144 @@ import model.Patient;
 
 public class PatientDAO implements DAOInterface {
 
-    private DBConnection connect = DBConnection.getInstance();
-    private ArrayList<Patient> patients;
+	private DBConnection connect = DBConnection.getInstance();
+	private PreparedStatement statement;
+	private ResultSet rs;
+	private ArrayList<Patient> pList;
 
-    private static PatientDAO pD = null;
+	private static PatientDAO pD = null;
 
-    public static synchronized PatientDAO getInstance() {
-        if (pD == null) {
-            pD = new PatientDAO();
-        }
-        return pD;
-    }
+	public static synchronized PatientDAO getInstance() {
+		if (pD == null) {
+			pD = new PatientDAO();
+		}
+		return pD;
+	}
 
-    @Override
-    public Iterator getAllData() {
-        Connection con = connect.getConnection();
-        Patient pat;
-        patients = new ArrayList<Patient>();
-        try {
-            String query = "SELECT * FROM patient";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String query2 = "SELECT * FROM user WHERE userID = \"" + resultSet.getInt("user_ID") + "\"";
-                PreparedStatement preparedStatement2 = con.prepareStatement(query2);
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
+	@Override
+	public Iterator<Patient> getAllData() {
 
-                if (resultSet2.next()) {
-                    pat = new Patient(resultSet.getInt("user_ID"), resultSet2.getString("username"),
-                            resultSet2.getString("email"), resultSet2.getString("password"),
-                            resultSet2.getString("lastname"), resultSet2.getString("firstname"),
-                            resultSet2.getString("type"), resultSet.getInt("patientID"),
-                            resultSet.getString("street"), resultSet.getString("city"));
-                    patients.add(pat);
-                }
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
+		Patient pat;
+		pList = new ArrayList<Patient>();
+		try {
+			String query = "SELECT * "
+						+ "FROM user, patient "
+						+ "WHERE userID =  user_ID;";
+			statement = connect.getConnection().prepareStatement(query);
+			rs = statement.executeQuery();
+			while (rs.next()) {
 
-        return patients.iterator();
-    }
+				pat = new Patient(rs.getInt("user_ID"), rs.getString("username"),
+						rs.getString("email"), rs.getString("password"),
+						rs.getString("lastname"), rs.getString("firstname"),
+						rs.getString("type"), rs.getInt("patientID"),
+						rs.getString("street"), rs.getString("city"));
+				pList.add(pat);
+			}
 
-    @Override
-    public void insertData(Object obj) {
-        Connection con = connect.getConnection();
-        Patient pat = (Patient) obj;
-        try {
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all Patient");
+			e.printStackTrace();
+		}
+		connect.close();
 
-            String query = "INSERT INTO patient VALUES(NULL,?,?, (SELECT userID from user WHERE username = ?));";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            //preparedStatement.setInt(1, pat.getPatientID());
-            preparedStatement.setString(1, pat.getStreet());
-            preparedStatement.setString(2, pat.getCity());
-            preparedStatement.setString(3, pat.getUsername());
-            preparedStatement.execute();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-    }
+		return pList.iterator();
+	}
 
-    @Override
-    public void updateData(Object obj) {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void insertData(Object obj) {
 
-    public Object getData(String keyID) {
-        Patient pat;
-        try {
-            String query = "SELECT * FROM patient WHERE user_ID =\"" + keyID + "\"";
-            PreparedStatement preparedStatement = connect.getConnection().prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String query2 = "SELECT * FROM user WHERE userID =\"" + keyID + "\"";
-                PreparedStatement preparedStatement2 = connect.getConnection().prepareStatement(query2);
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-                resultSet2.next();
-                
-                pat = new Patient(resultSet.getInt("user_ID"), resultSet2.getString("username"),
-                            resultSet2.getString("email"), resultSet2.getString("password"),
-                            resultSet2.getString("lastname"), resultSet2.getString("firstname"),
-                            resultSet2.getString("type"), resultSet.getInt("patientID"),
-                            resultSet.getString("street"), resultSet.getString("city"));
-                return pat;
-            }
+		Patient pat = (Patient) obj;
+		try {
 
-        } catch (SQLException e) {
-            System.out.println("ERROR in getting all users from DB");
-            e.printStackTrace();
-        }
-        connect.close();
-        return null;
-    }
+			String query = "INSERT INTO patient VALUES(NULL,?,?, (SELECT userID from user WHERE username = ?));";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, pat.getStreet());
+			statement.setString(2, pat.getCity());
+			statement.setString(3, pat.getUsername());
+			statement.execute();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		} 
+		connect.close();
+	}
 
+	@Override
+	public void updateData(Object obj) {
+		Patient p = (Patient)obj;
+		String query = "UPDATE patient "
+					 + "SET  street = ?, city = ?"
+				     + "WHERE patientID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, p.getStreet());
+			statement.setString(2, p.getCity());
+			if(statement.execute())
+			{
+				System.out.println("UPDATED Patinet");
+				connect.close();
+			}
+		
+		} catch (SQLException e) {
+	
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+		connect.close();
+	}
+
+	public Patient getData(Object user) {
+		String username = (String) user;
+		Patient pat = null;
+		try {
+			String query = "SELECT * "
+					+ "FROM user, patient "
+					+ "WHERE user_ID = userID AND username = ?";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, username);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				pat = new Patient(rs.getInt("user_ID"), rs.getString("username"),
+						rs.getString("email"), rs.getString("password"),
+						rs.getString("lastname"), rs.getString("firstname"),
+						rs.getString("type"), rs.getInt("patientID"),
+						rs.getString("street"), rs.getString("city"));
+				
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all users from DB");
+			e.printStackTrace();
+		}
+		connect.close();
+		return pat;
+	}
+
+	public Patient getPatientByID(int patientID) {
+	
+		Patient pat = null;
+		try {
+			String query = "SELECT * "
+					+ "FROM user, patient "
+					+ "WHERE user_ID = userID AND patientID = ?";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, patientID);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				pat = new Patient(rs.getInt("user_ID"), rs.getString("username"),
+						rs.getString("email"), rs.getString("password"),
+						rs.getString("lastname"), rs.getString("firstname"),
+						rs.getString("type"), rs.getInt("patientID"),
+						rs.getString("street"), rs.getString("city"));
+				
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all users from DB");
+			e.printStackTrace();
+		}
+		connect.close();
+		return pat;
+	}
 }

@@ -23,7 +23,7 @@ public class AutoCompleteServlet extends HttpServlet {
      
     private ServletContext context;
     private Controller con = new Controller();
-    private Iterator<String> specializations = con.getSpecializations();
+    private Iterator<String> specializations = con.getAllSpecializations();
     String specialization = null;
 
     @Override

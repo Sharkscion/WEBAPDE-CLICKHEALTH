@@ -1,3 +1,6 @@
+<%@page import="model.Hospital"%>
+<%@page import="model.DoctorSchedule"%>
+<%@page import="controller.Controller"%>
 <%@page import="model.Doctor"%>
 <%@page import="java.util.Iterator"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -72,25 +75,36 @@
                     <div  id="doctorsList" class = "large-12 columns"> <br>
                         <form action="AppointmentServlet" method="post">
                         <% 
+ 	                        Controller c = new Controller();
                             Iterator iterator = (Iterator) session.getAttribute("doctors");
-                        	while (iterator.hasNext()) {
-                                Doctor doc = (Doctor) iterator.next();%>    
+                        	while (iterator.hasNext())
+                        	{
+                                Doctor doc = (Doctor) iterator.next();
+                                Iterator scheds = c.getDoctorsSchedules(doc.getLicenseID(),(Integer) session.getAttribute("hID"));
+                        	
+                                while(scheds.hasNext())
+                                {
+                                	DoctorSchedule ds = (DoctorSchedule) scheds.next();
+                                	Hospital hospital = c.getHospitalByID(ds.getHospitalScheduleID());                        %>    
                             <div class = "row">
                                 <div class = "large-2 columns"> <img class = "hospital-img" src="Assets/clickHealth2.png"></div>
                                 <div class = "large-8 columns">
 
-                                    <h5>Hospital: Makati Med</h5>
+                                    <h5>Hospital: <%=hospital.getName()%> </h5>
                                     <h6>Doctor: Dr. <label id="name" value = ""><%=doc.getFirstname() + " " + doc.getLastname()%></label></h6>
                                     <h6>Specialization: <label name="spec" id="spec" value = ""><%=doc.getSpecialization()%></label></h6>
-                                   
+                                    <h6>Date: <label name="dt" id="dt" value = ""><%=ds.getScheduleDay()%></label></h6>
                                 </div>
                                 <div class = "large-2 columns">
                                   <!-- <button type = "submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="<%=doc.getUserID()%>" onClick = "getID(this)"> Set Appointment </button> -->
-                                  <input type="submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="Set Appointment" onClick = "getDocID(this);">
+                                  <input type="submit" class = "contact-button" id = "<%=doc.getUserID() %>" name  = "<%=doc.getUserID() %>" value="Set Appointment" onClick = "getDocID(this);">
                                 </div>
                             </div>
                         <hr>
-                        <%}%>
+                        <%
+                                }
+                            }
+                        %>
                         <input type = "hidden" name = "docID" id = "docID">
                         </form>
                         

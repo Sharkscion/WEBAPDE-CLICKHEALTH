@@ -1,9 +1,7 @@
-
 <%@page import="model.Hospital"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="controller.Controller"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -17,7 +15,6 @@
         <link  type = "text/css" rel = "stylesheet" href = "CSS/jquery.datetimepicker.css"/>
         <link  type = "text/css" rel = "stylesheet" href = "CSS/style-starter.css">
         <link  type = "text/css" rel = "stylesheet" href = "CSS/style-scrollbar.css">
-    
     </head>
     
      <body id = "scroll-style">
@@ -133,9 +130,20 @@
 <!--**************************************************Login Drop Down*************************************************************-->
         <div id ="login-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
             <!--  <form  action="doctor-account.html" method="get">  -->
-            <form action = "LoginServlet" method = "post" onsubmit = "return validateLogin()">	
-                <label>Username</label><input type="text" id = "logusername" name="logusername" placeholder="userName123" tabindex="1"/>
-                <label>Password</label><input type="password" id= "logpassword" name="logpassword" placeholder="********" tabindex="2"/>
+            <form data-abide action = "LoginServlet" method = "post">	
+                <div class="name-field">
+	                <label>Username
+	                	<input type="text" id = "logusername" name="logusername" tabindex="1" required/>
+	                </label>
+	                	<small class = "error">Enter your username.</small> 
+                </div> 
+                <div class = "password-field">
+	                <label>Password
+	                	<input type="password" id= "logpassword" name="logpassword" tabindex="2" required/>
+	                </label>
+	                	<small class = "error">Enter your password.</small> 
+                </div> 
+                 
                 <input type="submit" class="form-login-button" value="Login" tabindex="3"/>
             </form>
         </div>
@@ -153,7 +161,7 @@
             <form data-abide action = "PatientRegServlet" method = "post">
             	<div class = "row">
 	                <div class = "large-6 columns">
-		                <div class = "row">
+		                <div class = "row name-field">
 		                	<div class = "large-2 columns">
 		                		<label>Firstname:</label>             	
 		                	</div>
@@ -162,7 +170,7 @@
 		                   		 <small class = "error">Firstname is required.</small>             	
 		                	</div>
 		                </div>
-		                <div class = "row">
+		                <div class = "row name-field">
 			                <div class = "large-2 columns">
 		                		<label>Username:</label>             	
 		                	</div>
@@ -174,7 +182,7 @@
 	                </div>
 	                
 	                <div class = "large-6 columns">
-	                	<div class = "row">
+	                	<div class = "row name-field">
 	                		<div class = "large-2 columns">
 	                			<label>Lastname:</label> 
 	                		</div>
@@ -184,7 +192,7 @@
 	                		</div>
 	                	</div>
 	                    
-	                    <div class = "row">
+	                    <div class = "row email-field">
 	                    	<div class = "large-2 columns">
 	                			 <label>E-mail:</label> 
 	                		</div>
@@ -200,11 +208,11 @@
 	                <div class = "large-2 columns">
 	                	<label>Address:</label>             	
 	                </div>
-	                <div class="large-6 columns">
+	                <div class="large-6 columns name-field">
 	                		<input type="text" id="street" name="street" placeholder="street" required pattern="[a-zA-Z]+" data-invalid="" aria-invalid="true">
 	                		<small class="error">Street is required.</small>
-	                	</div>	 
-	                <div class = "large-4 columns" >
+	                </div>	 
+	                <div class = "large-4 columns name-field" >
 	                	<input type = "text" id = "city" name="city" placeholder = "city" required pattern="[a-zA-Z]+">
 	                	<small class="error">City is required.</small>
 	                </div>
@@ -361,6 +369,7 @@
 		<script src="Foundation/js/foundation/foundation.abide.js"></script>
         <script src="jquery.datetimepicker.js"></script>
         <script src="javascript.js"></script>
+   
         
        
         

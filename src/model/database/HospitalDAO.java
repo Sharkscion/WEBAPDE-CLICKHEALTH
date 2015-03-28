@@ -7,186 +7,192 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import model.DoctorSchedule;
 import model.Hospital;
 import model.Patient;
 
 public class HospitalDAO implements DAOInterface {
 
-    private DBConnection connect = DBConnection.getInstance();
-    private ArrayList<Hospital> hospitals;
+	private DBConnection connect = DBConnection.getInstance();
+	private PreparedStatement statement;
+	private ResultSet rs;
+	private ArrayList<Hospital> hList = null;
 
-    private static HospitalDAO hD = null;
+	private static HospitalDAO hD = null;
 
-    public static synchronized HospitalDAO getInstance() {
-        if (hD == null) {
-            hD = new HospitalDAO();
-            
-        }
-        
-        return hD;
-    }
+	public static synchronized HospitalDAO getInstance() {
+		if (hD == null) {
+			hD = new HospitalDAO();
 
-    @Override
-    public Iterator getAllData() 
+		}
+
+		return hD;
+	}
+
+	@Override
+	public Iterator<Hospital> getAllData() 
+	{
+		Hospital hosp = null;
+		hList = new ArrayList<Hospital>();
+
+		try 
+		{
+			String query = "SELECT * "
+					+ "FROM hospital "
+					+ "ORDER BY hospitalname;";
+					statement = connect.getConnection().prepareStatement(query);
+					rs = statement.executeQuery();
+
+					while (rs.next()) {
+						hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
+								rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+
+						hList.add(hosp);
+					}
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all Doctors");
+			e.printStackTrace();
+		}
+		connect.close();
+
+		return hList.iterator();
+	}
+
+	@Override
+	public void insertData(Object obj) 
+	{
+		Hospital hosp = (Hospital) obj;
+		try {
+
+			String query = "INSERT INTO hospital VALUES(NULL,?,?,?);";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, hosp.getName());
+			statement.setString(2, hosp.getStreet());
+			statement.setString(3, hosp.getCity());
+			statement.execute();
+			if(statement.execute())
+			{
+				connect.close();
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new hosptials");
+			e.printStackTrace();
+		}
+		connect.close();
+	}
+
+    public Hospital getHospitalByID(int hospID)
     {
-        Connection con = connect.getConnection();
-        Hospital hosp = null;
-        hospitals = new ArrayList<Hospital>();
-        
-        try 
-        {
-            String query = "SELECT * FROM hospital ORDER BY hospitalname;";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                hosp = new Hospital(resultSet.getInt("hospitalID"), resultSet.getString("hospitalName"),
-                        resultSet.getString("hospitalStreet"), resultSet.getString("hospitalCity"));
-                System.out.println("ID == " +hosp.getID());
-                System.out.println("name == " +hosp.getName());
-                hospitals.add(hosp);
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-
-        return hospitals.iterator();
-    }
-
-    @Override
-    public void insertData(Object obj) 
-    {
-        Connection con = connect.getConnection();
-        Hospital hosp = (Hospital) obj;
-        try {
-
-            String query = "INSERT INTO hospital VALUES(?,?,?,?);";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, hosp.getID());
-            preparedStatement.setString(2, hosp.getName());
-            preparedStatement.setString(3, hosp.getStreet());
-            preparedStatement.setString(4, hosp.getCity());
-            preparedStatement.execute();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-    }
-
-    public int getHospitalID(String username)
-    {
-    	  Connection con = connect.getConnection();
-          int i = 0;
+    	Hospital hosp = null;
           try 
           {
-              String query = "SELECT hospitalID FROM hospital WHERE hospitalName = ?";
-              PreparedStatement preparedStatement = con.prepareStatement(query);
-              preparedStatement.setString(1, username);
-              ResultSet resultSet = preparedStatement.executeQuery();
-              if (resultSet.next()) 
-            	  i = resultSet.getInt("hospitalID");
+              String query = "SELECT * "
+              			+ "FROM hospital "
+              			+ "WHERE hospitalID = ?";
+              statement = connect.getConnection().prepareStatement(query);
+              statement.setInt(1, hospID);
+              rs = statement.executeQuery();
+              if (rs.next()) 
+            		hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
+    						rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
                   
-          } catch (SQLException sqlException) {
-              sqlException.printStackTrace();
-          } finally {
-              try {
-                  if (con != null) {
-                      con.close();
-                  }
-              } catch (SQLException sqlee) {
-                  sqlee.printStackTrace();
-              }
           }
-          
-          return i;
-    }
-    @Override
-    public void updateData(Object obj) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public Object getData(String keyID) 
-    {
-        Connection con = connect.getConnection();
-        Hospital hosp;
-        try 
-        {
-            String query = "SELECT * FROM hospital WHERE hospitalID = ?";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, Integer.parseInt(keyID));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                hosp = new Hospital(resultSet.getInt("hospitalID"), resultSet.getString("hospitalName"),
-                        resultSet.getString("hospitalStreet"), resultSet.getString("hospitalCity"));
-                try {
-                    if (con != null) {
-                        con.close();
-                    }
-                } catch (SQLException sqlee) {
-                    sqlee.printStackTrace();
-                }
-                return hosp;
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-
-        return null;
+  		catch (SQLException e)
+  		{
+  			System.out.println("Unable to gethospital ID");
+  			e.printStackTrace();
+  		}
+  		connect.close();
+        return hosp;
     }
 
-	 public Iterator<Hospital> getSpecializationHospitals(String specialization)
-	 {
-		 Connection con = connect.getConnection();
-	        hospitals = new ArrayList<Hospital>();
-	         try {
-	             String query = "SELECT * FROM Hospital WHERE hospitalid IN (SELECT hospitalscheduleID from doctorschedule " +
-	            		 "WHERE doctorScheduleID IN (SELECT licenseID from doctor Where specialization LIKE \"%" + specialization + "%\"));";
-	             PreparedStatement preparedStatement = con.prepareStatement(query);
-	             ResultSet resultSet = preparedStatement.executeQuery();
-	             while (resultSet.next()) {
-	            	 	
-	            	 	Hospital hosp = new Hospital(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4));	            	 
-	                     hospitals.add(hosp);
-	                 }
-	             
-	         } catch (SQLException sqlException) {
-	             sqlException.printStackTrace();
-	         } finally {
-	             try {
-	                 if (con != null) {
-	                     con.close();
-	                 }
-	             } catch (SQLException sqlee) {
-	                 sqlee.printStackTrace();
-	             }
-	         }
+	@Override
+	public void updateData(Object obj) {
+		Hospital h = (Hospital)obj;
+		String query = "UPDATE hospital"
+					 + "SET  hospitalName = ?, hospitalCity = ?, hospitalStreet = ?"
+				     + "WHERE hospitalID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, h.getName());
+			statement.setString(2, h.getCity());
+			statement.setString(3, h.getStreet());
+			statement.setInt(4, h.getHospID());
+		
+			if(statement.execute())
+			{
+				System.out.println("UPDATED hopital");
+				connect.close();
+			}
+		
+		} catch (SQLException e) {
+	
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+		connect.close();
+	}
 
-	         return hospitals.iterator();
-		 
-		 
-	 }
-    
+	@Override
+	public Hospital getData(Object hospitalName) 
+	{
+		Hospital hosp = null;
+		String hName = (String) hospitalName;
+		try 
+		{
+			String query = "SELECT * "
+					+ "FROM hospital "
+					+ "WHERE hospitalName = ?";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, hName);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
+						rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+				
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to get hospital");
+			e.printStackTrace();
+		}
+		connect.close();
+		return hosp;
+	}
+
+	public Iterator<Hospital> getSpecializationHospitals(String specialization)
+	{
+		hList = new ArrayList<Hospital>();
+		try {
+			String query = "SELECT * "
+					+ "FROM Hospital "
+					+ "WHERE hospitalid IN (SELECT hospitalscheduleID FrOm doctorschedule WHERE doctorScheduleID "
+					+ "IN (SELECT licenseID FROM doctor WHERE specialization LIKE \"%?%\"));";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, specialization);
+			rs = statement.executeQuery();
+			while (rs.next()) {
+
+				Hospital hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
+						rs.getString("hospitalStreet"), rs.getString("hospitalCity"));	            	 
+				hList.add(hosp);
+			}
+
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to get all hospital");
+			e.printStackTrace();
+		}
+		connect.close();
+
+		return hList.iterator();
+
+
+	}
+
 }

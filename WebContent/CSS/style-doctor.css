@@ -5,20 +5,21 @@
     height: 100%;
 }
 
-.doctor-content h5
+/*.doctor-content div
 {
     font-family: century gothic, sans-serif;
     text-transform: uppercase;
     color: #1d1d1d;
     font-weight: 600;
-}
+}*/
 
-.doctor-content h6
+.doctor-content p
 {
     font-family: century gothic, sans-serif;
     color: #44749d;
     margin-bottom: -3px;
 }
+
 .contact-button
 {
     color: #ffffff;

@@ -1,4 +1,5 @@
 
+<%@page import="model.User"%>
 <%@page import="controller.Controller"%>
 <%@page import="model.Hospital"%>
 <%@page import="java.util.Iterator"%>
@@ -12,6 +13,21 @@
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
     </head>
+    
+    <%
+        Controller con = new Controller();
+	    String username = "";
+	    Cookie[] cookies = request.getCookies();
+	    for(Cookie cookie:cookies){
+	        if(cookie.getName().equals("user")){
+	            username = cookie.getValue();
+	        }
+	    }
+	    
+	   User user = con.getUser(username);
+	   String uName = user.getUsername();
+    %>
+    
     <body id = "scroll-style" class = "page-content">
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
@@ -35,8 +51,7 @@
                     <li class="divider"></li>
                     <li class = "active-button"><a  href = "#">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li><a href="availabledocs.jsp">DOCTORS</a></li>
-                    <li><a style= "margin-right: 10px;" href="contactdoc.jsp">CONTACTS</a></li>
+                    <li><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
 	            <form action = "SearchServlet" method = "post">
                 <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
@@ -59,7 +74,7 @@
                             <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name">Shark Tan</label>
+                            <label id = "left-bar-name"><%=uName%></label>
                             <a href = "account.html"><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
@@ -69,7 +84,7 @@
                 <div id = "mid-content" class = "row hospital-content">
                     <div class = "large-12 columns">
                         <%
-                    		Controller con = new Controller();
+                    		
                    			Iterator<Hospital> hospitals = con.getAllHospitals();
                         	while(hospitals.hasNext())
                         	{

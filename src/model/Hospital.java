@@ -2,25 +2,26 @@ package model;
 
 public class Hospital
 {
-	private int ID;
+	private int hospID;
 	private String name;
 	private String street;
 	private String city;
 	
-	public Hospital(int ID, String name, String street, String city)
+	public Hospital(int hospID, String name, String street, String city)
 	{
-		setID(ID);
+		setHospID(hospID);
 		setName(name);
 		setStreet(street);
 		setCity(city);
 	}
 
-	public int getID() {
-		return ID;
+	public int getHospID() {
+		return hospID;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+
+	public void setHospID(int hospID) {
+		this.hospID = hospID;
 	}
 
 	public String getName() {

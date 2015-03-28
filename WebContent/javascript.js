@@ -1,5 +1,3 @@
-
-
 $(document).foundation();
 
 
@@ -12,11 +10,29 @@ $(document).ready(function(){
 	});
 });
 
+var logic = function setMinTime(min,max){
+	  // 'this' is jquery object datetimepicker
+		alert(min);
+	    this.setOptions({
+	      minTime: min,
+	      maxTime: max
+	    });
+	  
+};
+	
 $('#datetimepicker').datetimepicker({
-    datepicker:false,
-    format:'H:i',
-    
+		datepicker:false,
+		format:'H:i',
+		onGenerate:logic,
+	    onShow:logic
+	    
+	   
 });
+//$('#datetimepicker').datetimepicker({
+//    datepicker:false,
+//    format:'H:i',
+//    
+//});
 $('#datetimepicker2').datetimepicker({
     datepicker:false,
     format:'H:i',
@@ -80,7 +96,8 @@ function validateLogin()
 function getHospID(element)
 {
 	var pressedBtn = element.id;
-		var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+		//var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+		var lastChar = pressedBtn;
 		document.getElementById("hospID").value = lastChar;
 		alert("here is " + document.getElementById("hospID").value);
 }
@@ -88,11 +105,41 @@ function getHospID(element)
 function getDocID(element)
 {
 	var pressedBtn = element.id;
-		var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+		//var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+		var lastChar = pressedBtn;
 		document.getElementById("docID").value = lastChar;
 		alert("here is " + document.getElementById("docID").value);
 }
+function getRequestID(element)
+{
+	alert("ALHELOO");
+	$(document).foundation();
+	$('#viewRequest-modal').foundation('reveal', 'open');
+	    var pressedBtn = element.id;
+		//var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+	    alert("PRESSED BTN"+ pressedBtn);
+		var lastChar = pressedBtn;
+		document.getElementById("requestID").value = lastChar;
+		
+		alert("here is " + document.getElementById("RequestID").value);
+}
+function getApproveID(element)
+{
+	    var pressedBtn = element.id;
+		//var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+		var lastChar = pressedBtn;
+		document.getElementById("approveID").value = lastChar;
+		alert("here is " + document.getElementById("approveID").value);
+}
 
+function getRejectID(element)
+{
+	    var pressedBtn = element.id;
+		//var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+		var lastChar = pressedBtn;
+		document.getElementById("rejectID").value = lastChar;
+		alert("here is " + document.getElementById("rejectID").value);
+}
 function clicked(i)
 {
 	switch(i)

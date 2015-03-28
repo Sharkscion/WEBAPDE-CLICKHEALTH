@@ -1,46 +1,51 @@
 package model;
 
-import java.sql.Date;
+
 import java.sql.Time;
+import java.util.Date;
 
 public class Appointment
 {
-	private int ID;
+	private int appID;
+
 	private String status;
 	private String concern;
+	private String remarks;
 	private Time startTime;
+	private Time requestedTime;
+	private Date requestedDate;
 	private Date appointmentDate;
+	private int isResolvedPatient;
+	private int isResolvedDoctor;
 	private int patientID;
-	private int doctorID;
-	private int hospitalID;
+	private int doctorSchedID;
 
-	public Appointment(int ID, String status, String concern, Time startTime, Date appointmentDate, int patientID, int doctorID, int hospitalID)
-	{
-		setID(ID);
-                this.status=status;
+	public Appointment(int appID, String status, String concern, String remarks, Time startTime, Time requestedTime,
+					   Date dateToday, Date appointmentDate2, int isResolvedPatient, int isResolvedDoctor, 
+					   int patientID, int doctorSchedID)
+   {
+		setAppID(appID);
+		setStatus(status);
 		setConcern(concern);
+		setRemarks(remarks);
 		setStartTime(startTime);
+		setRequestedTime(requestedTime);
+		setRequestedDate(dateToday);
+		setAppointmentDate(appointmentDate2);
+		setIsResolvedDoctor(isResolvedDoctor);
+		setIsResolvedPatient(isResolvedPatient);
 		setPatientID(patientID);
-		setDoctorID(doctorID);
-		setHospitalID(hospitalID);
-		setAppointmentDate(appointmentDate);
-		
+		setDoctorSchedID(doctorSchedID);
+   }
+	
+	public int getAppID() {
+		return appID;
 	}
 
-	public int getID() {
-		return ID;
+	public void setAppID(int appID) {
+		this.appID = appID;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
-	}
-	public int getHospitalID() {
-		return hospitalID;
-	}
-
-	public void setHospitalID(int hospitalID) {
-		this.hospitalID = hospitalID;
-	}
 	public String getStatus() {
 		return status;
 	}
@@ -57,6 +62,14 @@ public class Appointment
 		this.concern = concern;
 	}
 
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
 	public Time getStartTime() {
 		return startTime;
 	}
@@ -65,6 +78,37 @@ public class Appointment
 		this.startTime = startTime;
 	}
 
+	public Date getRequestedDate() {
+		return requestedDate;
+	}
+
+	public void setRequestedDate(Date requestedDate) {
+		this.requestedDate = requestedDate;
+	}
+
+	public Date getAppointmentDate() {
+		return appointmentDate;
+	}
+
+	public void setAppointmentDate(Date appointmentDate) {
+		this.appointmentDate = appointmentDate;
+	}
+
+	public int getIsResolvedPatient() {
+		return isResolvedPatient;
+	}
+
+	public void setIsResolvedPatient(int isResolvedPatient) {
+		this.isResolvedPatient = isResolvedPatient;
+	}
+
+	public int getIsResolvedDoctor() {
+		return isResolvedDoctor;
+	}
+
+	public void setIsResolvedDoctor(int isResolvedDoctor) {
+		this.isResolvedDoctor = isResolvedDoctor;
+	}
 
 	public int getPatientID() {
 		return patientID;
@@ -74,23 +118,20 @@ public class Appointment
 		this.patientID = patientID;
 	}
 
-	public int getDoctorID() {
-		return doctorID;
+	public int getDoctorSchedID() {
+		return doctorSchedID;
 	}
 
-	public void setDoctorID(int doctorID) {
-		this.doctorID = doctorID;
+	public void setDoctorSchedID(int doctorSchedID) {
+		this.doctorSchedID = doctorSchedID;
 	}
-	
-	public Date getAppointmentDate()
-	{
-		return appointmentDate;
+
+	public Time getRequestedTime() {
+		return requestedTime;
 	}
-	
-	public void setAppointmentDate(Date appointmentDate)
-	{
-		this.appointmentDate = appointmentDate;
+
+	public void setRequestedTime(Time requestedTime) {
+		this.requestedTime = requestedTime;
 	}
-	
-	
+
 }

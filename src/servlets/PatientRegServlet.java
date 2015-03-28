@@ -56,7 +56,7 @@ public class PatientRegServlet extends HttpServlet {
 		con.addUser(p);	
 		con.addPatient(p);
 		
-		UserContact c = new UserContact(con.getUserID(username), email, "E-mail");
+		UserContact c = new UserContact(con.getUser(username).getUserID(), email, "E-mail");
 		con.addContact(c);
 		response.sendRedirect("index.jsp");
 	}

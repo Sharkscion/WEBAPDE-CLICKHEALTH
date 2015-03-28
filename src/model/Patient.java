@@ -7,12 +7,12 @@ public class Patient extends User {
 	private String city;
 	
 	public Patient(int userID, String username, String email, String password,
-			String lastname, String firstname, String type, int patientID, String street, String city) {
+			String lastname, String firstname, String type, int patientID, String street, String city) 
+	{
 		super(userID, username, email, password, lastname, firstname, type);
-		// TODO Auto-generated constructor stub
-		this.patientID = patientID;
-		this.street = street;
-		this.city = city;
+		setPatientID(patientID);
+		setStreet(street);
+		setCity(city);
 	}
 	
 	public int getPatientID() {

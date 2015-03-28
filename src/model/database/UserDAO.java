@@ -18,7 +18,7 @@ public class UserDAO implements DAOInterface {
     private DBConnection connect = DBConnection.getInstance();
     private ResultSet rs;
     private PreparedStatement statement;
-    private ArrayList<User> users;
+    private ArrayList<User> uList = null;
 
     private static UserDAO uD = null;
 
@@ -30,75 +30,73 @@ public class UserDAO implements DAOInterface {
         return uD;
     }
 
-    public UserDAO() {
-        connect = DBConnection.getInstance();
-        users = new ArrayList<User>();
-    }
-
-    public int getUserID(String userName)
-    {
-
-    	  Connection con = connect.getConnection();
-          int i = 0;
-          try 
-          {
-              String query = "SELECT userID FROM user WHERE username = ?";
-              PreparedStatement preparedStatement = con.prepareStatement(query);
-              preparedStatement.setString(1, userName);
-              ResultSet resultSet = preparedStatement.executeQuery();
-              if (resultSet.next()) 
-            	  i = resultSet.getInt("userID");
-                  
-          } catch (SQLException sqlException) {
-              sqlException.printStackTrace();
-          } finally {
-              try {
-                  if (con != null) {
-                      con.close();
-                  }
-              } catch (SQLException sqlee) {
-                  sqlee.printStackTrace();
-              }
-          }
-          
-          return i;
-        
-    }
-    
+//    public int getUserID(String userName)
+//    {
+//          int i = 0;
+//          try 
+//          {
+//              String query = "SELECT userID FROM user WHERE username = ?";
+//              PreparedStatement preparedStatement = con.prepareStatement(query);
+//              preparedStatement.setString(1, userName);
+//              ResultSet resultSet = preparedStatement.executeQuery();
+//              if (resultSet.next()) 
+//            	  i = resultSet.getInt("userID");
+//                  
+//          } catch (SQLException sqlException) {
+//              sqlException.printStackTrace();
+//          } finally {
+//              try {
+//                  if (con != null) {
+//                      con.close();
+//                  }
+//              } catch (SQLException sqlee) {
+//                  sqlee.printStackTrace();
+//              }
+//          }
+//          
+//          return i;
+//        
+//    }
+//    
     public User validateUser(String username, String password) {
-        try {
-            String query = "SELECT * FROM User WHERE username = ? AND password = ?";
+        
+    	 User u = null;
+    	try {
+            String query = "SELECT * "
+            		+ "FROM User "
+            		+ "WHERE username = ? "
+            		+ "AND password = ?";
             statement = connect.getConnection().prepareStatement(query);
             statement.setString(1, username);
             statement.setString(2, encryptPassword(password));
             rs = statement.executeQuery();
 
-            User u;
-
-            if (rs.wasNull() == false && rs.next()) {
+            if (rs.next()) {
                 u = new User(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), rs.getString("password"),
-                        rs.getString("lastname"), rs.getString("firstname"), rs.getString("type"));
-                return u;
+                        	rs.getString("lastname"), rs.getString("firstname"), rs.getString("type"));
+                System.out.println("HELLLOOO PASOK KA?");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return null;
+        connect.close();
+        return u;
     }
 
     @Override
-    public Iterator getAllData() {
+    public Iterator<User> getAllData() {
         try {
-            String query = "SELECT * FROM User;";
+            String query = "SELECT * "
+            			 + "FROM User;";
             statement = connect.getConnection().prepareStatement(query);
             rs = statement.executeQuery();
 
-            users = new ArrayList<User>();
+            uList = new ArrayList<User>();
             while (rs.next()) {
-                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
-                users.add(u);
+                User u = new User(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), rs.getString("password"),
+                    	rs.getString("lastname"), rs.getString("firstname"), rs.getString("type"));
+                uList.add(u);
             }
 
         } catch (SQLException e) {
@@ -106,7 +104,7 @@ public class UserDAO implements DAOInterface {
             e.printStackTrace();
         }
         connect.close();
-        return users.iterator();
+        return uList.iterator();
     }
     @Override
     public void insertData(Object obj) {
@@ -143,20 +141,26 @@ public class UserDAO implements DAOInterface {
 
     public static String encryptPassword(String password){
 	    String sha1 = "";
-	    try{
-	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-	        crypt.reset();
-	        crypt.update(password.getBytes("UTF-8"));
-	        sha1 = byteToHex(crypt.digest());
-	    }
-	    catch(NoSuchAlgorithmException e)
+	    System.out.println("PASSWORD: "+ password);
+	    if(password.equals("") == false)
 	    {
-	        e.printStackTrace();
+	    	System.out.println("PASSORD");
+	    	 try{
+	 	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+	 	        crypt.reset();
+	 	        crypt.update(password.getBytes("UTF-8"));
+	 	        sha1 = byteToHex(crypt.digest());
+	 	    }
+	 	    catch(NoSuchAlgorithmException e)
+	 	    {
+	 	        e.printStackTrace();
+	 	    }
+	 	    catch(UnsupportedEncodingException e)
+	 	    {
+	 	        e.printStackTrace();
+	 	    }
 	    }
-	    catch(UnsupportedEncodingException e)
-	    {
-	        e.printStackTrace();
-	    }
+	   
 	    return sha1;
 	}
 	
@@ -171,13 +175,21 @@ public class UserDAO implements DAOInterface {
 	}
 	
     @Override
-    public Object getData(String keyID) {
+    public User getData(Object uName) {
+    	
+    	User u = null;
+    	String username = (String) uName;
     	try {
-            String query = "SELECT * FROM User WHERE userID =\""+keyID+"\"";
+            String query = "SELECT * "
+	            		+ "FROM User"
+	            		+ " WHERE username = ?";
             statement = connect.getConnection().prepareStatement(query);
+            statement.setString(1, username);
             rs = statement.executeQuery();
             if (rs.next()) {
-                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                u = new User(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), rs.getString("password"),
+                    	rs.getString("lastname"), rs.getString("firstname"), rs.getString("type"));
+                connect.close();
                 return u;
             }
 
@@ -186,7 +198,7 @@ public class UserDAO implements DAOInterface {
             e.printStackTrace();
         }
         connect.close();
-        return null;
+        return u;
     }
 
 }

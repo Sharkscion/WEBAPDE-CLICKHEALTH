@@ -11,315 +11,237 @@ import model.Doctor;
 import model.Hospital;
 import model.Patient;
 import model.User;
+import model.UserContact;
 
 public class DoctorDAO implements DAOInterface {
 
-    private DBConnection connect = DBConnection.getInstance();
-    private ArrayList<Doctor> doctors;
+	private DBConnection connect = DBConnection.getInstance();
+	private PreparedStatement statement;
+	private ResultSet rs;
+	private ArrayList<Doctor> dList = null;
 
-    private static DoctorDAO dD = null;
+	private static DoctorDAO dD = null;
 
-    public static synchronized DoctorDAO getInstance() {
-        if (dD == null) {
-            dD = new DoctorDAO();
-        }
-        return dD;
-    }
-
-    public int getLicenseID(String doctorName)
-    {
-
-    	  Connection con = connect.getConnection();
-          int i = 0;
-          try 
-          {
-              String query = "SELECT licenseID FROM user, doctor WHERE username = ?";
-              PreparedStatement preparedStatement = con.prepareStatement(query);
-              preparedStatement.setString(1, doctorName);
-              ResultSet resultSet = preparedStatement.executeQuery();
-              if (resultSet.next()) 
-            	  i = resultSet.getInt("licenseID");
-                  
-          } catch (SQLException sqlException) {
-              sqlException.printStackTrace();
-          } finally {
-              try {
-                  if (con != null) {
-                      con.close();
-                  }
-              } catch (SQLException sqlee) {
-                  sqlee.printStackTrace();
-              }
-          }
-          
-          return i;
-        
-    }
-    @Override
-    public Iterator getAllData() {
-        Connection con = connect.getConnection();
-        Doctor doc;
-        doctors = new ArrayList<Doctor>();
-        try {
-            String query = "SELECT * FROM doctor";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String query2 = "SELECT * FROM user WHERE userID = \"" + resultSet.getInt("user_ID") + "\"";
-                PreparedStatement preparedStatement2 = con.prepareStatement(query2);
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-
-                if (resultSet2.next()) {
-                	doc = new Doctor(resultSet.getInt(3), resultSet2.getString(2),
-                            resultSet2.getString(3), resultSet2.getString(4),
-                            resultSet2.getString(5), resultSet2.getString(6),
-                            resultSet2.getString(7), resultSet.getInt(1),
-                            resultSet.getString(2));
-                    doctors.add(doc);
-                }
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-
-        return doctors.iterator();
-    }
-
-    @Override
-    public void insertData(Object obj) {
-        Connection con = connect.getConnection();
-        Doctor doc = (Doctor) obj;
-        try {
-
-            String query = "INSERT INTO doctor VALUES(?,?,(SELECT userID from user WHERE username = ?));";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            //preparedStatement.setInt(1, pat.getPatientID());
-            preparedStatement.setInt(1, doc.getLicenseID() );
-            preparedStatement.setString(2, doc.getSpecialization());
-            preparedStatement.setString(3, doc.getUsername());
-            preparedStatement.execute();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void updateData(Object obj) {
-        // TODO Auto-generated method stub
-    }
-    
-    public Object getAppointmentDoctor(int keyID) 
-    {
-        Connection con = connect.getConnection();
-        System.out.println("DOCTOR DAO");
-        Doctor doc;
-        try {
-            String query = "SELECT * FROM user u, doctor d WHERE u.userID = d.user_ID AND d.licenseID = ?;";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, keyID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-      
-        if (resultSet.next()) {
-            doc = new Doctor(resultSet.getInt("user_ID"), resultSet.getString("username"),
-                    resultSet.getString("email"), resultSet.getString("password"),
-                    resultSet.getString("lastname"), resultSet.getString("firstname"),
-                    resultSet.getString("type"), resultSet.getInt("licenseID"),
-                    resultSet.getString("specialization"));
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-            return doc;
-        }
-    
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-    public Object getData(int keyID) {
-        Connection con = connect.getConnection();
-        Doctor doc;
-        System.out.println("In DB key == " + keyID);
-        try {
-            String query = "SELECT * FROM doctor WHERE user_ID = ?";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, keyID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String query2 = "SELECT * FROM user WHERE userID = ?";
-                PreparedStatement preparedStatement2 = con.prepareStatement(query2);
-                preparedStatement2.setInt(1,resultSet.getInt(3));
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-
-                if (resultSet2.next()) {
-                    /*(int userID, String username, String email, String password,
-                			String lastname, String firstname, String type, int licenseID, String specialization)*/
-
-                	
-                    doc = new Doctor(resultSet.getInt(3), resultSet2.getString(2),
-                            resultSet2.getString(3), resultSet2.getString(4),
-                            resultSet2.getString(5), resultSet2.getString(6),
-                            resultSet2.getString(7), resultSet.getInt(1),
-                            resultSet.getString(2));
-                    try {
-                        if (con != null) {
-                            con.close();
-                        }
-                    } catch (SQLException sqlee) {
-                        sqlee.printStackTrace();
-                    }
-                    return doc;
-                }
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    public Iterator<String> getSpecializations()
-    {
-    	Connection con = connect.getConnection();
-        String spec;
-        ArrayList<String> specs = new ArrayList<String>();
-         try {
-             String query = "SELECT DISTINCT(specialization) FROM doctor";
-             PreparedStatement preparedStatement = con.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery();
-             while (resultSet.next()) {
-                     specs.add(resultSet.getString(1));
-                 }
-             
-         } catch (SQLException sqlException) {
-             sqlException.printStackTrace();
-         } finally {
-             try {
-                 if (con != null) {
-                     con.close();
-                 }
-             } catch (SQLException sqlee) {
-                 sqlee.printStackTrace();
-             }
-         }
-
-         return specs.iterator();
-    	
-    	/*ArrayList<String> specializations = new ArrayList<String>();
-    	Iterator docs = getAllData();
-    	
-    	while(docs.hasNext())
-    	{
-    		Doctor doctor = (Doctor) docs.next();
-    		if(!specializations.contains(doctor.getSpecialization()))
-    			specializations.add(doctor.getSpecialization());
-    	}
-    	
-    	return specializations.iterator();*/
-    }
+	public static synchronized DoctorDAO getInstance() {
+		if (dD == null) {
+			dD = new DoctorDAO();
+		}
+		return dD;
+	}
 
 	@Override
-	public Object getData(String keyID) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Doctor> getAllData() {
+
+		try {
+			String query = "SELECT * "
+							+ "FROM user, doctor "
+							+ "WHERE user_ID = userID;";
+			statement = connect.getConnection().prepareStatement(query);
+			rs = statement.executeQuery();
+			Doctor d = null;
+
+			dList = new ArrayList<Doctor>();
+			while (rs.next()) 
+			{
+				d = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), rs.getString("password"),
+						rs.getString("lastname"), rs.getString("firstname"), rs.getString("type"), rs.getInt("licenseID"),
+						rs.getString("specialization"));
+				dList.add(d);
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all Doctors");
+			e.printStackTrace();
+		}
+		connect.close();
+		return dList.iterator();
 	}
+
+	@Override
+	public void insertData(Object obj) {
+
+		Doctor doc = (Doctor) obj;
+		try {
+
+			String query = "INSERT INTO doctor VALUES(?,?,(SELECT userID from user WHERE username = ?));";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, doc.getLicenseID() );
+			statement.setString(2, doc.getSpecialization());
+			statement.setString(3, doc.getUsername());
+			statement.execute();
+			if(statement.execute())
+			{
+				connect.close();
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new doctor");
+			e.printStackTrace();
+		}
+		connect.close();
+	}
+
+	@Override
+	public void updateData(Object obj) {
+		Doctor d = (Doctor)obj;
+		String query = "UPDATE doctor "
+					 + "SET  specialization = ?"
+				     + "WHERE licenseID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, d.getSpecialization());
+		
+			if(statement.execute())
+			{
+				System.out.println("UPDATED Doctor");
+				connect.close();
+			}
+		
+		} catch (SQLException e) {
 	
-	 public Iterator<String> getSpecializations(String specialization)
-    {
-    	Connection con = connect.getConnection();
-        String spec;
-        ArrayList<String> specs = new ArrayList<String>();
-         try {
-             String query = "SELECT DISTINCT(specialization) FROM doctor WHERE specialization Like \"%" + specialization + "%\"";
-             PreparedStatement preparedStatement = con.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery();
-             while (resultSet.next()) {
-            	 	System.out.println(resultSet.getString(1));
-                     specs.add(resultSet.getString(1));
-                 }
-             
-         } catch (SQLException sqlException) {
-             sqlException.printStackTrace();
-         } finally {
-             try {
-                 if (con != null) {
-                     con.close();
-                 }
-             } catch (SQLException sqlee) {
-                 sqlee.printStackTrace();
-             }
-         }
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+		connect.close();
+	}
 
-         return specs.iterator();
-    }
+	public Iterator<String> getAllSpecializations()
+	{
+		Connection con = connect.getConnection();
+		String spec;
+		ArrayList<String> specs = new ArrayList<String>();
+		try {
+			String query = "SELECT DISTINCT(specialization) FROM doctor";
+			PreparedStatement preparedStatement = con.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				specs.add(resultSet.getString(1));
+			}
 
-	 public Iterator<Doctor> getSpecializationHospitalDoctors(String specialization, int hospitalScheduleID)
-	 {
-		 Connection con = connect.getConnection();
-	        doctors = new ArrayList<Doctor>();
-	         try {
-	             String query = "SELECT * FROM doctor d, user u WHERE d.user_ID = u.userID AND d.specialization " + 
-	            		 "IN (SELECT specialization FROM doctor WHERE specialization  LIKE \"%" + specialization + "%\")" +
-	            		 " AND d.licenseID IN (SELECT doctorScheduleID from doctorschedule WHERE hospitalScheduleID = ?);";
-	             PreparedStatement preparedStatement = con.prepareStatement(query);
-	             preparedStatement.setInt(1, hospitalScheduleID);
-	             ResultSet resultSet = preparedStatement.executeQuery();
-	             while (resultSet.next()) {
-	            	 	
-	            	 	Doctor doc = new Doctor(resultSet.getInt(3), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(9), resultSet.getString(10), resultSet.getInt(1), resultSet.getString(2));
-	            	 	doctors.add(doc);
-	                 }
-	             
-	         } catch (SQLException sqlException) {
-	             sqlException.printStackTrace();
-	         } finally {
-	             try {
-	                 if (con != null) {
-	                     con.close();
-	                 }
-	             } catch (SQLException sqlee) {
-	                 sqlee.printStackTrace();
-	             }
-	         }
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new doctor");
+			e.printStackTrace();
+		}
+		connect.close();
 
-	         return doctors.iterator();
-	 }
-	 
+		return specs.iterator();
+	}
+
+	@Override
+	public Doctor getData(Object key) 
+	{
+		int licenseID = (Integer) key;
+
+		Doctor d = null;
+		try 
+		{
+			String query = "SELECT * FROM user u, doctor d "
+					+ "WHERE u.userID = d.user_ID "
+					+ "AND d.licenseID = ?;";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, licenseID);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				d = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), 
+						rs.getString("password"),rs.getString("lastname"), rs.getString("firstname"), 
+						rs.getString("type"), rs.getInt("licenseID"),rs.getString("specialization"));
+				
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new doctor");
+			e.printStackTrace();
+		}
+		connect.close();
+		return d;
+	}
+
+	public Doctor getDoctorByUsername(String username) 
+	{
+		Doctor d = null;
+		try 
+		{
+			String query = "SELECT * FROM user u, doctor d "
+					+ "WHERE u.userID = d.user_ID "
+					+ "AND username = ?;";
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, username);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				d = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), 
+						rs.getString("password"),rs.getString("lastname"), rs.getString("firstname"), 
+						rs.getString("type"), rs.getInt("licenseID"),rs.getString("specialization"));
+				
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new doctor");
+			e.printStackTrace();
+		}
+		connect.close();
+		return d;
+	}
+	public Iterator<String> getSpecializations(String specialization)
+	{
+		ArrayList<String> sList = new ArrayList<String>();
+		try {
+			String query = "SELECT DISTINCT(specialization) "
+						+ "FROM doctor "
+						+ "WHERE specialization Like \"%" + specialization + "%\"";
+			statement = connect.getConnection().prepareStatement(query);
+			rs = statement.executeQuery();
+			while (rs.next()) {
+				System.out.println(rs.getString(1));
+				sList.add(rs.getString(1));
+			}
+			
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to get speciclaitions");
+			e.printStackTrace();
+		}
+		connect.close();
+		return sList.iterator();
+	}
+
+	public Iterator<Doctor> getSpecializationHospitalDoctors(String specialization, int scheduleID)
+	{
+	
+		dList = new ArrayList<Doctor>();
+		try {
+			String query = "SELECT * "
+					+ "FROM user, doctor "
+					+ "WHERE user_ID = userID "
+					+ "AND specialization LIKE '%?%' "
+					+ "AND licenseID = (SELECT doctorScheduleID FROM doctorschedule WHERE scheduleID = '?');" ;
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, specialization);
+			statement.setInt(2, scheduleID);
+			rs = statement.executeQuery();
+			while (rs.next()) {
+
+				Doctor doc = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), 
+						rs.getString("password"),rs.getString("lastname"), rs.getString("firstname"), 
+						rs.getString("type"), rs.getInt("licenseID"),rs.getString("specialization"));
+				dList.add(doc);
+			}
+
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to get speciclaitions");
+			e.printStackTrace();
+		}
+		connect.close();
+		return dList.iterator();
+	}
+
 }

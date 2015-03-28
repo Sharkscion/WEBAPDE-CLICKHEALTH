@@ -12,13 +12,13 @@ public class User {
 	
 	public User(int userID, String username, String email, String password, String lastname, String firstname, String type)
 	{
-		this.userID = userID;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.lastname = lastname;
-		this.firstname = firstname;
-		this.type = type;
+		setUserID(userID);
+		setUsername(username);
+		setEmail(email);
+		setPassword(password);
+		setLastname(lastname);
+		setFirstname(firstname);
+		setType(type);
 	}
 
 	public int getUserID() {

@@ -75,7 +75,7 @@
                         <%
 	                    	Controller con = new Controller();
 	                   		Iterator<Hospital> hospitals = (Iterator<Hospital>) session.getAttribute("hospitals");
-	                   		session.setAttribute("specialization", session.getAttribute("specialization"));
+	                   		//session.setAttribute("specialization", session.getAttribute("specialization"));
                         	while(hospitals.hasNext())
                         	{
                         		Hospital hospital = hospitals.next();
@@ -86,15 +86,15 @@
 		                            </div>
 		                           <div class = "large-10 columns">
 		                                <h4><%=hospital.getName() %></h4>
-		                                <p><%=hospital.getStreet()%></p>
+		                                <p><%=hospital.getStreet() %></p>
 		                            </div>
 		                            <div class = "large-2 columns">
-		                                  <input type="submit" class = "contact-button" id = "sub<%=hospital.getID() %>" name  = "sub<%=hospital.getID() %>" value="Choose Hospital" onClick = "getHospID(this);">
+		                                  <input type="submit" class = "contact-button" id = "<%=hospital.getHospID() %>" name  = "<%=hospital.getHospID() %>" value="Choose Hospital" onClick = "getHospID(this);">
 		                            </div>
 		                        </div>
 		                         <hr>
                          <%
-                         }
+                        	 }
                          %>
                          <input type = "hidden" name = "hospID" id = "hospID">
                     </div>
@@ -110,6 +110,11 @@
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
 		  <script src = "javascript.js"></script> 
           
+        
+        <script>
+        
+        
+        </script>
         
     </body>
 </html>

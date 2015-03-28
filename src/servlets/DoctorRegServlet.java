@@ -78,10 +78,10 @@ public class DoctorRegServlet extends HttpServlet {
 			con.addUser(d);
 			con.addDoctor(d);
 			
-			DoctorSchedule  ds = new DoctorSchedule(0, schedDay, startTime, endTime, 1, con.getDoctorID(username), con.getHospitalID(hospital));
+			DoctorSchedule  ds = new DoctorSchedule(0, schedDay, startTime, endTime, licenseID, 0);
 			con.addDoctorSchedule(ds);
 			
-			UserContact c = new UserContact(con.getUserID(username), email, "E-mail");
+			UserContact c = new UserContact(con.getUser(username).getUserID(), email, "E-mail");
 			con.addContact(c);
 			 response.sendRedirect("index.jsp");
 			

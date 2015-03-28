@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DoctorSchedule;
 import model.User;
 
 import java.util.Iterator;
@@ -32,13 +33,14 @@ public class AppointmentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        
-    	String docId = "";
+    	String schedId = "";
     	String patientId = "";
     	int pangilan = 0;
     	Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals("doctor")){
-                docId = cookie.getValue();
+        for(Cookie cookie : cookies)
+        {	
+            if(cookie.getName().equals("doctorSched")){
+                schedId = cookie.getValue();
             }
             else if(cookie.getName().equals("user")){
                 patientId = cookie.getValue();
@@ -47,27 +49,26 @@ public class AppointmentServlet extends HttpServlet {
 
         Controller c = new Controller();
         
-        docId =  request.getParameter("docID");
-        System.out.println("DOC ID: "+ docId);
-        if(docId.equals("") == false)
+        schedId =  request.getParameter("docID");
+//        System.out.println("DOC ID: "+ docId);
+        	System.out.println("CHEDID: "+ schedId);
+        if(schedId.equals("") == false)
         	pangilan = Integer.parseInt((String) request.getParameter("docID"));
         
-        Iterator doctors = c.getDoctors();
-        Doctor doctor = null;
+        DoctorSchedule ds = c.getDoctorSchedule(pangilan);
         
-        while(doctors.hasNext())
+        System.out.println("DOCTOR SCHED in APPOINTMENT: "+ ds);
+        
+        if(ds != null)
         {
-        		doctor = (Doctor) doctors.next();
-        		if(doctor.getUserID() == pangilan)
-        		{      
-        			System.out.println("Doctor in appt. == " + doctor.getFirstname() + " " + doctor.getLastname());
-        			break;
-        		}
+        	request.getSession().setAttribute("doctorSched", ds);
+        	response.sendRedirect("contactdoc.jsp");
         }
-                
-        request.getSession().setAttribute("doctor", doctor);
+        else
+        {
+        	response.sendRedirect("availabledocs.jsp");
+        }
         
-        response.sendRedirect("contactdoc.jsp");
     }
 
 }

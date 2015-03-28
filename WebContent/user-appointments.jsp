@@ -1,3 +1,4 @@
+<%@page import="model.DoctorSchedule"%>
 <%@page import="controller.Controller"%>
 <%@page import="java.sql.Time"%>
 <%@page import="model.UserContact"%>
@@ -59,8 +60,7 @@
                     <li class="divider"></li>
                     <li><a  href="hospitals.jsp">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li><a href="availabledocs.jsp">DOCTORS</a></li>
-                    <li><a style= "margin-right: 10px;" href="contactdoc.html">CONTACT</a></li>
+                    <li><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
             </section>
         </nav>
@@ -94,8 +94,9 @@
                          		{
                          			
                          			Appointment a = (Appointment)i.next();
-                         			Hospital h = con.getHospital(a.getHospitalID());
-                         			Doctor d = con.getAppointmentDoctor(a.getDoctorID());
+                         			DoctorSchedule ds = con.getDoctorSchedule(a.getDoctorSchedID());
+                         			Hospital h = con.getHospitalByID(ds.getHospitalScheduleID());
+                         			Doctor d = con.getDoctor(ds.getHospitalScheduleID());
                          			String hospital = h.getName();
                          			String address = h.getStreet() + "," + h.getCity();
                          			String doctor = d.getFirstname()+ " "+ d.getLastname();
@@ -108,7 +109,7 @@
                          			System.out.println("DOCTOR: "+d.getUserID());
                          			Iterator cList = con.getUserContacts(d.getUserID());
                          			System.out.println("CLIST:" + cList.hasNext());
-                         			String appointmentID = "card"+ a.getID();
+                         			String appointmentID = "card"+ a.getAppID();
                          			String buttonAction = "removeElement('appointment','"+appointmentID+"')";
                          			
                           %>

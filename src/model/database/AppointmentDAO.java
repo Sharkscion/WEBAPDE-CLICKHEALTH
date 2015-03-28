@@ -1,6 +1,7 @@
 package model.database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,123 +14,296 @@ import model.Hospital;
 
 public class AppointmentDAO implements DAOInterface{
 
-	  private DBConnection connect = DBConnection.getInstance();
-	    private ArrayList<Appointment> appointments;
+	private DBConnection connect = DBConnection.getInstance();
+	private PreparedStatement statement;
+	private ResultSet rs;
+	private ArrayList<Appointment> aList = null;
+	private static AppointmentDAO dD = null;
 
-	    private static AppointmentDAO dD = null;
-
-    public static synchronized AppointmentDAO getInstance() {
-        if (dD == null) {
-            dD = new AppointmentDAO();
-        }
-        return dD;
-    }
-
+	public static synchronized AppointmentDAO getInstance() {
+		if (dD == null) {
+			dD = new AppointmentDAO();
+		}
+		return dD;
+	}
+	
 	@Override
-	public Iterator getAllData() {
-		// TODO Auto-generated method stub
+	public Appointment getData(Object keyID) {
+		
+		Appointment a = null;
+		int appID = (Integer) keyID;
+		try
+		{
+			String query = "SELECT * FROM appointments WHERE appointmentsID = ?";
+			
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, appID);
+			rs = statement.executeQuery();
+			
+			if (rs.next())
+			{
+				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+									rs.getTime("startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+									rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
+									rs.getInt("doctorSched_ID"));
+			}
+		}
+		
+		catch (SQLException e)
+		{
+			System.out.println("Unable to SELECT cinema");
+			e.printStackTrace();
+		}
+		
+		connect.close();
+		return a;
+	}
+	
+	@Override
+	public Iterator<Appointment> getAllData() {
+
+		try{
+			String query = "SELECT * "
+					+ "FROM appointments "
+					+ "ORDER BY requestedDate DESC, requestedTime DESC";
+			statement = connect.getConnection().prepareStatement(query);
+			rs = statement.executeQuery();
+
+			aList = new ArrayList<Appointment>();
+			Appointment a = null;
+			
+			while (rs.next())
+			{
+				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+									rs.getTime("startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+									rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
+									rs.getInt("doctorSched_ID"));
+				aList.add(a);
+			}
+
+			connect.close();
+			return aList.iterator();
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to SELECT cinema");
+			e.printStackTrace();
+		}
+
+		connect.close();
 		return null;
 	}
+
 
 	@Override
 	public void insertData(Object obj) {
-        Connection con = connect.getConnection();
-        Appointment app = (Appointment) obj;
-        try {
-
-            String query = "INSERT INTO appointments VALUES(NULL,?,?,?,?,?,?,?);";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1, app.getStatus());
-            preparedStatement.setString(2, app.getConcern());
-            preparedStatement.setTime(3, app.getStartTime());
-            preparedStatement.setDate(4, app.getAppointmentDate());
-            preparedStatement.setInt(5, app.getPatientID());
-            preparedStatement.setInt(6, app.getDoctorID());
-            preparedStatement.setInt(7, app.getHospitalID());
-            preparedStatement.execute();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException sqlee) {
-                sqlee.printStackTrace();
-            }
-        }
-    }
-
+		// TODO Auto-generated method stub
+		try
+		{
+			Appointment a = (Appointment) obj;
+	
+			String query = "INSERT INTO appointments values(NULL,?,?,?,?,?,?,?,?,?,?,?)";
+			
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, a.getStatus());
+			statement.setString(2, a.getConcern());
+			statement.setString(3, a.getRemarks());
+			statement.setTime(4, a.getStartTime());
+			statement.setTime(5, a.getRequestedTime());
+			statement.setDate(6,  new Date(a.getRequestedDate().getTime()));
+			statement.setDate(7, new Date(a.getAppointmentDate().getTime()));
+			statement.setInt(8, a.getIsResolvedPatient());
+			statement.setInt(9, a.getIsResolvedDoctor());
+			statement.setInt(10, a.getPatientID());
+			statement.setInt(11, a.getDoctorSchedID());
+			
+			if(statement.execute())
+			{
+				connect.close();
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to INSERT new appointments");
+			e.printStackTrace();
+		}
+		connect.close();	
+	}
+	
 	@Override
 	public void updateData(Object obj) {
-		// TODO Auto-generated method stub
+
+		Appointment a = (Appointment)obj;
+		String query = "UPDATE appointments "
+					 + "SET  status = ?, concern = ?, remarks = ?, startTime = ?, "
+						  + "requestedDate = ?, appointmentDate = ?, isResolvedPatient = ?, isResolvedDoctor = ?, "
+						  + "patient_ID = ?, doctorSched_ID = ? "
+				     + "WHERE appointmentID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, a.getStatus());
+			statement.setString(2, a.getConcern());
+			statement.setString(3, a.getRemarks());
+			statement.setTime(4, a.getStartTime());
+			statement.setDate(5,  new Date(a.getRequestedDate().getTime()));
+			statement.setDate(6, new Date(a.getAppointmentDate().getTime()));
+			statement.setInt(7, a.getIsResolvedPatient());
+			statement.setInt(8, a.getIsResolvedDoctor());
+			statement.setInt(9, a.getPatientID());
+			statement.setInt(10, a.getDoctorSchedID());
+			statement.setInt(11, a.getAppID());
+			if(statement.execute())
+			{
+				System.out.println("UPDATED APPOINTMENT TAT");
+				connect.close();
+			}
+		
+		} catch (SQLException e) {
+	
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+		connect.close();
 	}
 
-	@Override
-	public Object getData(String keyID) {
-		// TODO Auto-generated method stub
-		return null;
+
+
+	public Iterator<Appointment> getPatientAppointments(int patientID) 
+	{
+		System.out.println("APPOINTMENTS GET USER DAO");
+		
+		Appointment a =  null;
+		
+		try {
+			String query = "SELECT * "
+						+ "FROM appointments "
+						+ "WHERE patient_ID = ? "
+						+ "AND status = \"pending\" "
+						+ "AND isResolvedPatient = 0 "
+						+ "ORDER BY requestedDate DESC, requestedTime DESC";
+			
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, patientID);
+			rs = statement.executeQuery();
+
+			aList = new ArrayList<Appointment>();
+			while (rs.next()) {
+
+				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+									rs.getTime("startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+									rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
+									rs.getInt("doctorSched_ID"));
+				aList.add(a);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all users from DB");
+			e.printStackTrace();
+		}
+		connect.close();
+		return aList.iterator();
+	}
+
+	public Iterator<Appointment> getDoctorAppointments(int licenseID)
+	{
+		System.out.println("APPOINTMENTS DCOTOR DAO");
+		
+		Appointment a =  null;
+		
+		try {
+			String query = "SELECT * "
+					+ "FROM appointments, doctor "
+					+ "WHERE licenseID = (SELECT licenseID FROM doctorschedule WHERE licenseID = '?') "
+					+ "AND status = \"pending\" "
+					+ "AND isResolvedDoctor = 0 "
+					+ "ORDER BY requestedDate DESC, requestedTime DESC";
+			
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, licenseID);
+			rs = statement.executeQuery();
+
+			aList = new ArrayList<Appointment>();
+			while (rs.next()) {
+
+				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+									rs.getTime("startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+									rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
+									rs.getInt("doctorSched_ID"));
+				aList.add(a);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting doctor appointments from DB");
+			e.printStackTrace();
+		}
+		connect.close();
+		return aList.iterator();
 	}
 	
-	public Iterator getUserAppointments(int keyID) 
+	public Iterator<Appointment> getRequestAppointments(int licenseID)
 	{
-		 System.out.println("APPOINTMENTS DAO");
-		 ArrayList<Appointment> aList = null;
-		 Appointment a =  null;
-		  try {
-	            String query = "SELECT * FROM appointments WHERE patient_ID = ? AND status = \"pending\";";
-	            PreparedStatement statement = (PreparedStatement) connect.getConnection().prepareStatement(query);
-	            statement.setInt(1, keyID);
-	            ResultSet rs = statement.executeQuery();
-	           
-	            aList = new ArrayList<Appointment>();
-	            while (rs.next()) {
+		try 
+		{
+			String query = "SELECT * "
+						+ "FROM appointments, doctor "
+						+ "WHERE licenseID = (SELECT licenseID FROM doctorschedule WHERE licenseID = ?) "
+						+ "AND appointments.status = 'request' "
+						+ "AND isResolvedDoctor = 0 "
+						+ "ORDER BY requestedDate DESC, requestedTime DESC";
 
-	                 a = new Appointment(rs.getInt("appointmentsID"),  rs.getString("status"), rs.getString("concern"), 
-	                					 rs.getTime("startTime"), rs.getDate("appointmentDate"),rs.getInt("patient_ID"), 
-	                					 rs.getInt("doctor_ID"), rs.getInt("hospital_ID"));
-	                 aList.add(a);
-	            }
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, licenseID);
+			rs = statement.executeQuery();
+			
+			Appointment a =  null;
+			aList = new ArrayList<Appointment>();
+			
+			while (rs.next()) 
+			{
+				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+								  rs.getTime("startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+								  rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
+								  rs.getInt("doctorSched_ID"));
+				aList.add(a);
+			}
 
-	        } catch (SQLException e) {
-	            System.out.println("ERROR in getting all users from DB");
-	            e.printStackTrace();
-	        }
-	        connect.close();
-	        return aList.iterator();
+		} catch (SQLException e) {
+			System.out.println("ERROR in getting all request from DB");
+			e.printStackTrace();
+		}
+		connect.close();
+		return aList.iterator();
 	}
 	
-	public Iterator<Appointment> getDoctorAppointments(String username)
-	{
-		 Connection con = connect.getConnection();
-	        appointments = new ArrayList<Appointment>();
-	         try 
-	         {
-	             String query = "SELECT * FROM appointments WHERE doctor_ID = (SELECT licenseID FROM doctor WHERE user_ID = (SELECT userID FROM user where username = \""+ username + "\"));";
-	             PreparedStatement preparedStatement = con.prepareStatement(query);
-	             ResultSet rs = preparedStatement.executeQuery();
-	             while (rs.next()) 
-	             {
-	            	 	
-	            	 	Appointment app = new Appointment(rs.getInt("appointmentsID"),  rs.getString("status"), rs.getString("concern"), 
-	            	 									  rs.getTime("startTime"), rs.getDate("appointmentDate"),rs.getInt("patient_ID"), 
-	            	 									  rs.getInt("doctor_ID"), rs.getInt("hospital_ID"));
-	                     appointments.add(app);
-	             }
-	             
-	         } catch (SQLException sqlException) {
-	             sqlException.printStackTrace();
-	         } finally {
-	             try {
-	                 if (con != null) {
-	                     con.close();
-	                 }
-	             } catch (SQLException sqlee) {
-	                 sqlee.printStackTrace();
-	             }
-	         }
+//	public Iterator<Appointment> getDoctorAppointments(String username)
+//	{
+//		try 
+//		{
+//			String query = "SELECT * FROM appointments WHERE doctor_ID = (SELECT licenseID FROM doctor WHERE user_ID = (SELECT userID FROM user where username = ?) AND  status = \"pending\");";
+//			statement = connect.getConnection().prepareStatement(query);
+//			ResultSet rs = statement.executeQuery();
+//			
+//			aList = new ArrayList<Appointment>();
+//			Appointment a = null;
+//			
+//			while (rs.next()) 
+//			{
+//				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+//								  rs.getTime("startTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+//								  rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
+//								  rs.getInt("doctorSched_ID"));
+//				aList.add(a);
+//			}
+//
+//			System.out.println("ERROR in getting all request from DB");
+//			e.printStackTrace();
+//		}
+//		connect.close();
+//		return null;
+//	}
 
-	         return appointments.iterator();
-	}
+
+
 
 }

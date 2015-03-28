@@ -36,24 +36,14 @@ public class Controller
 		cd = new ContactDAO();
 	}
 	
-	//public 
 	public void addAppointment(Appointment app)
 	{
 		ad.insertData(app);
 	}
 	
-	public void addUser(User u)
-	{
-		ud.insertData(u);
-	}
-	
 	public void addContact(UserContact uc)
 	{
 		cd.insertData(uc);
-	}
-	public void addPatient(Patient p)
-	{
-		pd.insertData(p);
 	}
 	
 	public void addDoctor(Doctor d)
@@ -65,31 +55,74 @@ public class Controller
 	{
 		sd.insertData(ds);
 	}
-
-	public int getHospitalID(String hospitalName)
+	
+	public void addUser(User u)
 	{
-		return hd.getHospitalID(hospitalName);
+		ud.insertData(u);
 	}
 
-	public int getDoctorID(String doctorName)
+	public void addPatient(Patient p)
 	{
-		return dd.getLicenseID(doctorName);
+		pd.insertData(p);
 	}
 	
-	public int getUserID(String userName)
+	public Appointment getAppointment(int appId)
 	{
-		return ud.getUserID(userName);
+		return ad.getData(appId);
+	}
+	public Hospital getHospital(String hospitalName)
+	{
+		return hd.getData(hospitalName);
 	}
 	
-	public Iterator<Appointment> getDoctorAppointments(String username)
+	public Hospital getHospitalByID(int hospID)
 	{
-		return ad.getDoctorAppointments(username);
+		return hd.getHospitalByID(hospID);
+	}
+	public User getUser(String username)
+	{
+		User u = ud.getData(username);
+		System.out.println("USRNAME ETUUSER: "+ u.getUsername());
+		return ud.getData(username);
 	}
 	
+	public Patient getPatientByID(int patientID)
+	{
+		return pd.getPatientByID(patientID);
+	}
+
+	public Doctor getDoctor(int licenseID)
+	{
+		return dd.getData(licenseID);
+	}
 	
-	public User getUser(String username, String password)
+	public Doctor getDoctorByUsername(String username)
+	{
+		return dd.getDoctorByUsername(username);
+	}
+	public User validateUser(String username, String password)
 	{
 		return ud.validateUser(username, password);
+	}
+
+	public Iterator<Hospital> getAllHospitals()
+	{
+		return hd.getAllData();
+	}
+	
+	public Iterator getAllDoctors()
+	{
+		return dd.getAllData();
+	}
+	
+	public Iterator<DoctorSchedule> getAllDoctorSchedule()
+	{
+		return sd.getAllData();
+	}
+	
+	public Iterator<String> getAllSpecializations()
+	{
+		return dd.getAllSpecializations();
 	}
 	
 	public Iterator<User> getAllUsers()
@@ -97,47 +130,45 @@ public class Controller
 		return ud.getAllData();
 	}
 	
-	public Iterator<Hospital> getAllHospitals()
-	{
-		return hd.getAllData();
-	}
-	
-	public Iterator<String> getSpecializations()
-	{
-		return dd.getSpecializations();
-	}
-	
 	public Iterator<String> getSpecializations(String specialization)
 	{
 		return dd.getSpecializations(specialization);
 	}
 	
-	public Iterator getDoctors(){
-		return dd.getAllData();
-	}
-	
-	public Object getUserInstance(String key){
-		return (Object) ud.getData(key);
+	public User getUserInstance(String username){
+		return ud.getData(username);
 	}
         
-        public Object getPatientInstance(String key){
-		return (Object) pd.getData(key);
-	}
-	
-	public Object getDoctor(int key)
-	{
-		return dd.getData(key);
+    public Patient getPatientInstance(String username){
+		return pd.getData(username);
 	}
 
-	public Doctor getAppointmentDoctor(int keyID)
+	public DoctorSchedule getDoctorSchedule(int scheduleID)
 	{
-		return (Doctor) dd.getAppointmentDoctor(keyID);
+		return sd.getData(scheduleID);
 	}
-	public Hospital getHospital(int hospitalID)
+//	public Doctor getSpecificDoctor(int licenseKey)
+//	{
+//		return dd.getData(licenseKey);
+//	}
+//	public Doctor getAppointmentDoctor(int keyID)
+//	{
+//		return dd.getAppointmentDoctor(keyID);
+//	}
+//	public Hospital getHospital(int hospitalID)
+//	{
+//		return hd.getData(String.valueOf(hospitalID));
+//	}
+//	
+	public Iterator<Appointment> getPatientAppointments(int patientID)
 	{
-		return (Hospital) hd.getData(String.valueOf(hospitalID));
+		return ad.getPatientAppointments(patientID);
 	}
 	
+	public Iterator<Appointment> getRequestAppointment(int licenseID)
+	{
+		return ad.getRequestAppointments(licenseID);
+	}
 	public Iterator<Hospital> getSpecializationHospitals(String specialization)
 	{
 		return hd.getSpecializationHospitals(specialization);
@@ -148,28 +179,23 @@ public class Controller
 		return dd.getSpecializationHospitalDoctors(specialization, hospitalID);
 	}
 	
-	public Iterator<Doctor> getSpecializationDoctors()
-	{
-				/*SELECT * FROM doctor d, user u
-		WHERE d.user_ID = u.userID AND d.specialization 
-		IN (SELECT specialization FROM doctor WHERE specialization Like "%o%");*/
-		return null;
-	}
+//	public Iterator<Doctor> getSpecializationDoctors()
+//	{
+//				/*SELECT * FROM doctor d, user u
+//		WHERE d.user_ID = u.userID AND d.specialization 
+//		IN (SELECT specialization FROM doctor WHERE specialization Like "%o%");*/
+//		return null;
+//	}
 	
-	public Iterator getPatientAppointments(int patientID)
-	{
-		return ad.getUserAppointments(patientID);
-	}
 	
-	public String getUserUserName(int ID)
-	{
-		User u = (User) ud.getData(String.valueOf(ID));
-		return u.getFirstname() + " " + u.getLastname();
-	}
-	
-	public Iterator getUserContacts(int id)
+	public Iterator<UserContact> getUserContacts(int id)
 	{
 		return cd.getUserContacts(id); 
+	}
+
+	public Iterator<DoctorSchedule> getDoctorsSchedules(int licenseID, int hospitalID)
+	{
+		return sd.getDoctorsSchedules(licenseID, hospitalID);
 	}
 	
 	

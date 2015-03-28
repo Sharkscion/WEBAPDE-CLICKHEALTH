@@ -1,8 +1,11 @@
 
+<%@page import="controller.Controller"%>
+<%@page import="model.Hospital"%>
+<%@page import="model.DoctorSchedule"%>
 <%@page import="model.User"%>
 <%@page import="model.Doctor"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="controller.Controller"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <html>
@@ -15,17 +18,17 @@
 
     </head>
 	<% 
-       	  Controller c = new Controller();
-		  int id=-1;
-		    Cookie[] cookies = request.getCookies();
-		    for(Cookie cookie:cookies){
-		        if(cookie.getName().equals("user")){
-		            id=Integer.parseInt(cookie.getValue());
-		        }
-		    }
-		    
-		   User user = (User) c.getUserInstance(String.valueOf(id));
-		   String username = user.getUsername();
+	  	Controller c = new Controller();
+	    String username = "";
+	    Cookie[] cookies = request.getCookies();
+	    for(Cookie cookie:cookies){
+	        if(cookie.getName().equals("user")){
+	            username = cookie.getValue();
+	        }
+	    }
+	    
+	   User user = c.getUser(username);
+	   String uName = user.getUsername();
 	%>
     <body id = "scroll-style" class = "page-content">
         <div class="fixed">
@@ -49,8 +52,8 @@
                     <li class="divider"></li>
                     <li><a  href = "hospitals.jsp">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li class = "active-button" ><a href="availabledocs.jsp">DOCTORS</a></li>
-                    <li><a style= "margin-right: 10px;" href="contactdoc.jsp">CONTACTS</a></li>
+                    <li class = "active-button" ><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
+                  <!--   <li><a  " href="contactdoc.jsp">CONTACTS</a></li>-->
                 </ul>
                 <!-- Right Nav Section --> 
 	            <form action = "SearchServlet" method = "post">
@@ -74,7 +77,7 @@
                             <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name"><%=username%></label>
+                            <label id = "left-bar-name"><%=uName%></label>
                             <a href = "account.html"><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
 
@@ -87,24 +90,32 @@
                         <form action="AppointmentServlet" method="post">
                         <% 
                             //Controller c = Controller.getInstance();
-                        	Iterator iterator = c.getDoctors();
+                        	Iterator iterator = c.getAllDoctorSchedule();
                         	
+                        	System.out.println("ITERATOR: "+ iterator.hasNext());
                         	while (iterator.hasNext()) 
                         	{
-                                Doctor doc = (Doctor) iterator.next();
+                                DoctorSchedule ds = (DoctorSchedule) iterator.next();
+                                Doctor d = c.getDoctor(ds.getDoctorScheduleID());
+                                Hospital h =  c.getHospitalByID(ds.getHospitalScheduleID());
+                                
+                                System.out.println("doCtOR: "+ d.getFirstname());
+                                System.out.println("Hospital: "+ h.getName());
+                                
+                                String address = h.getStreet() + ", "+h.getCity();
                         %>    
 	                            <div class = "row">
 	                                <div class = "large-2 columns"> <img class = "hospital-img" src="Assets/clickHealth2.png"></div>
 	                                <div class = "large-8 columns">
 	
-	                                    <h5>Hospital: Makati Med</h5>
-	                                    <h6>Doctor: Dr. <label id="name" value = ""><%=doc.getFirstname() + " " + doc.getLastname()%></label></h6>
-	                                    <h6>Specialization: <label name="spec" id="spec" value = ""><%=doc.getSpecialization()%></label></h6>
-	                                   
+	                                    <p>Hospital: <%=h.getName()%></p>
+	                                    <p>Hospital Address: <%=address%></p>
+	                                    <p>Doctor: Dr. <%=d.getFirstname() + " " + d.getLastname()%> </p>
+	                                    <p>Specialization: <%=d.getSpecialization()%></p>
+	                                   	<p>Schedule Day: <%=ds.getScheduleDay()%></p>
 	                                </div>
 	                                <div class = "large-2 columns">
-	                                  <!-- <button type = "submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="<%=doc.getUserID()%>" onClick = "getID(this)"> Set Appointment </button> -->
-	                                  <input type="submit" class = "contact-button" id = "sub<%=doc.getUserID() %>" name  = "sub<%=doc.getUserID() %>" value="Set Appointment" onClick = "getDocID(this);">
+	                                  <input type="submit" class = "contact-button" id = "<%=ds.getScheduleID()%>" name  = "<%=ds.getScheduleID() %>" value="Set Appointment" onClick = "getDocID(this);">
 	                                </div>
 	                            </div>
 	                        	<hr>

@@ -4,24 +4,21 @@ import java.sql.Time;
 
 public class DoctorSchedule {
 	private int scheduleID;
-	private String scheduleDate;
+	private String scheduleDay;
 	private Time startTime;
 	private Time endTime;
-	private int isAvailable;
 	private int doctorScheduleID;
 	private int hospitalScheduleID;
 
-	public DoctorSchedule(int scheduleID, String scheduleDate, Time startTime, Time endTime, 
-			int isAvailable, int doctorScheduleID, int hospitalScheduleID)
+	public DoctorSchedule(int scheduleID, String scheduleDay, Time startTime, Time endTime,
+						  int doctorScheduleID, int hospitalScheduleID)
 	{
-		this.scheduleID = scheduleID;
-		this.scheduleDate = scheduleDate;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.isAvailable = isAvailable;
-		this.doctorScheduleID = doctorScheduleID;
-		this.hospitalScheduleID = hospitalScheduleID;
-		
+		setScheduleID(hospitalScheduleID);
+		setScheduleDay(scheduleDay);
+		setStartTime(startTime);
+		setEndTime(endTime);
+		setDoctorScheduleID(doctorScheduleID);
+		setHospitalScheduleID(hospitalScheduleID);
 	}
 	
 	public int getScheduleID() {
@@ -32,12 +29,12 @@ public class DoctorSchedule {
 		this.scheduleID = scheduleID;
 	}
 
-	public String getScheduleDate() {
-		return scheduleDate;
+	public String getScheduleDay() {
+		return scheduleDay;
 	}
 
-	public void setScheduleDate(String scheduleDate) {
-		this.scheduleDate = scheduleDate;
+	public void setScheduleDay(String scheduleDay) {
+		this.scheduleDay = scheduleDay;
 	}
 
 	public Time getStartTime() {
@@ -56,14 +53,6 @@ public class DoctorSchedule {
 		this.endTime = endTime;
 	}
 
-	public int isAvailable() {
-		return isAvailable;
-	}
-
-	public void setAvailable(int isAvailable) {
-		this.isAvailable = isAvailable;
-	}
-
 	public int getDoctorScheduleID() {
 		return doctorScheduleID;
 	}
@@ -79,7 +68,5 @@ public class DoctorSchedule {
 	public void setHospitalScheduleID(int hospitalScheduleID) {
 		this.hospitalScheduleID = hospitalScheduleID;
 	}
-
-	
 
 }
