@@ -1,6 +1,5 @@
 $(document).foundation();
 
-
 $(document).ready(function(){
 	var bodyheight = $(window).height();
 	$(".windowheight").css('min-height', bodyheight);
@@ -110,19 +109,31 @@ function getDocID(element)
 		document.getElementById("docID").value = lastChar;
 		alert("here is " + document.getElementById("docID").value);
 }
-function getRequestID(element)
+var x1 = function getRequestID(element)
 {
 	alert("ALHELOO");
-	$(document).foundation();
-	$('#viewRequest-modal').foundation('reveal', 'open');
+//	$(document).foundation();
+//	$('#viewRequest-modal').foundation('reveal', 'open');
 	    var pressedBtn = element.id;
 		//var lastChar = pressedBtn.charAt(pressedBtn.length-1);
-	    alert("PRESSED BTN"+ pressedBtn);
+	  //  alert("PRESSED BTN"+ pressedBtn);
 		var lastChar = pressedBtn;
 		document.getElementById("requestID").value = lastChar;
+		//$('#viewRequest-modal').foundation('reveal','open');
 		
-		alert("here is " + document.getElementById("RequestID").value);
+		alert("here is " + document.getElementById("requestID").value);
+		
+//		var outString = "doctor-appointment-requests.jsp?x1=" + lastChar
+////        outString += "&y1=" + 10
+////        outString += "&x2=" + 100
+////        outString += "&y2=" + 100
+//        location.href = outString
+        
+        
+		return lastChar;
 }
+
+
 function getApproveID(element)
 {
 	    var pressedBtn = element.id;

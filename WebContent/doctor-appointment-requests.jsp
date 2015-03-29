@@ -12,6 +12,7 @@
         <link rel = "stylesheet" type="text/css" href="CSS/style-menu.css">
         <link rel = "stylesheet" type="text/css" href="CSS/style-scrollbar.css">
         <link rel = "stylesheet" type="text/css" href="CSS/style-appointment.css">
+        <link  type = "text/css" rel = "stylesheet" href = "Foundation/css/normalize.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
         
@@ -64,7 +65,7 @@
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name">Dr. <%=uName%></label>
                             <a href = "doctor-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
-                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
                         </div>
                     </div>
@@ -76,7 +77,7 @@
 	                		Doctor d = con.getDoctorByUsername(user.getUsername());
 	                		System.out.println("DOCTOR: "+ d);
 	             			Iterator<Appointment> appointments = con.getRequestAppointment(d.getLicenseID());
-	             	
+	             			System.out.println("APPOITNMENTS: "+ appointments.hasNext());
 	                		Appointment app = null;
 	                		Patient patient = null;
 	                		
@@ -94,27 +95,32 @@
 			                            </p>
 			                        </div>
 			                        <div class = "large-3 columns"> 
-			                        	<button class = "appointment-request-button" id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" 
-			                        	 onClick = "getRequestID(this);">
-			                        	 View
-			                           </button>
-			                        		
-			                        	
+			                     
+			                            <input type = "submit" data-reveal-id="viewRequest-modal" value = " View " id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" 
+			                        	  data-reveal onClick ="getRequestID(this);">
+			                        	<input type ="hidden" name="requestID" id="requestID" value="2">
+			                  
 			                        </div>
 			                    </div>
 	                	<% } %>
 	                	</div>
-	                	<input type = "hidden" name = "requestID" id = "requestID">
+	                	
             </section>
         </div>
 <!----------------------------------------------------- VIEW REQUEST MODAL------------------------------------------------------>
-        <div class='reveal-modal' data-reveal-id ='viewRequest-modal' data-reveal>
+        <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
+      
            	<form action = "ApproveRequestServlet" method = "post">
-	        	<p> hello</p>
-	            <%
-	            	String appId =  request.getParameter("requestID");
+	        	  <p> hello</p>
+	        	  
+	        	  <%String appId =  %> document.getElementByID("requestID"); <%;%>
+	              <%
+	              
+	             //s String appId= this.getInitParameter("requestID");
+	            	
 	            	System.out.println("APPID: "+ appId);
 	            	int id = -1;
+	            //	appId = "2";
 	            	if(appId != null)
 	            	{
 	            		id = Integer.parseInt(appId);
@@ -140,14 +146,15 @@
 	            <input type = "hidden" name = "approveID" id = "approveID">
 	            <input type = "hidden" name = "rejectID" id = "rejectID">
             </form>
+             <a class="close-reveal-modal">&#215;</a>
         </div>
           <script src= "Foundation/js/vendor/jquery.js"></script>
           <script src= "Foundation/js/foundation.min.js"></script>
           <script src= "Foundation/js/foundation/foundation.js"></script>
           <script src= "Foundation/js/foundation/foundation.topbar.js"></script>
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
-          <script src= "http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+           <script src="Foundation/js/vendor/modernizr.js"></script>
+          
           <script src = "javascript.js"></script> 
-            
     </body>
 </html>
