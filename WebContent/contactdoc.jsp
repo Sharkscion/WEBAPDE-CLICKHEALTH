@@ -19,8 +19,7 @@
         <link  type = "text/css" rel = "stylesheet" href = "CSS/jquery.datetimepicker.css"/>
         
     </head>
-    <body id = "scroll-style" class = "page-content">
-        <%
+    <%
             Controller c = new Controller();
             Iterator iterator = c.getAllDoctorSchedule();
             
@@ -52,8 +51,8 @@
             String doctorName = "";
             String doctorSpec = "";
             String schedDay = "";
-            Time startTime = null;
-            Time endTime = null;
+            String startTime = null;
+            String endTime = null;
             
             if(ds != null)
             {
@@ -67,11 +66,14 @@
             	 doctorName = "Dr. "+ d.getFirstname() + " "+ d.getLastname();
             	 doctorSpec = d.getSpecialization();
             	 schedDay = ds.getScheduleDay();
-            	 startTime = ds.getStartTime();
-            	 endTime = ds.getEndTime();
+            	 startTime = ds.getStartTime().toString();
+            	 endTime = ds.getEndTime().toString();
             }
+            
           
         %>
+    <body id = "scroll-style" class = "page-content" onload="setMinTime('<%=startTime.substring(0,5)%>', '<%=endTime.substring(0,5)%>')">
+        
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
             <ul class="title-area">
@@ -153,8 +155,7 @@
 		                        <label>Date of Appointment: </label><input id="date" name = "date" type = "date">
 		                            
 		                        <label>
-		                            	Start Time: <input id="datetimepicker" name = "startTime" type="text" required 
-		                            						onChange = "setMinTime(<%=startTime%>, <%=endTime%>)"> 
+		                            	Start Time: <input id="datetimepicker" name = "startTime" type="text" required> 
 			                    </label>
 			                    <small class="error">Schedule start time is required.</small>
 		                            
