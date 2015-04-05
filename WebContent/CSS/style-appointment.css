@@ -16,13 +16,14 @@
 .appointment-content
 {
     background: #ffffff;
-    overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
 }
 
 .appointment-request-button
 {
     font-family: century gothic, sans-serif;
+   	text-align: center;
     font-size: 17px;
     background: #306288;
     color: white;
@@ -93,4 +94,15 @@
 {
     border-bottom:1px solid darkorange !important;
     padding-top: 5px;
+}
+
+.appointment-request-header
+{
+	background: #dc7d14;
+}
+.appointment-request-header h6
+{
+	font-family: century gothic, sans-serif;
+	font-weight: bold;
+	font-stretch: extra-expanded;
 }

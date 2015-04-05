@@ -71,15 +71,17 @@
                     </div>
                 </div>
                 
-                    <div id = "mid-content" class = "row appointment-content appointment-request" style = "margin-top: 90px;">
-                 	
+                    <div id = "mid-content" class = "row appointment-content appointment-request" style = "margin-top: 40px;">
+                 		<div class = "row appointment-request-header">
+                 			<div class= "large-2 columns" style = "text-align: center;"> <h6>Time Requested</h6> </div>
+                 			<div class= "large-2 columns" style = "text-align: center;"> <h6>Date Requested</h6> </div>
+                 			<div class= "large-8 columns"> <h6>Appointment Request Info</h6></div>
+                 		</div>
 	                	<%
-	                		//Controller con = new Controller();
+	           
 	                		Doctor d = con.getDoctorByUsername(user.getUsername());
-	                		System.out.println("DOCTOR: "+ d);
 	             			Iterator<Appointment> appointments = con.getRequestAppointment(d.getLicenseID());
-	             			System.out.println("APPOITNMENTS: "+ appointments.hasNext());
-	                		Appointment app = null;
+	             			Appointment app = null;
 	                		Patient patient = null;
 	                		
 	                		while(appointments.hasNext())
@@ -88,10 +90,11 @@
 	                			patient = con.getPatientByID(app.getPatientID());              			
 	                	%>
 			                	<div id = "request-1" class = "row request-box">
-			                       <div class = "large-2 columns"> <%=app.getRequestedTime() %> </div>
-			                        <div class = "large-2 columns"><%=app.getRequestedDate()%></div>
-			                        <div class = "large-5 columns">
-			                            <p>Appointment with <%=patient.getFirstname() + " "+ patient.getLastname() %> <br>
+			                       <div class = "large-2 columns" style = "text-align: center;"> <%=app.getRequestedTime() %></div>
+			                       <div class = "large-2 columns" style = "text-align: center;"><%=app.getRequestedDate()%></div>
+			                       <div class = "large-5 columns">
+			                            <p style = "font-style: oblique;">
+			                               Appointment with <%=patient.getFirstname() + " "+ patient.getLastname() %> <br>
 			                               Area of Concern: <%=app.getConcern() %>
 			                            </p>
 			                        </div>
