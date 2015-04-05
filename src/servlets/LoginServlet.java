@@ -36,9 +36,9 @@ public class LoginServlet extends HttpServlet {
         
         if (user != null)
         {
-        	Cookie loginCookie = new Cookie("user",user.getUsername());
-            response.addCookie(loginCookie);
-            loginCookie.setMaxAge(30*60);
+        	Cookie loginCookie = new Cookie("user",String.valueOf(user.getUserID()));
+                response.addCookie(loginCookie);
+                loginCookie.setMaxAge(30*60);
             if (user.getType().equals("patient"))
             {
                 response.sendRedirect("hospitals.jsp");
@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
         }
         else
         {
-            response.sendRedirect("loginError.jsp");
+            response.sendRedirect("index.jsp");
         }
     }
 

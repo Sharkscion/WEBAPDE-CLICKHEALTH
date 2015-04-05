@@ -65,7 +65,7 @@ public class DoctorScheduleDAO implements DAOInterface {
 	}
 
 	@Override
-	public boolean insertData(Object obj) {
+	public void insertData(Object obj) {
 		
 		DoctorSchedule ds = (DoctorSchedule) obj;
 		try {
@@ -78,7 +78,6 @@ public class DoctorScheduleDAO implements DAOInterface {
 			statement.setInt(4, ds.getDoctorScheduleID());
 			statement.setInt(5, ds.getHospitalScheduleID());
 			statement.execute();
-			return true;
 		}
 		catch (SQLException e)
 		{
@@ -86,11 +85,10 @@ public class DoctorScheduleDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
-		return false;
 	}
 
 	@Override
-	public boolean updateData(Object obj) {
+	public void updateData(Object obj) {
 		DoctorSchedule d = (DoctorSchedule)obj;
 		String query = "UPDATE doctorschedule "
 					 + "SET  scheduleDay = ?, startTime = ?, endTime = ?"
@@ -106,7 +104,6 @@ public class DoctorScheduleDAO implements DAOInterface {
 			{
 				System.out.println("UPDATED DoctorScehdule");
 				connect.close();
-				return true;
 			}
 		
 		} catch (SQLException e) {
@@ -115,7 +112,6 @@ public class DoctorScheduleDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
-		return false;
 	}
 
 	public Iterator<DoctorSchedule> getDoctorsSchedules(int licenseID, int hospitalID)

@@ -59,7 +59,7 @@ public class HospitalDAO implements DAOInterface {
 	}
 
 	@Override
-	public boolean insertData(Object obj) 
+	public void insertData(Object obj) 
 	{
 		Hospital hosp = (Hospital) obj;
 		try {
@@ -73,7 +73,6 @@ public class HospitalDAO implements DAOInterface {
 			if(statement.execute())
 			{
 				connect.close();
-				return true;
 			}
 		}
 		catch (SQLException e)
@@ -82,7 +81,6 @@ public class HospitalDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
-		return false;
 	}
 
     public Hospital getHospitalByID(int hospID)
@@ -111,7 +109,7 @@ public class HospitalDAO implements DAOInterface {
     }
 
 	@Override
-	public boolean updateData(Object obj) {
+	public void updateData(Object obj) {
 		Hospital h = (Hospital)obj;
 		String query = "UPDATE hospital"
 					 + "SET  hospitalName = ?, hospitalCity = ?, hospitalStreet = ?"
@@ -128,7 +126,6 @@ public class HospitalDAO implements DAOInterface {
 			{
 				System.out.println("UPDATED hopital");
 				connect.close();
-				return true;
 			}
 		
 		} catch (SQLException e) {
@@ -137,7 +134,6 @@ public class HospitalDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
-		return false;
 	}
 
 	@Override

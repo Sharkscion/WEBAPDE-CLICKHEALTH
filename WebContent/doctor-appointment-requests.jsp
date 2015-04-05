@@ -30,7 +30,7 @@
 	   User user = con.getUser(username);
 	   String uName = user.getFirstname() + " "+ user.getLastname();
     %>
-     <body id = "scroll-style" class = "page-content" onLoad="loadModalOnLoad()">
+     <body id = "scroll-style" class = "page-content">
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
             <ul class="title-area">
@@ -71,8 +71,7 @@
                     </div>
                 </div>
                 
-                    <div id = "mid-content" class = "row appointment-content appointment-request" style = "margin-top: 90px;">
-                 	
+	                <div id = "mid-content" class = "row appointment-content appointment-request" style = "margin-top: 90px;">
 	                	<%
 	                		//Controller con = new Controller();
 	                		Doctor d = con.getDoctorByUsername(user.getUsername());
@@ -96,31 +95,32 @@
 			                            </p>
 			                        </div>
 			                        <div class = "large-3 columns"> 
-			                            <input type = "button" value = " View " id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" onClick ="getRequestID(this);">
-			                       	<!--  dito niya dapt istostore yung na yung ID ng appitment na naclick -->
-	                					<input type ="hidden" name="requestID" id="requestID">
+			                     
+			                            <input type = "submit" data-reveal-id="viewRequest-modal" value = " View " id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" 
+			                        	  data-reveal onClick ="getRequestID(this);">
+			                        	<input type ="hidden" name="requestID" id="requestID" value="2">
+			                  
 			                        </div>
 			                    </div>
-	                	<%
-	                		} 
-	                	%>
-	                	
+	                	<% } %>
 	                	</div>
-	             
 	                	
             </section>
         </div>
 <!----------------------------------------------------- VIEW REQUEST MODAL------------------------------------------------------>
         <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
-      		
-      		<div style="color: #119525"> ${successMessage} </div>
+      
            	<form action = "ApproveRequestServlet" method = "post">
-	         
- 
+	        	  <p> hello</p>
+	        	  
+	        	  <%String appId =  %> document.getElementByID("requestID").value <%;%>
 	              <%
-	             
-	              	String appId= request.getParameter("requestID");
+	              
+	             //s String appId= this.getInitParameter("requestID");
+	            	
+	            	System.out.println("APPID: "+ appId);
 	            	int id = -1;
+	            //	appId = "2";
 	            	if(appId != null)
 	            	{
 	            		id = Integer.parseInt(appId);
@@ -138,8 +138,8 @@
 	         		
 	         		<%if(a.getRemarks().equals("") == false)%>
 	         		<p>Remarks: <%=a.getRemarks()%></p>
-	         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
-	         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
+	         		<input type="button" class = "appointment-request-button" id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
+	         		<input type="button" class = "appointment-request-button" id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
 	            <%
 	            	}
 	            %>
@@ -154,7 +154,7 @@
           <script src= "Foundation/js/foundation/foundation.topbar.js"></script>
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
            <script src="Foundation/js/vendor/modernizr.js"></script>
-          <script src="Foundation/js/foundation/foundation.alert.js"></script>
+          
           <script src = "javascript.js"></script> 
     </body>
 </html>

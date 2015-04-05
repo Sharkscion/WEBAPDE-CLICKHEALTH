@@ -15,7 +15,16 @@ public class Controller
 	private PatientDAO pd;
 	private ContactDAO cd;
 	private UserDAO ud;
-
+//	private static Controller controller;
+//
+//	public static synchronized Controller getInstance() 
+//	{
+//        if (controller == null) {
+//            controller = new Controller();
+//        }
+// 
+//        return controller;
+//    }
 	public Controller()
 	{
 		ad = new AppointmentDAO();
@@ -27,39 +36,42 @@ public class Controller
 		cd = new ContactDAO();
 	}
 	
-	public boolean changeAppointmentStat(int id, String stat)
+	public void addAppointment(Appointment app)
 	{
-		return ad.changeAppointmentStat(id, stat);
-	}
-	public boolean addAppointment(Appointment app)
-	{
-		System.out.println("HELLO: ");
-		return ad.insertData(app);
+		ad.insertData(app);
 	}
 	
-	public boolean addContact(UserContact uc)
+        public void editPatient(Patient p){
+            pd.updateData(p);
+        }
+        
+        public void editUser(User u){
+            ud.updateData(u);
+        }
+        
+	public void addContact(UserContact uc)
 	{
-		return cd.insertData(uc);
+		cd.insertData(uc);
 	}
 	
-	public boolean addDoctor(Doctor d)
+	public void addDoctor(Doctor d)
 	{
-		return dd.insertData(d);
+		dd.insertData(d);
 	}
 	
-	public boolean addDoctorSchedule(DoctorSchedule ds)
+	public void addDoctorSchedule(DoctorSchedule ds)
 	{
-		return sd.insertData(ds);
+		sd.insertData(ds);
 	}
 	
-	public boolean addUser(User u)
+	public void addUser(User u)
 	{
-		return ud.insertData(u);
+		ud.insertData(u);
 	}
 
-	public boolean addPatient(Patient p)
+	public void addPatient(Patient p)
 	{
-		return pd.insertData(p);
+		pd.insertData(p);
 	}
 	
 	public Appointment getAppointment(int appId)
@@ -77,8 +89,9 @@ public class Controller
 	}
 	public User getUser(String username)
 	{
-		User u = ud.getData(username);
-		return ud.getData(username);
+		User u = ud.getDataUsername(username);
+		System.out.println("USRNAME ETUUSER: "+ u.getUsername());
+		return u;
 	}
 	
 	public Patient getPatientByID(int patientID)
@@ -130,11 +143,11 @@ public class Controller
 		return dd.getSpecializations(specialization);
 	}
 	
-	public User getUserInstance(String username){
-		return ud.getData(username);
+	public User getUserInstance(String userID){
+		return ud.getData(userID);
 	}
         
-    public Patient getPatientInstance(String username){
+        public Patient getPatientInstance(String username){
 		return pd.getData(username);
 	}
 

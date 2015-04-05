@@ -53,11 +53,11 @@
             String schedDay = "";
             String startTime = null;
             String endTime = null;
-            Doctor d = null;
+            
             if(ds != null)
             {
             	 Hospital h = c.getHospitalByID(ds.getHospitalScheduleID());
-            	 d = c.getDoctor(ds.getDoctorScheduleID());
+            	 Doctor d = c.getDoctor(ds.getDoctorScheduleID());
             	 //UserContact uc = (UserContact) c.getUserContacts(d.getUserID());
             	 
             	 hospitalName = h.getName();
@@ -95,7 +95,7 @@
                     <li class="divider"></li>
                     <li class = "active-button"><a  href = "#">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li style= "margin-right: 10px;"><a  href="availabledocs.jsp">DOCTORS</a></li>
+                    <li><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
                 
                 </ul>
                 <!-- Right Nav Section --> 
@@ -128,91 +128,53 @@
                     </div>
                 </div>
                 <div id = "mid-content" class = "row">
-                	<div> ${successMessage}</div>
-                	<form data-abide action = "ContactDocServlet" method = "post">
-                        <div id="form-left-content" class="large-5 columns">
-                              <div class = "row">
-                              	<div class = "large-3 columns" style = "margin-top: 15px;">
-                              		 <img class = "hospital-img" src="Assets/clickHealth2.png">
-                              	</div>
-                              	<div class = "large-9 columns">
-                              		<label>
-	                              	 <%=hospitalName%><br>
-	                              	 <%=hospitalAddress%>
-	                              	</label>
-                              	</div>
-                              </div>
-                              <hr>
-                              <label> 
-                               	 Doctor Name: <%=doctorName%><br>
-                               	 Specialization: <%=doctorSpec%><br><br>
-                               	 Schedule Day: <%=schedDay%><br>
-                               	 Start Time: <%=startTime%><br>    
-                               	 End Time: <%=endTime%> <br><br>
-                               	 Contact Info:
-	                            	<ul>
-	                            	<% 
-	                            		Iterator cList = c.getUserContacts(d.getUserID());
-	                            		String userContact = "";
-	                            		if(cList.hasNext() == false)
-	                            			userContact = "No User Contacts";
-	                            		else
-	                            		{
-	                            			UserContact uc = (UserContact) cList.next();
-	                            			String type = uc.getType();
-	                            			String contact = uc.getContactInfo();
-	                            			userContact = type + " : "+ contact;
-	                            		
-	                            	%>
-		                            	<li><%=userContact%></li>
-		                           <%   } %>
-		                            </ul>          	
-                         	  </label>
-	                     </div> 
-	                     <div id ="form-right-content" class="large-7 columns">
-                            <label> 
-                            	Name: <%=user.getFirstname()+" "+user.getLastname()%><br>
-                            	Contact Info:
-                            	<ul>
-                            	<% 
-                            		Iterator cList2 = c.getUserContacts(user.getUserID());
-                            		String userContact2 = "";
-                            		if(cList2.hasNext() == false)
-                            			userContact2 = "No User Contacts";
-                            		else
-                            		{
-                            			UserContact uc = (UserContact) cList2.next();
-                            			String type = uc.getType();
-                            			String contact = uc.getContactInfo();
-                            			userContact2 = type + " : "+ contact;
-                            		
-                            	%>
-	                            	<li><%=userContact2%></li>
-	                           <%   } %>
-	                            </ul>
-                            </label>
-	                        <label>Date of Appointment: </label>
-	                        <input id="date" name = "date" type = "date">
-	                            
-	                        <label>Start Time: </label>
-		                    <input id="datetimepicker" name = "startTime" type="text" required> 
-		                    <small class="error">Schedule start time is required.</small>
-	                            
-                            <label>Area of Concern: </label>
-                            <div class = "dropdown-options">
-	                            <select   id="dropdown" name = "dropdown">
+                
+                        <div id="form-content" class="large-12 columns">
+                          <form data-abide action = "ContactDocServlet" method = "post">
+	                        <div class="row" >
+	                            <div class="large-12 columns">
+		                            <p>Hospital: <%=hospitalName%><br>
+		                               Hospital Address:<%=hospitalAddress%><br><br>
+		                               Doctor Name: <%=doctorName%><br>
+		                               Specialization: <%=doctorSpec%><br><hr>
+		                               Schedule Day: <%=schedDay%><br>
+		                               Start Time: <%=startTime%><br>    
+		                               End Time: <%=endTime%>            	
+		                            </p>
+	                            </div>
+	                        </div>
+                            <hr>
+                        <div class="row">
+                            <div class="large-12 columns">
+	                            <p>
+		                            Name: <%=user.getFirstname()+" "+user.getLastname()%><br>
+		                            Contact Number: 09xx-xxx-xxxx<br>
+		                            Email: <%=user.getEmail()%>
+	                            </p>
+
+		                        <label>Date of Appointment: </label><input id="date" name = "date" type = "date">
+		                            
+		                        <label>
+		                            	Start Time: <input id="datetimepicker" name = "startTime" type="text" required> 
+			                    </label>
+			                    <small class="error">Schedule start time is required.</small>
+		                            
+	                            <label>Area of Concern: </label>
+	                            <select id="dropdown" name = "dropdown">
 	                                <option>Vaccination</option>
 	                                <option>Check-up</option>
 	                                <option>Therapy</option>
 	                                <option>Medication</option>
 	                            </select>
+		                            
+	                            <label>Remarks: </label><br><textarea id="remarks" name = "remarks" cols = "45" rows = "6"></textarea>
+	                            
+	                            <input type="submit" class = "contact-button" value="Submit">
+	                          </div>
 	                         </div>
-                            <label>Remarks: </label>
-                            <textarea id="remarks" name = "remarks" cols = "45" rows = "6"></textarea>
-                            <input type="submit" class="contact-button" value="SUBMIT">
-	                      </div> 
-	                    </form>
-                      </div>       
+	                       </form>
+                         </div>
+                     </div>
                   </section>
               </div>
 
@@ -221,8 +183,6 @@
           <script src="Foundation/js/foundation/foundation.js"></script>
           <script src="Foundation/js/foundation/foundation.topbar.js"></script>
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
-          <script src="Foundation/js/vendor/modernizr.js"></script>
-          <script src="Foundation/js/foundation/foundation.alert.js"></script>
           <script src="jquery.datetimepicker.js"></script>
 		  <script src = "javascript.js"></script> 
         

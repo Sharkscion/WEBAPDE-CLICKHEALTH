@@ -1,37 +1,70 @@
-#form-left-content
+#HeadDiv
 {
-    background: #e17100;
-    font-family:  century gothic, sans-serif;
-    padding-top: 90px;
-    height: 550px;
-    margin-bottom: 30px; 
+    background-color: #a82159;
+    width: auto;
+    height: 50;
+    float: top;
+}
+#BGDiv
+{
+    background-color: #c6d4e1;
+    width: auto;
+    height: 95%;
+
 }
 
-#form-left-content label
+#form-content
 {
-	color: white;
-	font-size:13px;
-}
-#form-right-content
-{
-    background: #ebe7e0;
+    background: #fff;
+    height: 850px;
     font-family:  century gothic, sans-serif;
-    font-size: 15px;
     padding-top:15px;
-    height: 550px;
     margin-bottom: 30px; 
 }
 
-#form-left-content ul li
+#BodDiv
 {
-	font-size: 13px !important;
+    top: 30%;
+    background-color: #b7e7e4;
+    width: 90%;
+    height: 30%;
+    margin-left: 5%;
+    padding-bottom: 10;
+    margin-top: -1%;
+    
+    color: #a82159;
+    text-align: left;
+    font-family: Handlee;
+    font-size: 22px;
 }
-
-#form-right-content ul li
+#DetailsDiv
 {
-	font-size: 13px !important;
+    background-color: #7ec2ab;
+    width: 90%;
+    height: 57%;
+    margin-left: 5%;
+    margin-top: 1%;
+    
+    color: #a82159;
+    text-align: left;
+    font-family: Handlee;
+    font-size: 22px;
 }
-
+.headbutton
+{
+    float: right;
+    margin-top: 10px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    text-decoration: none;
+    outline:none;
+    color: white;
+    font-family: Handlee;
+    font-size: 25px;
+}
 .contact-button
 {
     border-radius: 3px;
@@ -43,7 +76,7 @@
     overflow: hidden;
     outline:none;
     color: white;
-    font-family: century gothic, sans-serif !important;
+    font-family: Slabs;
     font-size: 20px;
 }
 .column-contact-content
@@ -53,14 +86,9 @@
     background: #ebe7e0;
 }
 
-.dropdown-options select {
-   background: white;
-   font-family: century gothic, sans-serif;
-   padding: 5px;
-   font-size: 14px;
-   line-height: 1;
-   border: 1;
-   border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
- }
+@font-face
+{
+    font-family: 'Handlee';
+    src: local('Handlee-Regular');
+    
+}

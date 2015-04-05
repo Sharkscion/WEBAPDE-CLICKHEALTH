@@ -23,8 +23,9 @@ import controller.Controller;
  */
 @WebServlet("/DoctorRegServlet")
 public class DoctorRegServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -33,68 +34,66 @@ public class DoctorRegServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     * response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		Controller con = new Controller();
-		
-		String username = request.getParameter("dUName");
-		String password = request.getParameter("dPassword");
-		String email = request.getParameter("dEmail");
-		
-		String lastname = request.getParameter("dLName");
-		String firstname = request.getParameter("dFName");
-		String license = request.getParameter("dLicense");
-		String specialization = request.getParameter("dSpec");
-		
-		String hospital = request.getParameter("hospital");
-		String schedDay = request.getParameter("schedDay");
-		String start = request.getParameter("startTime");
-		String end = request.getParameter("endTime");
-		
-		try {
-			DateFormat sdf = new SimpleDateFormat("hh:mm");
-			Date dateStart = sdf.parse(start);
-			Time startTime = new Time(dateStart.getTime());
-			
-			Date dateEnd = sdf.parse(end);
-			Time endTime = new Time(dateEnd.getTime());
-			
-			int licenseID = 0;
-			
-			if(license.equals("") == false)
-				licenseID = Integer.parseInt(license);
-			
-			Doctor d = new Doctor(0, username, email, password, lastname, firstname, "doctor", licenseID, specialization);
-			con.addUser(d);
-			con.addDoctor(d);
-			
-			DoctorSchedule  ds = new DoctorSchedule(0, schedDay, startTime, endTime, licenseID, 0);
-			con.addDoctorSchedule(ds);
-			
-			UserContact c = new UserContact(con.getUser(username).getUserID(), email, "E-mail");
-			con.addContact(c);
-			 response.sendRedirect("index.jsp");
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     * response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        Controller con = new Controller();
 
-		
-	
-		
-		
-	}
+        String username = request.getParameter("dUName");
+        String password = request.getParameter("dPassword");
+        String email = request.getParameter("dEmail");
+
+        String lastname = request.getParameter("dLName");
+        String firstname = request.getParameter("dFName");
+        String license = request.getParameter("dLicense");
+        String specialization = request.getParameter("dSpec");
+
+        String hospital = request.getParameter("hospital");
+        String schedDay = request.getParameter("schedDay");
+        String start = request.getParameter("startTime");
+        String end = request.getParameter("endTime");
+
+        try {
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            Date dateStart = sdf.parse(start);
+            Time startTime = new Time(dateStart.getTime());
+
+            Date dateEnd = sdf.parse(end);
+            Time endTime = new Time(dateEnd.getTime());
+
+            int licenseID = 0;
+
+            if (license.equals("") == false) {
+                licenseID = Integer.parseInt(license);
+            }
+
+            Doctor d = new Doctor(0, username, email, password, lastname, firstname, "doctor", licenseID, specialization);
+            con.addUser(d);
+            con.addDoctor(d);
+
+            DoctorSchedule ds = new DoctorSchedule(0, schedDay, startTime, endTime, licenseID, 0);
+            con.addDoctorSchedule(ds);
+
+            UserContact c = new UserContact(con.getUser(username).getUserID(), email, "E-mail");
+            con.addContact(c);
+            response.sendRedirect("index.jsp");
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 
 }
