@@ -31,11 +31,7 @@ $('#datetimepicker').datetimepicker({
 
 
 });
-//$('#datetimepicker').datetimepicker({
-//    datepicker:false,
-//    format:'H:i',
-//    
-//});
+
 $('#datetimepicker2').datetimepicker({
     datepicker: false,
     format: 'H:i',
@@ -113,38 +109,71 @@ function getDocID(element)
     document.getElementById("docID").value = lastChar;
     alert("here is " + document.getElementById("docID").value);
 }
-var x1 = function getRequestID(element)
-{
-    alert("ALHELOO");
-//	$(document).foundation();
-//	$('#viewRequest-modal').foundation('reveal', 'open');
-    var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
-    //  alert("PRESSED BTN"+ pressedBtn);
-    var lastChar = pressedBtn;
-    document.getElementById("requestID").value = lastChar;
-    //$('#viewRequest-modal').foundation('reveal','open');
 
-    alert("here is " + document.getElementById("requestID").value);
-
-//		var outString = "doctor-appointment-requests.jsp?x1=" + lastChar
-////        outString += "&y1=" + 10
-////        outString += "&x2=" + 100
-////        outString += "&y2=" + 100
-//        location.href = outString
-
-
-    return lastChar;
-}
-
+//function getRequestID(element)
+//{
+//    alert("ALHELOO");
+//    var pressedBtn = element.id;
+//    var lastChar = pressedBtn;
+//    document.getElementById("requestID").value = lastChar;
+//    alert("here is " + document.getElementById("requestID").value);
+//    $('#viewRequest-modal').foundation('reveal', 'open');
+//    return document.getElementById("requestID").value;
+//}
 
 function getApproveID(element)
 {
     var pressedBtn = element.id;
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
-    document.getElementById("approveID").value = lastChar;
+    document.getElementById("approveID").value = element.id;
     alert("here is " + document.getElementById("approveID").value);
+}
+
+function getRequestID(element)
+{
+
+	var pressedBtn = element.id;
+    
+    document.getElementById("requestID").value = element.id
+
+    var currentUrl = window.location.href;
+    var urlLength  = currentUrl.length;
+    //get the last 3 letters of the url
+    var a = currentUrl.charAt(urlLength - 3);
+    var b = currentUrl.charAt(urlLength - 2);
+    var c = currentUrl.charAt(urlLength - 1);    
+    var last = "" + a + b + c + "";
+    
+    var splitUrl = ""; // will contain an array
+
+    // compare the last three letters of the url
+    if(last != 'jsp') {
+        splitUrl = currentUrl.split('?'); //will split the text when ? is found
+        currentUrl = splitUrl[0]; // get the first element of splitUrl
+    }
+
+    var url=currentUrl,
+	    seperator = (url.indexOf("?")===-1)?"?":"&",
+	    newParam=seperator + "requestID=" +element.id;
+	    newUrl=url.replace(newParam,"");
+	    newUrl+=newParam;
+	    window.location.href =newUrl;
+}
+
+function loadModalOnLoad()
+{
+    var currentUrl = window.location.href;
+    var urlLength  = currentUrl.length;
+    var a = currentUrl.charAt(urlLength - 3);
+    var b = currentUrl.charAt(urlLength - 2);
+    var c = currentUrl.charAt(urlLength - 1);
+    var last = "" + a + b + c + "";
+    
+    
+    if(  last != 'jsp') {
+    	 $('#viewRequest-modal').foundation('reveal', 'open');
+    }
 }
 
 function getRejectID(element)

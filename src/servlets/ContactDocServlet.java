@@ -67,8 +67,25 @@ public class ContactDocServlet extends HttpServlet {
 
 	       Appointment a =  new Appointment(0, "request", concern, remarks, startTime, requestTime,
 	    		   							dateToday, appointmentDate, 0, 0, p.getPatientID(), ds.getScheduleID());
-	        con.addAppointment(a);
-	        response.sendRedirect("hospitals.jsp");
+	       	String message = "Rando ";
+	       	
+	        if(con.addAppointment(a) == true)
+	        {
+	        	message = "<div data-alert class=\"alert-box success radius\"> "
+					    +  "Appointment Schedule has been successfully requested! "
+				        +  "<a href=\"#\" class=\"close\">&times;</a> "
+						+  "</div>";
+	        	System.out.println("HELLO");
+	        }
+	        else
+	        {
+	        	message = "<div data-alert class=\"alert-box alert radius\"> "
+					    +  "Appointment Schedule has already been occupied "
+				        +  "<a href=\"#\" class=\"close\">&times;</a> "
+						+  "</div>";
+	        }
+	        request.setAttribute("successMessage", message);
+			request.getRequestDispatcher("contactdoc.jsp").forward(request, response);
         }catch(ParseException e){
             e.printStackTrace();
         }

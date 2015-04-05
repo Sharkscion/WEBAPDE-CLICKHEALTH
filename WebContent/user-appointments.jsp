@@ -23,19 +23,19 @@
 	<%
 		Controller con = new Controller();
 	    
-	    int id=-1;
+	    String id = "";
 	    Cookie[] cookies = request.getCookies();
 	    for(Cookie cookie:cookies){
 	        if(cookie.getName().equals("user")){
-	            id=Integer.parseInt(cookie.getValue());
+	            id= cookie.getValue();
 	        }
 	    }
 	    
-	   User user = (User) con.getUserInstance(String.valueOf(id));
+	   User user = (User) con.getUser(id);
 	   String username = user.getUsername();
 	   
 	%>
-     <body id = "scroll-style" class = "page-content">
+     <body id = "scroll-style" class = "page-content" >
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
             <ul class="title-area">
@@ -52,7 +52,7 @@
 
             <section class="top-bar-section" id = "clickHealth-menu">
                 <!-- Right Nav Section -->
-                <input id = "search-box" input="text" placeholder=" Search Here ">
+                <input id = "searchbox" input="text" placeholder=" Search Here ">
                         <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a>
                 <ul class="right">
                     <li class="divider"></li>
@@ -60,7 +60,7 @@
                     <li class="divider"></li>
                     <li><a  href="hospitals.jsp">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
+                    <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
             </section>
         </nav>
@@ -74,13 +74,13 @@
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name"><%=username%></label>
-                            <a href = "user-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
-                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            <a href = "user-account-settings.jsp"><label id = "left-bar-account">Account Settings</label></a>
+                            <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
                         </div>
                     </div>
                 </div>
-                <div id = "mid-content" class = "row appointment-content">
+                <div id = "mid-content" class = "row appointment-content" >
                     <div class ="large-12 columns" id = "appointment">
                          <br>
                          <%
@@ -96,8 +96,8 @@
                          			Appointment a = (Appointment)i.next();
                          			DoctorSchedule ds = con.getDoctorSchedule(a.getDoctorSchedID());
                          			Hospital h = con.getHospitalByID(ds.getHospitalScheduleID());
-                         			Doctor d = con.getDoctor(ds.getHospitalScheduleID());
-                         			String hospital = h.getName();
+                         			Doctor d = con.getDoctor(ds.getDoctorScheduleID());
+                          			String hospital = h.getName();
                          			String address = h.getStreet() + "," + h.getCity();
                          			String doctor = d.getFirstname()+ " "+ d.getLastname();
                          			String specialization = d.getSpecialization();

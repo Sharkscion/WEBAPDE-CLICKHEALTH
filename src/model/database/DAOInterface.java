@@ -5,8 +5,8 @@ import java.util.Iterator;
 public interface DAOInterface {
 	
 	public Iterator getAllData();
-	public void insertData(Object obj);
-	public void updateData(Object obj);
+	public boolean insertData(Object obj);
+	public boolean updateData(Object obj);
 	public Object getData(Object keyID);
 
 }

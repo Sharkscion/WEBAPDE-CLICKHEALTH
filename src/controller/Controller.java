@@ -15,16 +15,7 @@ public class Controller
 	private PatientDAO pd;
 	private ContactDAO cd;
 	private UserDAO ud;
-//	private static Controller controller;
-//
-//	public static synchronized Controller getInstance() 
-//	{
-//        if (controller == null) {
-//            controller = new Controller();
-//        }
-// 
-//        return controller;
-//    }
+
 	public Controller()
 	{
 		ad = new AppointmentDAO();
@@ -36,34 +27,39 @@ public class Controller
 		cd = new ContactDAO();
 	}
 	
-	public void addAppointment(Appointment app)
+	public boolean changeAppointmentStat(int id, String stat)
 	{
-		ad.insertData(app);
+		return ad.changeAppointmentStat(id, stat);
+	}
+	public boolean addAppointment(Appointment app)
+	{
+		System.out.println("HELLO: ");
+		return ad.insertData(app);
 	}
 	
-	public void addContact(UserContact uc)
+	public boolean addContact(UserContact uc)
 	{
-		cd.insertData(uc);
+		return cd.insertData(uc);
 	}
 	
-	public void addDoctor(Doctor d)
+	public boolean addDoctor(Doctor d)
 	{
-		dd.insertData(d);
+		return dd.insertData(d);
 	}
 	
-	public void addDoctorSchedule(DoctorSchedule ds)
+	public boolean addDoctorSchedule(DoctorSchedule ds)
 	{
-		sd.insertData(ds);
+		return sd.insertData(ds);
 	}
 	
-	public void addUser(User u)
+	public boolean addUser(User u)
 	{
-		ud.insertData(u);
+		return ud.insertData(u);
 	}
 
-	public void addPatient(Patient p)
+	public boolean addPatient(Patient p)
 	{
-		pd.insertData(p);
+		return pd.insertData(p);
 	}
 	
 	public Appointment getAppointment(int appId)
@@ -82,7 +78,6 @@ public class Controller
 	public User getUser(String username)
 	{
 		User u = ud.getData(username);
-		System.out.println("USRNAME ETUUSER: "+ u.getUsername());
 		return ud.getData(username);
 	}
 	

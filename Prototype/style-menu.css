@@ -1,3 +1,8 @@
+body
+{
+ background: white;   
+}
+
 #clickHealth-logo
 {
     height: 35px;
@@ -156,7 +161,7 @@
 
 .page-content
 {
-   background: #bdb8ad;
+   background: #ffffff;
    height: 700px;  
 }
 

@@ -107,7 +107,7 @@ public class UserDAO implements DAOInterface {
         return uList.iterator();
     }
     @Override
-    public void insertData(Object obj) {
+    public boolean insertData(Object obj) {
 
 		try 
 		{
@@ -123,6 +123,7 @@ public class UserDAO implements DAOInterface {
 			if(statement.execute())
 			{
 				connect.close();
+				return true;
 			}
 		}
 		catch (SQLException e)
@@ -132,11 +133,14 @@ public class UserDAO implements DAOInterface {
 		}
 		
 		connect.close();
+		return false;
 	}
 
     @Override
-    public void updateData(Object obj) {
+    public boolean updateData(Object obj) {
         // TODO Auto-generated method stub
+    	
+    	return false;
     }
 
     public static String encryptPassword(String password){

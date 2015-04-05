@@ -51,7 +51,7 @@
                     <li class="divider"></li>
                     <li class = "active-button"><a  href = "#">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
+                    <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
 	            <form action = "SearchServlet" method = "post">
                 <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">

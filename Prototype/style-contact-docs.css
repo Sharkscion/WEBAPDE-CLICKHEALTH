@@ -1,17 +1,3 @@
-#HeadDiv
-{
-    background-color: #a82159;
-    width: auto;
-    height: 50;
-    float: top;
-}
-#BGDiv
-{
-    background-color: #c6d4e1;
-    width: auto;
-    height: 95%;
-
-}
 
 #form-content
 {
@@ -22,34 +8,7 @@
     margin-bottom: 30px; 
 }
 
-#BodDiv
-{
-    top: 30%;
-    background-color: #b7e7e4;
-    width: 90%;
-    height: 30%;
-    margin-left: 5%;
-    padding-bottom: 10;
-    margin-top: -1%;
-    
-    color: #a82159;
-    text-align: left;
-    font-family: Handlee;
-    font-size: 22px;
-}
-#DetailsDiv
-{
-    background-color: #7ec2ab;
-    width: 90%;
-    height: 57%;
-    margin-left: 5%;
-    margin-top: 1%;
-    
-    color: #a82159;
-    text-align: left;
-    font-family: Handlee;
-    font-size: 22px;
-}
+
 .headbutton
 {
     float: right;
@@ -76,7 +35,7 @@
     overflow: hidden;
     outline:none;
     color: white;
-    font-family: Slabs;
+    font-family: century-gothic, sans-serif;
     font-size: 20px;
 }
 .column-contact-content
@@ -84,11 +43,4 @@
     margin-left: 10%;
     margin-top: 0;
     background: #ebe7e0;
-}
-
-@font-face
-{
-    font-family: 'Handlee';
-    src: local('Handlee-Regular');
-    
 }

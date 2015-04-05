@@ -327,7 +327,7 @@ body
 
 .intro-page
 {
-  background: #ebe7e0;
+  background: #ffffff;
   width: 100%;
   height: 700px;
 }
@@ -364,7 +364,7 @@ body
 
 #menu
 {
-  background: #ebe7e0;
+  background: #ffffff;
   width: auto;
 }
 
@@ -479,6 +479,43 @@ body
     height: 50px !important;   
 }
 
+#error-box
+{
+    font-family: Century Gothic, sans-serif;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    margin-right: 100px;
+    margin-left: 180px;
+    margin-top: 80px;
+    border-style: solid;
+    border-color: #696660;   
+    border-width: 2px;
+}
+
+#error-box h4
+{
+  font-family: Century Gothic, sans-serif;
+    margin-left: 100px;
+}
+#error-form
+{
+    font-family: Century Gothic, sans-serif;
+    font-size: 15px;
+}
+
+.error-login-button
+{
+   font-size: 20px;
+   margin-top:10px;
+   margin-left: 50%;
+   margin-right: 50%;
+   border-radius: 3px;
+   border-color: transparent;
+   background:#44749d;
+   color: #ffffff;
+   width: 100px;
+   font-family: Century Gothic, sans-serif; 
+}
 
 
 
@@ -487,3 +524,9 @@ body
 
 
 
+
+.error-page {
+    background: #ffffff;
+    width: 100%;
+    height: 700px;
+}

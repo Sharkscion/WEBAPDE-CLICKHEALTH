@@ -19,7 +19,7 @@
     
      <body id = "scroll-style">
         <br>
-        <div class = "intro-page">
+        <div class = "error-page">
             <div class="contain-to-grid sticky"> 
                 <nav class="top-bar" id = "menu" data-topbar>
                     <ul class="title-area">
@@ -29,136 +29,55 @@
 
                     <ul class="right">
                         <li><a href= "#" data-dropdown="user-dropdown" class="radius button button-padding nav-button" >Sign Up</a></li>
-                        <li><a href= "#" data-dropdown="login-dropdown" class="radius button button-padding nav-button" >Login</a></li> 
                     </ul>
                 </nav>
             </div>  
+            <div id = "error-box">
+                <h4>ClickHealth Login</h4><hr>
+              <form data-abide action = "LoginServlet" method = "post" id = "error-form">	
+                    <div class = "row">
 
-            <div class = "row" >
-                <center>
-                    <h1 id = "tagLine"> A few clicks a day keeps the sickness away!</h1>
-                    <img id = "sample-screen" src = "Assets/sample_screens.png">
-                </center>
-            </div>
-
-            <div class = "row bottom-bar">
-                <center><img class = "line-LearnMore" src = "Assets/leftLine.png"> 
-                    <a href = "#About" class = "hvr-float" style = "font-size: 15px"> Learn More</a>
-                    <img class = "line-LearnMore" src = "Assets/rightLine.png">
-                </center>
-            </div>
-        </div>
-<!--**************************************************ABOUT PAGE 1****************************************************************** -->
-        <div class = "about-page-1">
-            <a name = "About"></a>
-            <div class = "row">
-                <div class = "large-8 columns">
-                    <h1> What is ClickHealth? </h1>
-                    <p><span style ="color: #ffffff">ClickHealth</span> is your bridge to the nearest available hospitals, doctors, and health services around you. Through this application, you will be able to easily connect with the hospitals, doctors and health services you need in just a few clicks! </p>
-                </div>
-                <div class = "large-4 columns">
-                    <img src = "Assets/locations.png">
-                </div>  
-            </div>
-        </div>
-<!--**************************************************ABOUT PAGE 2*************************************************************** -->
-        <div class = "about-page-2">
-            <div class = "row">
-                <div class = "large-12 columns">
-                    <h1>What can I find in ClickHealth?</h1>
-                    <span style ="color: #696660">ClickHealth</span> contains catalogs of participating hospitals, doctors, and services all around the country. These catalogs will contain the information on the hospitals and their locations, the information on the doctors (which hospital they're in, their specializations, their schedules, their contact info etc.), the information on health services available, and the form to set an appointment with the doctor you need.          
-                </div>
+                        <div class=  "name-field">
+                            <div class = "large-2 columns" style = "margin-left: 100px;">
+                                Username:            	
+                            </div>
+                            <div class = "large-8 columns">
+                                <input type="text" id = "logusername" name="logusername" tabindex="1" required/>
+                                <small class = "error">Enter your username.</small> 
+                            </div>   
+                        </div> 
+                    </div>
+                    <div class = "row">
+                        <div class = "password-field">
+                            <div class = "large-2 columns" style = "margin-left: 100px;">
+                                Password :            	
+                            </div>
+                            <div class = "large-8 columns error-field">
+                                 <input type="password" id= "logpassword" name="logpassword" tabindex="2" required/>
+                                 <small class = "error">Enter your password.</small>
+                                 
+                            </div>                  
+                        </div> 
+                    </div>
+                  <div class = "row">
+                    <div style = "color: red; margin-left:40%;">Either your username or your password is invalid.</div>
+                    <input type="submit" class="error-login-button" value="Login" tabindex="3"/>
+                  </div>
+                </form>
             </div>
         </div>
-<!--**************************************************ABOUT PAGE 3****************************************************************** -->
-        <div class = "about-page-3">
-            <div class = "row">
-                <div class = "large-12 columns dp">
-                    <h1>How do I use ClickHealth?</h1>
-                    <img src = "Assets/steps.png">
-                </div>
-            </div>
-        </div>
-<!--**************************************************TEAM PAGE****************************************************************** -->
-        <div class = "team-page">
-            <!-- /<a name = ""></a> -->
-            <div class = "row">
-                <h1>ClickHealth Team</h1>
-            </div>
-            <br>
-            <div class = "row">
-                <div class = "large-4 columns demo-3">
-                    <figure>
-                        <img src = "Assets/shay.png"/>
-                        <figcaption>
-                            <h2>I AM SHAYANE!</h2>
-                            <p> ClickHealth's developer and designer.<br> I am a second year BS CS-ST student from De La Salle University. </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class = "large-4 columns demo-3">
-                    <figure>
-                        <img src ="Assets/xgb.png"/>
-                        <figcaption>
-                            <h2>I AM CHRISTIAN!</h2>
-                            <p> ClickHealth's developer and designer.<br> I am a second year BS CS-ST student from De La Salle University. </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class = "large-4 columns demo-3">
-                    <figure>
-                        <img src = "Assets/winona.png"/>
-                        <figcaption>
-                            <h2>I AM WINONA!</h2>
-                            <p> ClickHealth's developer and designer.<br> I am a second year BS CS-ST student from De La Salle University. </p>
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
-            <div class = "row member-name">
-                <div class = "large-4 columns demo-3"><h3>Shayane Tan </h3></div>
-                <div class = "large-4 columns demo-3"><h3>Christian Cote </h3></div>
-                <div class = "large-4 columns demo-3"><h3>Winona Erive </h3></div>
-            </div>
-
-            <div class = "row footer">
-                ClickHealth © 2015 by Powerpuff.<br>
-                De La Salle University, 2401 Taft Avenue, Malate, Manila, Philippines
-            </div>
-        </div>
-
-<!--**************************************************Login Drop Down*************************************************************-->
-        <div id ="login-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
-            <!--  <form  action="doctor-account.html" method="get">  -->
-            <form data-abide action = "LoginServlet" method = "post">	
-                <div class="name-field">
-	                <label>Username
-	                	<input type="text" id = "logusername" name="logusername" tabindex="1" required/>
-	                </label>
-	                	<small class = "error">Enter your username.</small> 
-                </div> 
-                <div class = "password-field">
-	                <label>Password
-	                	<input type="password" id= "logpassword" name="logpassword" tabindex="2" required/>
-	                </label>
-	                	<small class = "error">Enter your password.</small> 
-                </div> 
-                 
-                <input type="submit" class="form-login-button" value="Login" tabindex="3"/>
-            </form>
-        </div>
+      
 <!--*************************************************User Sign In Drop Down*******************************************************-->
-        <div id ="user-dropdown" class="f-dropdown small content form-dropdown " data-dropdown-content>
-            <div class = "row user-form">
-          		<ul>
-              		<li><a href = "#" data-reveal-id="signUp-patient-modal" data-reveal> PATIENT </a></li>
-              		<li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> DOCTOR </a> </li>
-          		</ul>
-            </div>
+        <div id ="user-dropdown" class="f-dropdown small content form-dropdown user-form" data-dropdown-content>
+            <h5>-SIGN UP AS- </h5> 
+            <ul>
+                <li><a href = "#" data-reveal-id="signUp-patient-modal" data-reveal> Patient </a></li>
+                <li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> Doctor </a> </li>
+            </ul>
         </div>
 <!--************************************************PATIENT SIGN UP MODAL*********************************************************-->
         <div id = "signUp-patient-modal" class="reveal-modal small form" style = "width: 900px;" data-reveal>
-            <h5>SIGN UP : PATIENT</h5> 
+            <h2>SIGN UP : PATIENT</h2> 
             <form data-abide action = "PatientRegServlet" method = "post">
             	<div class = "row">
 	                <div class = "large-6 columns">
@@ -242,11 +161,11 @@
             <a class="close-reveal-modal">&#215;</a>
         </div>
  <!--**************************************************DOCTOR MODAL***************************************************************-->
-       <div id = "signUp-doctor-modal" class="reveal-modal small form" style = "width: 1000px; height: 560px;" data-reveal>
-            <h5>SIGN UP : DOCTOR</h5> 
+       <div id = "signUp-doctor-modal" class="reveal-modal small form" style = "width: 1000px;" data-reveal>
+            <h2>SIGN UP : DOCTOR</h2> 
             <form  data-abide action="DoctorRegServlet" method = "post">
-           		 <div class = "row">
-	                <div class = "large-6 columns" style = "padding-top: 20px;">
+            <div class = "row">
+	                <div class = "large-6 columns" style = "padding-top: 40px;">
 	                    <h6 class = "doctor-SignUp-header">-Account Info-</h6>
 	                    <div class = "row">
 	                        <div clas ="large-12 columns" style = "margin-left: 15px;">
@@ -323,10 +242,17 @@
 	                                    %>
 	                             </select>
 	                        </div>
-	                        <div class = "large-6 columns">
-	                            <label>Day:   <small>(e.g. M-W-F)</small></label>
-	                            <input type = "text" id = "schedDays" name = "schedDays" required>
-	                            <small class="error">Schedule Days are required.</small>
+	                        <div class = "large-6 columns dropdown-options">
+	                            <label>Day:</label>
+	                            <select name = "schedDay">
+	                                <option>M</option>
+	                                <option>T</option>
+	                                <option>W</option>
+	                                <option>TH</option>
+	                                <option>F</option>
+	                                <option>S</option>
+	                                <option>SU</option>
+	                            </select>
 	                        </div>
 	                    </div>
 	                    <div class = "row">
@@ -359,7 +285,7 @@
         <script src="Foundation/js/foundation/foundation.topbar.js"></script>
         <script src="Foundation/js/foundation/foundation.reveal.js"></script> 
         <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
-        <script src="Foundation/js/vendor/modernizr.js"></script>
+        <script src="Foundation/foundation/js/vendor/custom.modernizr.js"></script>
 		<script src="Foundation/js/foundation/foundation.abide.js"></script>
         <script src="jquery.datetimepicker.js"></script>
         <script src="javascript.js"></script>

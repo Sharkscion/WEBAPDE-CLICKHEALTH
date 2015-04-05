@@ -3,7 +3,8 @@
 {
     display: inline-block;
     list-style-type: none;
-    border: 1px solid #DDDDDD;
+    border-width; 1px;
+    border-color: #e17100;
     background: #c6d4e1;
     font-family: century gothic, sans-serif;
     height: auto;

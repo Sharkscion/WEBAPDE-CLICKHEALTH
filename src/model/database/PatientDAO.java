@@ -57,7 +57,7 @@ public class PatientDAO implements DAOInterface {
 	}
 
 	@Override
-	public void insertData(Object obj) {
+	public boolean insertData(Object obj) {
 
 		Patient pat = (Patient) obj;
 		try {
@@ -68,14 +68,16 @@ public class PatientDAO implements DAOInterface {
 			statement.setString(2, pat.getCity());
 			statement.setString(3, pat.getUsername());
 			statement.execute();
+			return true;
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		} 
 		connect.close();
+		return false;
 	}
 
 	@Override
-	public void updateData(Object obj) {
+	public boolean updateData(Object obj) {
 		Patient p = (Patient)obj;
 		String query = "UPDATE patient "
 					 + "SET  street = ?, city = ?"
@@ -89,6 +91,7 @@ public class PatientDAO implements DAOInterface {
 			{
 				System.out.println("UPDATED Patinet");
 				connect.close();
+				return true;
 			}
 		
 		} catch (SQLException e) {
@@ -97,6 +100,7 @@ public class PatientDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
 	}
 
 	public Patient getData(Object user) {

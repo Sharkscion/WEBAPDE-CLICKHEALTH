@@ -59,7 +59,7 @@ public class DoctorDAO implements DAOInterface {
 	}
 
 	@Override
-	public void insertData(Object obj) {
+	public boolean insertData(Object obj) {
 
 		Doctor doc = (Doctor) obj;
 		try {
@@ -69,10 +69,10 @@ public class DoctorDAO implements DAOInterface {
 			statement.setInt(1, doc.getLicenseID() );
 			statement.setString(2, doc.getSpecialization());
 			statement.setString(3, doc.getUsername());
-			statement.execute();
 			if(statement.execute())
 			{
 				connect.close();
+				return true;
 			}
 		}
 		catch (SQLException e)
@@ -81,10 +81,11 @@ public class DoctorDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
 	}
 
 	@Override
-	public void updateData(Object obj) {
+	public boolean updateData(Object obj) {
 		Doctor d = (Doctor)obj;
 		String query = "UPDATE doctor "
 					 + "SET  specialization = ?"
@@ -98,6 +99,7 @@ public class DoctorDAO implements DAOInterface {
 			{
 				System.out.println("UPDATED Doctor");
 				connect.close();
+				return true;
 			}
 		
 		} catch (SQLException e) {
@@ -106,6 +108,7 @@ public class DoctorDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
 	}
 
 	public Iterator<String> getAllSpecializations()
