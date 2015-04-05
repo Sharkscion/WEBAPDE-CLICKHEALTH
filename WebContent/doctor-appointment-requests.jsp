@@ -19,15 +19,15 @@
     </head>
      <%
  		Controller con = new Controller();
-	    String username = "";
+	    String userId = "";
 	    Cookie[] cookies = request.getCookies();
 	    for(Cookie cookie:cookies){
 	        if(cookie.getName().equals("user")){
-	            username = cookie.getValue();
+	            userId = cookie.getValue();
 	        }
 	    }
 	    
-	   User user = con.getUser(username);
+	   User user = con.getUserInstance(userId);
 	   String uName = user.getFirstname() + " "+ user.getLastname();
     %>
      <body id = "scroll-style" class = "page-content" onLoad="loadModalOnLoad()">
