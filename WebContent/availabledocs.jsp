@@ -19,7 +19,7 @@
     </head>
 	<% 
 	  	Controller c = new Controller();
-	    String userID = "";
+		String userID = "";
 	    Cookie[] cookies = request.getCookies();
 	    for(Cookie cookie:cookies){
 	        if(cookie.getName().equals("user")){
@@ -52,7 +52,7 @@
                     <li class="divider"></li>
                     <li><a  href = "hospitals.jsp">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li class = "active-button" ><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
+                    <li class = "active-button" style= "margin-right: 10px;" ><a href="availabledocs.jsp">DOCTORS</a></li>
                   <!--   <li><a  " href="contactdoc.jsp">CONTACTS</a></li>-->
                 </ul>
                 <!-- Right Nav Section --> 
@@ -78,8 +78,8 @@
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name"><%=uName%></label>
-                            <a href = "account.html"><label id = "left-bar-account">Account Settings</label></a>
-                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            <a href = "user-account-settings.jsp"><label id = "left-bar-account">Account Settings</label></a>
+                            <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
 
                         </div>
 

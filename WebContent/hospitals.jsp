@@ -16,15 +16,15 @@
     
     <%
         Controller con = new Controller();
-	    String userId = "";
+	    String userID = "";
 	    Cookie[] cookies = request.getCookies();
 	    for(Cookie cookie:cookies){
 	        if(cookie.getName().equals("user")){
-	            userId = cookie.getValue();
+	            userID = cookie.getValue();
 	        }
 	    }
 	    
-	   User user = con.getUserInstance(userId);
+	   User user = con.getUserInstance(userID);
 	   String uName = user.getUsername();
     %>
     
@@ -51,7 +51,7 @@
                     <li class="divider"></li>
                     <li class = "active-button"><a  href = "#">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li><a style= "margin-right: 10px;" href="availabledocs.jsp">DOCTORS</a></li>
+                    <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
 	            <form action = "SearchServlet" method = "post">
                 <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
@@ -75,7 +75,8 @@
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name"><%=uName%></label>
-                            <a href = "user-account-settings.jsp"><label id = "left-bar-account">Account Settings</label></a>
+                            <a href = "user-account-settings.jsp">
+                            	<label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
                         </div>

@@ -30,34 +30,6 @@ public class UserDAO implements DAOInterface {
         return uD;
     }
 
-//    public int getUserID(String userName)
-//    {
-//          int i = 0;
-//          try 
-//          {
-//              String query = "SELECT userID FROM user WHERE username = ?";
-//              PreparedStatement preparedStatement = con.prepareStatement(query);
-//              preparedStatement.setString(1, userName);
-//              ResultSet resultSet = preparedStatement.executeQuery();
-//              if (resultSet.next()) 
-//            	  i = resultSet.getInt("userID");
-//                  
-//          } catch (SQLException sqlException) {
-//              sqlException.printStackTrace();
-//          } finally {
-//              try {
-//                  if (con != null) {
-//                      con.close();
-//                  }
-//              } catch (SQLException sqlee) {
-//                  sqlee.printStackTrace();
-//              }
-//          }
-//          
-//          return i;
-//        
-//    }
-//    
     public User validateUser(String username, String password) {
 
         User u = null;
@@ -108,7 +80,7 @@ public class UserDAO implements DAOInterface {
     }
 
     @Override
-    public void insertData(Object obj) {
+    public boolean insertData(Object obj) {
 
         try {
             User u = (User) obj;
@@ -120,19 +92,20 @@ public class UserDAO implements DAOInterface {
             statement.setString(4, u.getLastname());
             statement.setString(5, u.getFirstname());
             statement.setString(6, u.getType());
-            if (statement.execute()) {
-                connect.close();
-            }
+            statement.execute();
+            connect.close();
+            return true;
         } catch (SQLException e) {
             System.out.println("Unable to INSERT new user");
             e.printStackTrace();
         }
 
         connect.close();
+        return false;
     }
 
     @Override
-    public void updateData(Object obj) {
+    public boolean updateData(Object obj) {
         User user = (User) obj;
         String query = "UPDATE user "
                 + "SET  firstname = ?, lastname = ?, username=?, "
@@ -146,9 +119,8 @@ public class UserDAO implements DAOInterface {
             statement.setString(4, user.getEmail());
             statement.setString(5, encryptPassword(user.getPassword()));
             statement.setInt(6, user.getUserID());
-            if (statement.execute()) {
-                connect.close();
-            }
+            statement.execute();
+            return true;
 
         } catch (SQLException e) {
 
@@ -156,6 +128,7 @@ public class UserDAO implements DAOInterface {
             e.printStackTrace();
         }
         connect.close();
+        return false;
     }
 
     public User getUserInstance(String key) {

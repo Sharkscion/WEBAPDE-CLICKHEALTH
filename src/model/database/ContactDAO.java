@@ -83,7 +83,7 @@ public class ContactDAO implements DAOInterface {
     }
 
     @Override
-    public void insertData(Object obj) 
+    public boolean insertData(Object obj) 
     {
         try 
         {
@@ -93,10 +93,9 @@ public class ContactDAO implements DAOInterface {
             statement.setInt(1, c.getUserID());
             statement.setString(2, c.getContactInfo());
             statement.setString(3, c.getType());
-            if(statement.execute())
-			{
-				connect.close();
-			}
+            statement.execute();
+            connect.close();
+            return true;
 		}
 		catch (SQLException e)
 		{
@@ -104,10 +103,11 @@ public class ContactDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
     }
 
     @Override
-    public void updateData(Object obj) {
+    public boolean updateData(Object obj) {
     	
     	UserContact u = (UserContact)obj;
 		String query = "UPDATE usercontact "
@@ -119,12 +119,10 @@ public class ContactDAO implements DAOInterface {
 			statement.setString(1, u.getContactInfo());
 			statement.setString(2, u.getType());
 			statement.setInt(3, u.getUserID());
-		
-			if(statement.execute())
-			{
-				System.out.println("UPDATED CONTACT TAT");
-				connect.close();
-			}
+			statement.execute();
+			connect.close();
+			return true;
+			
 		
 		} catch (SQLException e) {
 	
@@ -132,6 +130,7 @@ public class ContactDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
     }
 
     @Override

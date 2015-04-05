@@ -96,7 +96,7 @@ public class AppointmentDAO implements DAOInterface{
 
 
 	@Override
-	public void insertData(Object obj) {
+	public boolean insertData(Object obj) {
 		// TODO Auto-generated method stub
 		try
 		{
@@ -116,22 +116,21 @@ public class AppointmentDAO implements DAOInterface{
 			statement.setInt(9, a.getIsResolvedDoctor());
 			statement.setInt(10, a.getPatientID());
 			statement.setInt(11, a.getDoctorSchedID());
-			
-			if(statement.execute())
-			{
-				connect.close();
-			}
+			statement.execute();
+			connect.close();
+			return true;
 		}
 		catch (SQLException e)
 		{
 			System.out.println("Unable to INSERT new appointments");
 			e.printStackTrace();
 		}
-		connect.close();	
+		connect.close();
+		return false;
 	}
 	
 	@Override
-	public void updateData(Object obj) {
+	public boolean updateData(Object obj) {
 
 		Appointment a = (Appointment)obj;
 		String query = "UPDATE appointments "
@@ -153,11 +152,9 @@ public class AppointmentDAO implements DAOInterface{
 			statement.setInt(9, a.getPatientID());
 			statement.setInt(10, a.getDoctorSchedID());
 			statement.setInt(11, a.getAppID());
-			if(statement.execute())
-			{
-				System.out.println("UPDATED APPOINTMENT TAT");
-				connect.close();
-			}
+			statement.execute();
+			connect.close();
+			return true;
 		
 		} catch (SQLException e) {
 	
@@ -165,6 +162,7 @@ public class AppointmentDAO implements DAOInterface{
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
 	}
 
 
@@ -208,13 +206,13 @@ public class AppointmentDAO implements DAOInterface{
 	public Iterator<Appointment> getDoctorAppointments(int licenseID)
 	{
 		System.out.println("APPOINTMENTS DCOTOR DAO");
-		
+		System.out.println("APPOINTMENTS DCOTOR DAO: "+ licenseID);
 		Appointment a =  null;
 		
 		try {
 			String query = "SELECT * "
 					+ "FROM appointments, doctor "
-					+ "WHERE licenseID = (SELECT licenseID FROM doctorschedule WHERE licenseID = '?') "
+					+ "WHERE licenseID = ? "
 					+ "AND status = \"pending\" "
 					+ "AND isResolvedDoctor = 0 "
 					+ "ORDER BY requestedDate DESC, requestedTime DESC";
@@ -276,32 +274,31 @@ public class AppointmentDAO implements DAOInterface{
 		return aList.iterator();
 	}
 	
-//	public Iterator<Appointment> getDoctorAppointments(String username)
-//	{
-//		try 
-//		{
-//			String query = "SELECT * FROM appointments WHERE doctor_ID = (SELECT licenseID FROM doctor WHERE user_ID = (SELECT userID FROM user where username = ?) AND  status = \"pending\");";
-//			statement = connect.getConnection().prepareStatement(query);
-//			ResultSet rs = statement.executeQuery();
-//			
-//			aList = new ArrayList<Appointment>();
-//			Appointment a = null;
-//			
-//			while (rs.next()) 
-//			{
-//				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
-//								  rs.getTime("startTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
-//								  rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
-//								  rs.getInt("doctorSched_ID"));
-//				aList.add(a);
-//			}
-//
-//			System.out.println("ERROR in getting all request from DB");
-//			e.printStackTrace();
-//		}
-//		connect.close();
-//		return null;
-//	}
+
+	public boolean changeAppointmentStat(int appID, String stat)
+	{
+		String query = "UPDATE appointments "
+					 + "SET  status = ?"
+				     + "WHERE appointmentsID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, stat);
+			statement.setInt(2, appID);
+			statement.execute();
+			connect.close();
+			return true;
+		
+		} catch (SQLException e) {
+	
+			System.out.println("Update Error");
+			connect.close();
+			e.printStackTrace();
+		}
+		connect.close();
+		return false;
+	}
+
 
 
 

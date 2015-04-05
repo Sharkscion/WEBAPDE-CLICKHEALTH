@@ -59,7 +59,7 @@ public class DoctorDAO implements DAOInterface {
 	}
 
 	@Override
-	public void insertData(Object obj) {
+	public boolean insertData(Object obj) {
 
 		Doctor doc = (Doctor) obj;
 		try {
@@ -70,10 +70,8 @@ public class DoctorDAO implements DAOInterface {
 			statement.setString(2, doc.getSpecialization());
 			statement.setString(3, doc.getUsername());
 			statement.execute();
-			if(statement.execute())
-			{
-				connect.close();
-			}
+			connect.close();
+			return true;
 		}
 		catch (SQLException e)
 		{
@@ -81,10 +79,11 @@ public class DoctorDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
 	}
 
 	@Override
-	public void updateData(Object obj) {
+	public boolean updateData(Object obj) {
 		Doctor d = (Doctor)obj;
 		String query = "UPDATE doctor "
 					 + "SET  specialization = ?"
@@ -93,19 +92,16 @@ public class DoctorDAO implements DAOInterface {
 		{
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setString(1, d.getSpecialization());
-		
-			if(statement.execute())
-			{
-				System.out.println("UPDATED Doctor");
-				connect.close();
-			}
-		
+			statement.execute();
+			connect.close();
+			return true;
 		} catch (SQLException e) {
 	
 			System.out.println("Update Error");
 			e.printStackTrace();
 		}
 		connect.close();
+		return false;
 	}
 
 	public Iterator<String> getAllSpecializations()
@@ -162,16 +158,15 @@ public class DoctorDAO implements DAOInterface {
 		return d;
 	}
 
-	public Doctor getDoctorByUsername(String username) 
+	public Doctor getDoctorByUserId(int userId) 
 	{
 		Doctor d = null;
 		try 
 		{
 			String query = "SELECT * FROM user u, doctor d "
-					+ "WHERE u.userID = d.user_ID "
-					+ "AND username = ?;";
+					+ "WHERE u.userID = ?";
 			statement = connect.getConnection().prepareStatement(query);
-			statement.setString(1, username);
+			statement.setInt(1, userId);
 			rs = statement.executeQuery();
 			if (rs.next()) {
 				d = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), 

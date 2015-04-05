@@ -26,16 +26,9 @@ var logic = function() {
 $('#datetimepicker').datetimepicker({
     datepicker: false,
     format: 'H:i',
-    //onGenerate: logic,
     onShow: logic
-
-
 });
-//$('#datetimepicker').datetimepicker({
-//    datepicker:false,
-//    format:'H:i',
-//    
-//});
+
 $('#datetimepicker2').datetimepicker({
     datepicker: false,
     format: 'H:i',
@@ -82,27 +75,12 @@ $(function() {
     });
 });
 
-
-function validateLogin()
-{
-    if (document.getElementById("logusername").value.length < 1 || document.getElementById("logpassword").value.length < 1)
-    {
-        document.getElementById("logusername").style.borderColor = "Red";
-        document.getElementById("logpassword").style.borderColor = "Red";
-        $('#blankFields-modal').foundation('reveal', 'open');
-        return false;
-    }
-    return true;
-}
-
-
 function getHospID(element)
 {
     var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("hospID").value = lastChar;
-    alert("here is " + document.getElementById("hospID").value);
+  //  alert("here is " + document.getElementById("hospID").value);
 }
 
 function getDocID(element)
@@ -111,40 +89,63 @@ function getDocID(element)
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("docID").value = lastChar;
-    alert("here is " + document.getElementById("docID").value);
+    //alert("here is " + document.getElementById("docID").value);
 }
-var x1 = function getRequestID(element)
-{
-    alert("ALHELOO");
-//	$(document).foundation();
-//	$('#viewRequest-modal').foundation('reveal', 'open');
-    var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
-    //  alert("PRESSED BTN"+ pressedBtn);
-    var lastChar = pressedBtn;
-    document.getElementById("requestID").value = lastChar;
-    //$('#viewRequest-modal').foundation('reveal','open');
-
-    alert("here is " + document.getElementById("requestID").value);
-
-//		var outString = "doctor-appointment-requests.jsp?x1=" + lastChar
-////        outString += "&y1=" + 10
-////        outString += "&x2=" + 100
-////        outString += "&y2=" + 100
-//        location.href = outString
-
-
-    return lastChar;
-}
-
 
 function getApproveID(element)
 {
     var pressedBtn = element.id;
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
-    document.getElementById("approveID").value = lastChar;
+    document.getElementById("approveID").value = element.id;
     alert("here is " + document.getElementById("approveID").value);
+}
+
+function getRequestID(element)
+{
+
+	var pressedBtn = element.id;
+    
+    document.getElementById("requestID").value = element.id
+
+    var currentUrl = window.location.href;
+    var urlLength  = currentUrl.length;
+    //get the last 3 letters of the url
+    var a = currentUrl.charAt(urlLength - 3);
+    var b = currentUrl.charAt(urlLength - 2);
+    var c = currentUrl.charAt(urlLength - 1);    
+    var last = "" + a + b + c + "";
+    //var d = currentUrl.(urlLength-21);
+    alert(d);
+    var splitUrl = ""; // will contain an array
+
+    // compare the last three letters of the url
+    if(last != 'jsp') {
+        splitUrl = currentUrl.split('?'); //will split the text when ? is found
+        currentUrl = splitUrl[0]; // get the first element of splitUrl
+    }
+
+    var url=currentUrl,
+	    seperator = (url.indexOf("?")===-1)?"?":"&",
+	    newParam=seperator + "requestID=" +element.id;
+	    newUrl=url.replace(newParam,"");
+	    newUrl+=newParam;
+	    window.location.href =newUrl;
+}
+
+function loadModalOnLoad()
+{
+    var currentUrl = window.location.href;
+    var urlLength  = currentUrl.length;
+    var a = currentUrl.charAt(urlLength - 3);
+    var b = currentUrl.charAt(urlLength - 2);
+    var c = currentUrl.charAt(urlLength - 1);
+    var last = "" + a + b + c + "";
+    
+    
+    if(  last != 'jsp') {
+    	 $('#viewRequest-modal').foundation('reveal', 'open');
+    }
 }
 
 function getRejectID(element)
@@ -153,29 +154,8 @@ function getRejectID(element)
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("rejectID").value = lastChar;
-    alert("here is " + document.getElementById("rejectID").value);
+   // alert("here is " + document.getElementById("rejectID").value);
 }
-function clicked(i)
-{
-    switch (i)
-    {
-        case 1:
-            alert("You clicked Contact");
-            break;
-        case 2:
-            alert("You clicked Guidelines");
-            break;
-        case 3:
-            alert("You clicked Hospitals");
-            break;
-        case 4:
-            alert("You clicked About");
-            break;
-        case 5:
-            alert("List of specializations here.");
-    }
-}
-
 
 function removeElement(parentDiv, childDiv) {
     if (childDiv == parentDiv) {

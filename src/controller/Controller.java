@@ -36,44 +36,48 @@ public class Controller
 		cd = new ContactDAO();
 	}
 	
-	public void addAppointment(Appointment app)
+	public boolean changeAppointmentStat(int id, String stat)
 	{
-		ad.insertData(app);
+		return ad.changeAppointmentStat(id, stat);
+	}
+	public boolean addAppointment(Appointment app)
+	{
+		return ad.insertData(app);
 	}
 	
-        public void editPatient(Patient p){
-            pd.updateData(p);
-        }
-        
-        public void editUser(User u){
-            ud.updateData(u);
-        }
-        
-	public void addContact(UserContact uc)
+	public boolean addContact(UserContact uc)
 	{
-		cd.insertData(uc);
+		return cd.insertData(uc);
 	}
 	
-	public void addDoctor(Doctor d)
+	public boolean addDoctor(Doctor d)
 	{
-		dd.insertData(d);
+		return dd.insertData(d);
 	}
 	
-	public void addDoctorSchedule(DoctorSchedule ds)
+	public boolean addDoctorSchedule(DoctorSchedule ds)
 	{
-		sd.insertData(ds);
+		return sd.insertData(ds);
 	}
 	
-	public void addUser(User u)
+	public boolean addUser(User u)
 	{
-		ud.insertData(u);
+		return ud.insertData(u);
 	}
 
-	public void addPatient(Patient p)
+	public boolean addPatient(Patient p)
 	{
-		pd.insertData(p);
+		return pd.insertData(p);
 	}
 	
+	public void editPatient(Patient p){
+        pd.updateData(p);
+    }
+    
+    public void editUser(User u){
+        ud.updateData(u);
+    }
+    
 	public Appointment getAppointment(int appId)
 	{
 		return ad.getData(appId);
@@ -90,7 +94,6 @@ public class Controller
 	public User getUser(String username)
 	{
 		User u = ud.getDataUsername(username);
-		System.out.println("USRNAME ETUUSER: "+ u.getUsername());
 		return u;
 	}
 	
@@ -104,9 +107,9 @@ public class Controller
 		return dd.getData(licenseID);
 	}
 	
-	public Doctor getDoctorByUsername(String username)
+	public Doctor getDoctorByUserId(int userID)
 	{
-		return dd.getDoctorByUsername(username);
+		return dd.getDoctorByUserId(userID);
 	}
 	public User validateUser(String username, String password)
 	{
@@ -155,22 +158,14 @@ public class Controller
 	{
 		return sd.getData(scheduleID);
 	}
-//	public Doctor getSpecificDoctor(int licenseKey)
-//	{
-//		return dd.getData(licenseKey);
-//	}
-//	public Doctor getAppointmentDoctor(int keyID)
-//	{
-//		return dd.getAppointmentDoctor(keyID);
-//	}
-//	public Hospital getHospital(int hospitalID)
-//	{
-//		return hd.getData(String.valueOf(hospitalID));
-//	}
-//	
+
 	public Iterator<Appointment> getPatientAppointments(int patientID)
 	{
 		return ad.getPatientAppointments(patientID);
+	}
+	public Iterator<Appointment> getDoctorAppointments(int licenseID)
+	{
+		return ad.getDoctorAppointments(licenseID);
 	}
 	
 	public Iterator<Appointment> getRequestAppointment(int licenseID)
@@ -186,14 +181,6 @@ public class Controller
 	{
 		return dd.getSpecializationHospitalDoctors(specialization, hospitalID);
 	}
-	
-//	public Iterator<Doctor> getSpecializationDoctors()
-//	{
-//				/*SELECT * FROM doctor d, user u
-//		WHERE d.user_ID = u.userID AND d.specialization 
-//		IN (SELECT specialization FROM doctor WHERE specialization Like "%o%");*/
-//		return null;
-//	}
 	
 	
 	public Iterator<UserContact> getUserContacts(int id)

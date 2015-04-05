@@ -19,15 +19,16 @@
     </head>
      <%
  		Controller con = new Controller();
-	    String userId = "";
+     	String userID = "";
 	    Cookie[] cookies = request.getCookies();
 	    for(Cookie cookie:cookies){
 	        if(cookie.getName().equals("user")){
-	            userId = cookie.getValue();
+	            userID = cookie.getValue();
 	        }
 	    }
 	    
-	   User user = con.getUserInstance(userId);
+	   User user = con.getUserInstance(userID);
+		
 	   String uName = user.getFirstname() + " "+ user.getLastname();
     %>
      <body id = "scroll-style" class = "page-content" onLoad="loadModalOnLoad()">
@@ -49,7 +50,7 @@
                     <li class="divider"></li>
                     <li class ="active-button"><a href="doctor-appointment-requests.jsp">APPOINTMENT REQUESTS</a></li>
                     <li class="divider"></li>
-                    <li  style= "margin-right: 10px"><a  href="scheduled-appointments.html">SCHEDULED APPOINTMENTS</a></li>
+                    <li  style= "margin-right: 10px"><a  href="scheduled-appointments.jsp">SCHEDULED APPOINTMENTS</a></li>
                     <li class="divider"></li>
                 </ul>
             </section>
@@ -79,7 +80,7 @@
                  		</div>
 	                	<%
 	           
-	                		Doctor d = con.getDoctorByUsername(user.getUsername());
+	                		Doctor d = con.getDoctorByUserId(user.getUserID());
 	             			Iterator<Appointment> appointments = con.getRequestAppointment(d.getLicenseID());
 	             			Appointment app = null;
 	                		Patient patient = null;
@@ -114,43 +115,50 @@
             </section>
         </div>
 <!----------------------------------------------------- VIEW REQUEST MODAL------------------------------------------------------>
-        <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
-      		
-      		<div style="color: #119525"> ${successMessage} </div>
-           	<form action = "ApproveRequestServlet" method = "post">
-	         
- 
-	              <%
-	             
-	              	String appId= request.getParameter("requestID");
-	            	int id = -1;
-	            	if(appId != null)
-	            	{
-	            		id = Integer.parseInt(appId);
-	      				Appointment a = con.getAppointment(id);
-	      				Patient p = con.getPatientByID(a.getPatientID());
-	      				String patientName = p.getFirstname() + " "+ p.getLastname();
-	         				
-	            %>
-	            	<h5>Appointment with <%=patientName%> </h5>
-	            	<h6>Requested on <%=a.getRequestedDate()%> </h6>
-	            	<hr>
-	            	<p>Area of Concern: <%=a.getConcern() %></p>
-	            	<p>Appointment Date: <%=a.getAppointmentDate() %></p>
-	            	<p>Appointment Time: <%=a.getStartTime() %></p>
-	         		
-	         		<%if(a.getRemarks().equals("") == false)%>
-	         		<p>Remarks: <%=a.getRemarks()%></p>
-	         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
-	         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
-	            <%
-	            	}
-	            %>
-	            <input type = "hidden" name = "approveID" id = "approveID">
-	            <input type = "hidden" name = "rejectID" id = "rejectID">
-            </form>
-             <a class="close-reveal-modal">&#215;</a>
-        </div>
+      
+	        <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
+	      		<div id="request-message" style="color: #119525;"> ${successMessage} </div>
+	      		   <%
+		             
+		              	String appId= request.getParameter("requestID");
+		            	int id = -1;
+		            	if(appId != null)
+		            	{
+		            		id = Integer.parseInt(appId);
+		      				Appointment a = con.getAppointment(id);
+		      				Patient p = con.getPatientByID(a.getPatientID());
+		      				String patientName = p.getFirstname() + " "+ p.getLastname();
+		         				
+		            %>
+		          <form action = "ApproveRequestServlet" method = "post">
+	      			<div class ="request-modal-content">
+		            	<h5>Appointment with <%=patientName%> </h5>
+		            	<h6>Requested on <%=a.getRequestedDate()%> </h6>
+		            	<hr>
+		            	<label>	
+		            		Area of Concern :  <%=a.getConcern() %> <br>
+		            		Appointment Date:  <%=a.getAppointmentDate() %><br>
+		            		Appointment Time:  <%=a.getStartTime() %>
+		            	</label>
+		         		
+		         		<%if(a.getRemarks().equals("") == false)%>
+		         		<label>
+		         			Remarks   : <br>
+		         			<%=a.getRemarks()%>
+		         		</label>
+		         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
+		         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
+		            
+		            <input type = "hidden" name = "approveID" id = "approveID">
+		            <input type = "hidden" name = "rejectID" id = "rejectID">
+	           		</div>
+	           	 </form>
+	           		<%
+		            	}
+		            %>
+	             <a class="close-reveal-modal">&#215;</a>
+	        </div>
+        
           <script src= "Foundation/js/vendor/jquery.js"></script>
           <script src= "Foundation/js/foundation.min.js"></script>
           <script src= "Foundation/js/foundation/foundation.js"></script>

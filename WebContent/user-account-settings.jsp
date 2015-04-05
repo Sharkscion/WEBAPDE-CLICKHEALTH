@@ -48,17 +48,16 @@
 
                 <section class="top-bar-section" id = "clickHealth-menu">
                     <!-- Right Nav Section -->
-                    <input id = "search-box" input="text" placeholder=" Search Here ">
+                    <input id = "searchbox" input="text" placeholder=" Search Here ">
                     <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a>
-                    <ul class="right">
-                        <li class="divider"></li>
-                        <li><a href="appointments.html">APPOINTMENTS</a></li>
-                        <li class="divider"></li>
-                        <li><a href="hospitals.html">HOSPITALS</a></li>
-                        <li class="divider"></li>
-                        <li><a href="availabledocs.html">DOCTORS</a></li>
-                        <li><a href="contactdoc.html">CONTACT</a></li>
-                    </ul>
+                     <ul class="right">
+	                    <li class="divider"></li>
+	                    <li class ="active-button"><a href="user-appointments.jsp">APPOINTMENTS</a></li>
+	                    <li class="divider"></li>
+	                    <li><a  href="hospitals.jsp">HOSPITALS</a></li>
+	                    <li class="divider"></li>
+	                    <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
+               		 </ul>
                 </section>
             </nav>
         </div>
@@ -70,7 +69,7 @@
                             <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name"><%=patient.getFirstname()%> <%=patient.getLastname()%></label>
+                            <label id = "left-bar-name"><%=user.getUsername() %></label>
                             <a><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
 

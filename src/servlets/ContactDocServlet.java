@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import controller.Controller;
+
 
 import model.Appointment;
 import model.Doctor;
@@ -40,35 +42,59 @@ public class ContactDocServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-
+    
         Controller con = new Controller();
         DateFormat formatter = new SimpleDateFormat("hh:mm");
         String start = request.getParameter("startTime");
         String appDate = request.getParameter("date");
         String concern = request.getParameter("dropdown");
         String remarks = request.getParameter("remarks");
+        
+        try
+        {
+			DateFormat sdf = new SimpleDateFormat("hh:mm");
+			Date dateStart = sdf.parse(start);
+			Time startTime = new Time(dateStart.getTime());
+			
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Date appointmentDate = df.parse(appDate);
+			Date dateToday = new Date();
+			Time requestTime = new Time(dateToday.getTime());
+			System.out.println("USER: "+ request.getSession().getAttribute("currentUser"));
+			String userId = String.valueOf(((User)request.getSession().getAttribute("currentUser")).getUserID());
+			System.out.println("USREID:"+ userId);
+			User user = (User) con.getUserInstance(userId);
+	        DoctorSchedule ds = (DoctorSchedule) request.getSession().getAttribute("doctorSched");
+	        Patient p = con.getPatientInstance(user.getUsername());
 
-        try {
-            DateFormat sdf = new SimpleDateFormat("hh:mm");
-            Date dateStart = sdf.parse(start);
-            Time startTime = new Time(dateStart.getTime());
-
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            Date appointmentDate = df.parse(appDate);
-            Date dateToday = new Date();
-            Time requestTime = new Time(dateToday.getTime());
-
-            User user = (User) con.getUserInstance(((User) request.getSession().getAttribute("currentUser")).getUsername());
-            DoctorSchedule ds = (DoctorSchedule) request.getSession().getAttribute("doctorSched");
-            Patient p = con.getPatientInstance(user.getUsername());
-
-            Appointment a = new Appointment(0, "request", concern, remarks, startTime, requestTime,
-                    dateToday, appointmentDate, 0, 0, p.getPatientID(), ds.getScheduleID());
-            con.addAppointment(a);
-            response.sendRedirect("hospitals.jsp");
-        } catch (ParseException e) {
+	       Appointment a =  new Appointment(0, "request", concern, remarks, startTime, requestTime,
+	    		   							dateToday, appointmentDate, 0, 0, p.getPatientID(), ds.getScheduleID());
+	       	String message = "Rando ";
+	       	
+	        if(con.addAppointment(a) == true)
+	        {
+	        	message = "<div data-alert class=\"alert-box success radius\"> "
+					    +  "Appointment Schedule has been successfully requested! "
+				        +  "<a href=\"#\" class=\"close\">&times;</a> "
+						+  "</div>";
+	        	System.out.println("HELLO");
+	        }
+	        else
+	        {
+	        	message = "<div data-alert class=\"alert-box alert radius\"> "
+					    +  "Appointment Schedule has already been occupied "
+				        +  "<a href=\"#\" class=\"close\">&times;</a> "
+						+  "</div>";
+	        }
+	        request.setAttribute("successMessage", message);
+			request.getRequestDispatcher("contactdoc.jsp").forward(request, response);
+        }catch(ParseException e){
             e.printStackTrace();
         }
+   
+     
+        
+     
 
     }
 

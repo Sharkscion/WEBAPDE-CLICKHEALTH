@@ -64,6 +64,7 @@ public class ApproveRequestServlet extends HttpServlet {
 			msg = "Error: The status of this appointment has failed to change.";
 		}
 		request.setAttribute("successMessage", msg);
+		//response.sendRedirect("doctor-appointment-requests.jsp");
 		request.getRequestDispatcher("doctor-appointment-requests.jsp").forward(request, response);
 	}
 

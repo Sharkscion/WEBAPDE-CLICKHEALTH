@@ -36,23 +36,21 @@ public class LoginServlet extends HttpServlet {
         
         if (user != null)
         {
-        	Cookie loginCookie = new Cookie("user",String.valueOf(user.getUserID()));
-                response.addCookie(loginCookie);
-                loginCookie.setMaxAge(30*60);
+        	Cookie loginCookie = new Cookie("user", String.valueOf(user.getUserID()));
+            response.addCookie(loginCookie);
+            loginCookie.setMaxAge(30*60);
             if (user.getType().equals("patient"))
             {
                 response.sendRedirect("hospitals.jsp");
             }
             else if (user.getType().equals("doctor"))
             {
-            	//request.getSession().setAttribute("doctor", request.getParameter("logusername"));
                 response.sendRedirect("doctor-appointment-requests.jsp");
-            	//response.sendRedirect("trial.jsp");
             }
         }
         else
         {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("loginError.jsp");
         }
     }
 

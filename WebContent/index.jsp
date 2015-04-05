@@ -148,16 +148,17 @@
             </form>
         </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
-        <div id ="user-dropdown" class="f-dropdown small content form-dropdown user-form" data-dropdown-content>
-            <h5>-SIGN UP AS- </h5> 
-            <ul>
-                <li><a href = "#" data-reveal-id="signUp-patient-modal" data-reveal> Patient </a></li>
-                <li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> Doctor </a> </li>
-            </ul>
+        <div id ="user-dropdown" class="f-dropdown small content form-dropdown " data-dropdown-content>
+            <div class = "row user-form">
+          		<ul>
+              		<li><a href = "#" data-reveal-id="signUp-patient-modal" data-reveal> PATIENT </a></li>
+              		<li><a href = "#" data-reveal-id="signUp-doctor-modal" data-reveal> DOCTOR </a> </li>
+          		</ul>
+            </div>
         </div>
 <!--************************************************PATIENT SIGN UP MODAL*********************************************************-->
         <div id = "signUp-patient-modal" class="reveal-modal small form" style = "width: 900px;" data-reveal>
-            <h2>SIGN UP : PATIENT</h2> 
+            <h5>SIGN UP : PATIENT</h5> 
             <form data-abide action = "PatientRegServlet" method = "post">
             	<div class = "row">
 	                <div class = "large-6 columns">
@@ -241,11 +242,11 @@
             <a class="close-reveal-modal">&#215;</a>
         </div>
  <!--**************************************************DOCTOR MODAL***************************************************************-->
-       <div id = "signUp-doctor-modal" class="reveal-modal small form" style = "width: 1000px;" data-reveal>
-            <h2>SIGN UP : DOCTOR</h2> 
+       <div id = "signUp-doctor-modal" class="reveal-modal small form" style = "width: 1000px; height: 560px;" data-reveal>
+            <h5>SIGN UP : DOCTOR</h5> 
             <form  data-abide action="DoctorRegServlet" method = "post">
-            <div class = "row">
-	                <div class = "large-6 columns" style = "padding-top: 40px;">
+           		 <div class = "row">
+	                <div class = "large-6 columns" style = "padding-top: 20px;">
 	                    <h6 class = "doctor-SignUp-header">-Account Info-</h6>
 	                    <div class = "row">
 	                        <div clas ="large-12 columns" style = "margin-left: 15px;">
@@ -322,17 +323,10 @@
 	                                    %>
 	                             </select>
 	                        </div>
-	                        <div class = "large-6 columns dropdown-options">
-	                            <label>Day:</label>
-	                            <select name = "schedDay">
-	                                <option>M</option>
-	                                <option>T</option>
-	                                <option>W</option>
-	                                <option>TH</option>
-	                                <option>F</option>
-	                                <option>S</option>
-	                                <option>SU</option>
-	                            </select>
+	                        <div class = "large-6 columns">
+	                            <label>Day:   <small>(e.g. M-W-F)</small></label>
+	                            <input type = "text" id = "schedDays" name = "schedDays" required>
+	                            <small class="error">Schedule Days are required.</small>
 	                        </div>
 	                    </div>
 	                    <div class = "row">
@@ -355,17 +349,14 @@
             <a class="close-reveal-modal">&#215;</a>
         </div>
         
-        <!-- BLANKS FIELDS MODAL-->
-        <div class='reveal-modal' id='blankFields-modal' data-reveal>
-            <label>Please kindly fill up all fields! :D </label>
-        </div>
+      
 <!--**************************************************SCRIPTS****************************************************************** -->
         <script src="Foundation/js/vendor/jquery.js"></script>
         <script src="Foundation/js/foundation/foundation.js"></script>
         <script src="Foundation/js/foundation/foundation.topbar.js"></script>
         <script src="Foundation/js/foundation/foundation.reveal.js"></script> 
         <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
-        <script src="Foundation/foundation/js/vendor/custom.modernizr.js"></script>
+        <script src="Foundation/js/vendor/modernizr.js"></script>
 		<script src="Foundation/js/foundation/foundation.abide.js"></script>
         <script src="jquery.datetimepicker.js"></script>
         <script src="javascript.js"></script>

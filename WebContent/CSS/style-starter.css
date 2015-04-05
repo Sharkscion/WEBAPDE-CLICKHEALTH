@@ -1,7 +1,7 @@
 
 .about-page-1
 {
-    background: #44749d;
+    background: #e17100;
     font-family: Century Gothic, sans-serif;
     font-size: 20px;
     color: #ebe7e0;
@@ -76,7 +76,7 @@
 }
 body
 {
-  background: #ebe7e0;
+  background: white;
   transition: background 0.75s;
   min-height: 400px;
 }
@@ -192,6 +192,19 @@ body
   transform:rotateY(0)
 }
 
+.dropdown-options select {
+   background: transparent;
+   font-family: century gothic, sans-serif;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 1;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
+
+
 .footer
 {
   color: #969185;
@@ -201,7 +214,7 @@ body
   margin-top: 5%;
   margin-bottom: 0;
 }
-.form h2
+.form h5
 {
    font-family: Century Gothic, sans-serif; 
    color: #44749d;
@@ -214,18 +227,14 @@ body
    color:#969185
 }
 
-.user-form h5
-{
-    font-family: century gothic, sans-serif;
-    color: #696660;
-}
-
 .user-form ul li
 {
     list-style-type: none;
     margin-top: 10px;
     padding: 0;
     float: left;
+    margin-left: 25px;
+    border-radius: 3px;
 }
 
 .user-form ul li a
@@ -234,13 +243,24 @@ body
     background: #44749d;
     color: #ffffff;
     font-family: century gothic, sans-serif;
-    font-size: 20px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-right: 15px;
+    font-size: 15px;
 }
+
+.user-form a:hover 
+{
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: background;
+  transition-property: background;
+  box-shadow: inset 0 0 0 4px #c6d4e1, 0 0 1px rgba(0, 0, 0, 0);
+}
+
 
 .form-dropdown
 {
@@ -327,22 +347,10 @@ body
 
 .intro-page
 {
-  background: #ebe7e0;
+  background: white;
   width: 100%;
   height: 700px;
 }
-
-/*
-#learnMore
-{
-  height: 80px;
-  bottom: 0;
-  margin-left: 40%;
-  margin-right: 20%;
-  margin-top: 8%;
-  margin-bottom: 0;
-}
-*/
 
 .line-LearnMore
 {
@@ -364,7 +372,7 @@ body
 
 #menu
 {
-  background: #ebe7e0;
+  background: #ffffff;
   width: auto;
 }
 
@@ -485,16 +493,58 @@ body
     color: #e68208;
 }
 
-.dropdown-options select {
-   background: transparent;
-   font-family: century gothic, sans-serif;
-   padding: 5px;
-   font-size: 16px;
-   line-height: 1;
-   border: 1;
-   border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
-   }
 
 
+#error-box
+{
+    font-family: Century Gothic, sans-serif;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    margin-right: 100px;
+    margin-left: 180px;
+    margin-top: 80px;
+    border-style: solid;
+    border-color: #696660;   
+    border-width: 2px;
+}
+
+#schedDays
+{
+	text-transform: uppercase;
+	font-family: Century Gothic, sans-serif;
+}
+
+#datetimepicker, #datetimepicker2
+{
+	font-family: Century Gothic, sans-serif;
+}
+#error-box h4
+{
+  font-family: Century Gothic, sans-serif;
+    margin-left: 100px;
+}
+#error-form
+{
+    font-family: Century Gothic, sans-serif;
+    font-size: 15px;
+}
+
+.error-login-button
+{
+   font-size: 20px;
+   margin-top:10px;
+   margin-left: 50%;
+   margin-right: 50%;
+   border-radius: 3px;
+   border-color: transparent;
+   background:#44749d;
+   color: #ffffff;
+   width: 100px;
+   font-family: Century Gothic, sans-serif; 
+}
+
+.error-page {
+    background: #ffffff;
+    width: 100%;
+    height: 700px;
+}

@@ -53,6 +53,7 @@ public class EditPatientServlet extends HttpServlet {
                 userID = cookie.getValue();
             }
         }
+        
         u = con.getUserInstance(userID);
         p = con.getPatientInstance(u.getUsername());
 
