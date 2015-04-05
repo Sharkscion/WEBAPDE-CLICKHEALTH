@@ -30,7 +30,7 @@
 	   User user = con.getUser(username);
 	   String uName = user.getFirstname() + " "+ user.getLastname();
     %>
-     <body id = "scroll-style" class = "page-content">
+     <body id = "scroll-style" class = "page-content" onLoad="loadModalOnLoad()">
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
             <ul class="title-area">
@@ -71,14 +71,17 @@
                     </div>
                 </div>
                 
-	                <div id = "mid-content" class = "row appointment-content appointment-request" style = "margin-top: 90px;">
+                    <div id = "mid-content" class = "row appointment-content appointment-request" style = "margin-top: 40px;">
+                 		<div class = "row appointment-request-header">
+                 			<div class= "large-2 columns" style = "text-align: center;"> <h6>Time Requested</h6> </div>
+                 			<div class= "large-2 columns" style = "text-align: center;"> <h6>Date Requested</h6> </div>
+                 			<div class= "large-8 columns"> <h6>Appointment Request Info</h6></div>
+                 		</div>
 	                	<%
-	                		//Controller con = new Controller();
+	           
 	                		Doctor d = con.getDoctorByUsername(user.getUsername());
-	                		System.out.println("DOCTOR: "+ d);
 	             			Iterator<Appointment> appointments = con.getRequestAppointment(d.getLicenseID());
-	             			System.out.println("APPOITNMENTS: "+ appointments.hasNext());
-	                		Appointment app = null;
+	             			Appointment app = null;
 	                		Patient patient = null;
 	                		
 	                		while(appointments.hasNext())
@@ -87,40 +90,40 @@
 	                			patient = con.getPatientByID(app.getPatientID());              			
 	                	%>
 			                	<div id = "request-1" class = "row request-box">
-			                       <div class = "large-2 columns"> <%=app.getRequestedTime() %> </div>
-			                        <div class = "large-2 columns"><%=app.getRequestedDate()%></div>
-			                        <div class = "large-5 columns">
-			                            <p>Appointment with <%=patient.getFirstname() + " "+ patient.getLastname() %> <br>
+			                       <div class = "large-2 columns" style = "text-align: center;"> <%=app.getRequestedTime() %></div>
+			                       <div class = "large-2 columns" style = "text-align: center;"><%=app.getRequestedDate()%></div>
+			                       <div class = "large-5 columns">
+			                            <p style = "font-style: oblique;">
+			                               Appointment with <%=patient.getFirstname() + " "+ patient.getLastname() %> <br>
 			                               Area of Concern: <%=app.getConcern() %>
 			                            </p>
 			                        </div>
 			                        <div class = "large-3 columns"> 
-			                     
-			                            <input type = "submit" data-reveal-id="viewRequest-modal" value = " View " id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" 
-			                        	  data-reveal onClick ="getRequestID(this);">
-			                        	<input type ="hidden" name="requestID" id="requestID" value="2">
-			                  
+			                            <input type = "button" value = " View " id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" onClick ="getRequestID(this);">
+			                       	<!--  dito niya dapt istostore yung na yung ID ng appitment na naclick -->
+	                					<input type ="hidden" name="requestID" id="requestID">
 			                        </div>
 			                    </div>
-	                	<% } %>
+	                	<%
+	                		} 
+	                	%>
+	                	
 	                	</div>
+	             
 	                	
             </section>
         </div>
 <!----------------------------------------------------- VIEW REQUEST MODAL------------------------------------------------------>
         <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
-      
+      		
+      		<div style="color: #119525"> ${successMessage} </div>
            	<form action = "ApproveRequestServlet" method = "post">
-	        	  <p> hello</p>
-	        	  
-	        	  <%String appId =  %> document.getElementByID("requestID").value <%;%>
+	         
+ 
 	              <%
-	              
-	             //s String appId= this.getInitParameter("requestID");
-	            	
-	            	System.out.println("APPID: "+ appId);
+	             
+	              	String appId= request.getParameter("requestID");
 	            	int id = -1;
-	            //	appId = "2";
 	            	if(appId != null)
 	            	{
 	            		id = Integer.parseInt(appId);
@@ -138,8 +141,8 @@
 	         		
 	         		<%if(a.getRemarks().equals("") == false)%>
 	         		<p>Remarks: <%=a.getRemarks()%></p>
-	         		<input type="button" class = "appointment-request-button" id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
-	         		<input type="button" class = "appointment-request-button" id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
+	         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
+	         		<input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
 	            <%
 	            	}
 	            %>
@@ -154,7 +157,7 @@
           <script src= "Foundation/js/foundation/foundation.topbar.js"></script>
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
            <script src="Foundation/js/vendor/modernizr.js"></script>
-          
+          <script src="Foundation/js/foundation/foundation.alert.js"></script>
           <script src = "javascript.js"></script> 
     </body>
 </html>
