@@ -70,7 +70,7 @@ public class ContactDocServlet extends HttpServlet {
 	       Appointment a =  new Appointment(0, "request", concern, remarks, startTime, requestTime,
 	    		   							dateToday, appointmentDate, 0, 0, p.getPatientID(), ds.getScheduleID());
 	       	String message = "Rando ";
-	       	
+	       	int success = 0;
 	        if(con.addAppointment(a) == true)
 	        {
 	        	message = "<div data-alert class=\"alert-box success radius\"> "
@@ -78,16 +78,17 @@ public class ContactDocServlet extends HttpServlet {
 				        +  "<a href=\"#\" class=\"close\">&times;</a> "
 						+  "</div>";
 	        	System.out.println("HELLO");
+	        	success = 1;
 	        }
-	        else
-	        {
-	        	message = "<div data-alert class=\"alert-box alert radius\"> "
-					    +  "Appointment Schedule has already been occupied "
-				        +  "<a href=\"#\" class=\"close\">&times;</a> "
-						+  "</div>";
-	        }
-	        request.setAttribute("successMessage", message);
-			request.getRequestDispatcher("contactdoc.jsp").forward(request, response);
+//	        else
+//	        {
+//	        	message = "<div data-alert class=\"alert-box alert radius\"> "
+//					    +  "Appointment Schedule has already been occupied "
+//				        +  "<a href=\"#\" class=\"close\">&times;</a> "
+//						+  "</div>";
+//	        }
+	        //request.setAttribute("successMessage", message);
+			response.sendRedirect("contactdoc.jsp?Success="+ success);
         }catch(ParseException e){
             e.printStackTrace();
         }

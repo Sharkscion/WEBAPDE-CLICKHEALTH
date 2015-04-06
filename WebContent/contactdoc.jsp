@@ -127,7 +127,31 @@
                     </div>
                 </div>
                 <div id = "mid-content" class = "row">
-                	<div> ${successMessage}</div>
+                	<%
+	                	String success = request.getParameter("Success");
+		        		String msg = "";
+		        		if(success != null)
+		        		{
+                			if(success.equals("1"))
+                			{
+                	%>
+	                			<div data-alert class="alert-box success radius"> 
+						    		Appointment Schedule has been successfully requested! 
+					        		<a href="#" class="close">&times;</a>
+								</div>
+						  <%
+                			} 
+                			else
+                			{
+						  %>
+						  		<div data-alert class="alert-box alert radius"> 
+						    		Appointment Schedule has already been occupied 
+					        		<a href="#" class="close">&times;</a>
+								</div>
+                	<%
+                			}
+		        		}
+                	%>
                 	<form data-abide action = "ContactDocServlet" method = "post">
                         <div id="form-left-content" class="large-5 columns">
                               <div class = "row">

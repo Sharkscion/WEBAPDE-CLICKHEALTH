@@ -193,7 +193,15 @@ public class Controller
 		return sd.getDoctorsSchedules(licenseID, hospitalID);
 	}
 	
+	public boolean resolvePatientAppointment(int appId)
+	{
+		return ad.resolvePatientAppointment(appId);
+	}
 	
+	public boolean resolveDoctorAppointment(int appId)
+	{
+		return ad.resolveDoctorAppointment(appId);
+	}
 }
 
 

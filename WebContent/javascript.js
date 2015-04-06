@@ -34,31 +34,6 @@ $('#datetimepicker2').datetimepicker({
     format: 'H:i',
 });
 
-function addElement()
-{
-    alert("HELLO");
-    var div = document.createElement("div");
-    div.className = "row request-box";
-    div.id = "request-2";
-    div.innerHTML = "<div class = \"large-2 columns\"> 10:00 AM </div>" +
-            "<div class = \"large-2 columns\"> March 5, 2015</div>" +
-            "<div class = \"large-5 columns\">" +
-            "<p>Appointment with Siao Long Bao <br>" +
-            "Area of Concern: So delicious :> Big tummy :><br>" +
-            "Time: 12:00 PM</p>" +
-            "</div>" +
-            "<div class = \"large-3 columns\"> <input type=\"button\" class = \"appointment-request-button\"                                                        value=\"Remove\" onClick=\"removeElement('mid-content','request-1');\"> " +
-            "<input type=\"button\" class = \"appointment-request-button\" value=\"Approve\" onClick=\"addElement();\"></div>";
-//   document.body.appendChild(div);   
-//    document.body.prepend(div);
-    $(document).ready(function()
-    {
-
-        $("#mid-content").prepend(div);
-
-    });
-
-}
 
 $(function() {
     $('a[href*=#]:not([href=#])').click(function() {
@@ -98,7 +73,15 @@ function getApproveID(element)
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("approveID").value = element.id;
-    alert("here is " + document.getElementById("approveID").value);
+   // alert("here is " + document.getElementById("approveID").value);
+}
+
+function getResolveID(element)
+{
+    var pressedBtn = element.id;
+    var lastChar = pressedBtn;
+    document.getElementById("resolveID").value = element.id;
+    alert("here is " + document.getElementById("resolveID").value);
 }
 
 function getRequestID(element)
@@ -116,7 +99,7 @@ function getRequestID(element)
     var c = currentUrl.charAt(urlLength - 1);    
     var last = "" + a + b + c + "";
     //var d = currentUrl.(urlLength-21);
-    alert(d);
+    
     var splitUrl = ""; // will contain an array
 
     // compare the last three letters of the url
@@ -157,17 +140,4 @@ function getRejectID(element)
    // alert("here is " + document.getElementById("rejectID").value);
 }
 
-function removeElement(parentDiv, childDiv) {
-    if (childDiv == parentDiv) {
-        alert("The parent div cannot be removed.");
-    }
-    else if (document.getElementById(childDiv)) {
-        var child = document.getElementById(childDiv);
-        var parent = document.getElementById(parentDiv);
-        parent.removeChild(child);
-    }
-    else {
-        alert("Child div has already been removed or does not exist.");
-        return false;
-    }
-}
+

@@ -81,18 +81,42 @@
                     </div>
                 </div>
                 <div id = "mid-content" class = "row appointment-content" >
+                	<%
+	                	String success = request.getParameter("Success");
+		        		String msg = "";
+		        		if(success != null)
+		        		{
+                			if(success.equals("1"))
+                			{
+                	%>
+	                			<div data-alert class="alert-box success radius"> 
+						    		Appointment Schedule has been resolved! 
+					        		<a href="#" class="close">&times;</a>
+								</div>
+						  <%
+                			} 
+                			else
+                			{
+						  %>
+						  		<div data-alert class="alert-box alert radius"> 
+						    		Error: Appointment Schedule failed to be resolved!
+					        		<a href="#" class="close">&times;</a>
+								</div>
+                	<%
+                			}
+		        		}
+                	%>
                     <div class ="large-12 columns" id = "appointment">
-                         <br>
+                      <br>
+                      <form action = "UserAppointmentServlet" method = "post">
                          <%
                          	String notif;
                          	
                          	Iterator i = con.getPatientAppointments(user.getUserID());
-                         	if(i == null)
-                        		 notif = "No Scheduled Appointments";
-                         	else
+                         	
+                         	if(i != null)
                          		while(i.hasNext())
                          		{
-                         			
                          			Appointment a = (Appointment)i.next();
                          			DoctorSchedule ds = con.getDoctorSchedule(a.getDoctorSchedID());
                          			Hospital h = con.getHospitalByID(ds.getHospitalScheduleID());
@@ -112,7 +136,7 @@
                          			String appointmentID = "card"+ a.getAppID();
                          			String buttonAction = "removeElement('appointment','"+appointmentID+"')";
                          			
-                          %>
+                          %>                
 	                          <ul  id = "<%=appointmentID%>" class="appointment-card">
 	                              <li>Hospital: <%=hospital%> </li>
 	                              <li>Address: <%=address%></li>
@@ -135,9 +159,18 @@
 		                               <li class = "label-appointment-sched">Time: <%=time%></li>
 		                               <li class = "line"></li>
 			                             
-	                              <input type="button" class = "appointment-card-button" value="Resolve" onClick= <%=buttonAction%>>
+	                              <input type = "submit" id=<%=a.getAppID() %> name = <%=a.getAppID()%> class = "appointment-card-button" value = "Resolve" onClick = "getResolveID(this);">
+	                              <input type = "hidden" name = "resolveID" id = "resolveID">
 	                        </ul>
-                        <% } %>
+                        <% } 
+                         	else
+                         	{
+                        %>	
+                        	<h4 style= "font-family: cenutry gothic, sans-serif;">No Scheduled Appointments</h4>
+                        <%
+                        	}
+                        %>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -148,6 +181,8 @@
         <script src = "Foundation/js/foundation/foundation.js"></script>
         <script src = "Foundation/js/foundation/foundation.topbar.js"></script>
         <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
+        <script src="Foundation/js/vendor/modernizr.js"></script>
+        <script src="Foundation/js/foundation/foundation.alert.js"></script>
         <script src = "javascript.js"></script> 
         
     </body>

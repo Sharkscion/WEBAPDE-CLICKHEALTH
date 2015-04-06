@@ -137,7 +137,7 @@ public class AppointmentDAO implements DAOInterface{
 					 + "SET  status = ?, concern = ?, remarks = ?, startTime = ?, "
 						  + "requestedDate = ?, appointmentDate = ?, isResolvedPatient = ?, isResolvedDoctor = ?, "
 						  + "patient_ID = ?, doctorSched_ID = ? "
-				     + "WHERE appointmentID = ?";
+				     + "WHERE appointmentsID = ?";
 		try 
 		{
 			statement = connect.getConnection().prepareStatement(query);
@@ -300,7 +300,53 @@ public class AppointmentDAO implements DAOInterface{
 	}
 
 
+	public boolean resolvePatientAppointment(int appId)
+	{
+		
+		String query = "UPDATE appointments "
+					 + "SET isResolvedPatient = ? "
+				     + "WHERE appointmentsID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, 1);
+			statement.setInt(2,  appId);
+			statement.execute();
+			connect.close();
+			return true;
+		
+		} catch (SQLException e) {
+	
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+		connect.close();
+		return false;
+	}
 
+	public boolean resolveDoctorAppointment(int appId)
+	{
+		
+		String query = "UPDATE appointments "
+					 + "SET isResolvedDoctor = ? "
+				     + "WHERE appointmentsID = ?";
+		try 
+		{
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setInt(1, 1);
+			statement.setInt(2,  appId);
+			statement.execute();
+			connect.close();
+			return true;
+		
+		} catch (SQLException e) {
+	
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+		connect.close();
+		return false;
+	}
 
 
 }

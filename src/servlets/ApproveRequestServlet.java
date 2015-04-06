@@ -42,30 +42,28 @@ public class ApproveRequestServlet extends HttpServlet {
 		String rejectId = request.getParameter("rejectID");
 		String approveId = request.getParameter("approveID");
 		String requestId = request.getParameter("requestID");
-		String msg = null;
-		
+	
+		int success =0;
 		System.out.println("REJECT ID: "+ rejectId);
 		System.out.println("APPROV ID: "+ approveId);
 		System.out.println("requestID: "+ requestId);
 		
-		if(approveId != null)
+		if(approveId != null && approveId.equals("")== false)
 		{
 			c.changeAppointmentStat(Integer.parseInt(approveId), "pending");
-			msg = "This appointment has successfully been approved!";
+			success = 1;
 		} 
-		else if(rejectId != null)
+		else if(rejectId != null && rejectId.equals("")== false)
 		{
 			c.changeAppointmentStat(Integer.parseInt(rejectId), "rejected");
-			msg = "This appointment have been rejected! <br>"
-			    + "A notification will be send to the patient concerning the status of the appointment!";
+			success = 2;
 		}
 		else if(rejectId == null && approveId == null)
 		{
-			msg = "Error: The status of this appointment has failed to change.";
+			success = -1;
 		}
-		request.setAttribute("successMessage", msg);
-		//response.sendRedirect("doctor-appointment-requests.jsp");
-		request.getRequestDispatcher("doctor-appointment-requests.jsp").forward(request, response);
+
+		response.sendRedirect("doctor-appointment-requests.jsp?Success="+ success);
 	}
 
 }

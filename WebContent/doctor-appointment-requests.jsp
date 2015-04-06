@@ -28,7 +28,6 @@
 	    }
 	    
 	   User user = con.getUserInstance(userID);
-		
 	   String uName = user.getFirstname() + " "+ user.getLastname();
     %>
      <body id = "scroll-style" class = "page-content" onLoad="loadModalOnLoad()">
@@ -101,8 +100,7 @@
 			                        </div>
 			                        <div class = "large-3 columns"> 
 			                            <input type = "button" value = " View " id = "<%=app.getAppID()%>" name = "<%=app.getAppID()%>" onClick ="getRequestID(this);">
-			                       	<!--  dito niya dapt istostore yung na yung ID ng appitment na naclick -->
-	                					<input type ="hidden" name="requestID" id="requestID">
+			               	            <input type ="hidden" name="requestID" id="requestID">
 			                        </div>
 			                    </div>
 	                	<%
@@ -117,9 +115,27 @@
 <!----------------------------------------------------- VIEW REQUEST MODAL------------------------------------------------------>
       
 	        <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
-	      		<div id="request-message" style="color: #119525;"> ${successMessage} </div>
-	      		   <%
-		             
+	        	<% 
+	        		String success = request.getParameter("Success");
+	        		String msg = "";
+	        		if(success != null)
+	        		{
+	        			if(success.equals("1"))
+	        				msg = "<span style= \"color: #119525;\">This appointment has successfully been approved!</span>";
+	        			else if(success.equals("2"))
+	        			{
+	        				msg = "<span style= \"color: #119525;\">This appointment have been rejected! <br>"
+	        				    + "A notification will be sent to the patient concerning the status of the appointment!</span>";
+	        			}
+	        			else
+	        				msg = "<span style= \"color: red;\">Error: The status of this appointment has failed to change.</span>";
+	        				
+	        	%>
+	      		<div id="request-message"><%=msg%></div>
+	      		<%
+	        		}
+	      		%>
+	      		<%
 		              	String appId= request.getParameter("requestID");
 		            	int id = -1;
 		            	if(appId != null)
