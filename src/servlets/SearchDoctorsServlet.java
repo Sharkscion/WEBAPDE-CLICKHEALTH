@@ -41,7 +41,7 @@ public class SearchDoctorsServlet extends HttpServlet {
 		Controller con = new Controller();
 		String searchedSpecialization = (String)request.getSession().getAttribute("specialization");
 		request.getSession().setAttribute("hID", Integer.parseInt((String) request.getParameter("hospID")));
-		request.getSession().setAttribute("doctors", con.getSpecializationHospitalDoctors(searchedSpecialization, Integer.parseInt((String) request.getParameter("hospID"))));
+		request.getSession().setAttribute("doctors", con.getSpecializationHospitalDoctorScheds(searchedSpecialization, Integer.parseInt((String) request.getParameter("hospID"))));
 		response.sendRedirect("searchedDoctors.jsp");
 	}
 

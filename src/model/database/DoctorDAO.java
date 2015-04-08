@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.Doctor;
+import model.DoctorSchedule;
 import model.Hospital;
 import model.Patient;
 import model.User;
@@ -215,11 +216,9 @@ public class DoctorDAO implements DAOInterface {
 			String query = "SELECT * "
 					+ "FROM user, doctor "
 					+ "WHERE user_ID = userID "
-					+ "AND specialization LIKE '%?%' "
-					+ "AND licenseID = (SELECT doctorScheduleID FROM doctorschedule WHERE scheduleID = '?');" ;
+					+ "AND specialization LIKE '%" + specialization + "%' "
+					+ "AND licenseID = (SELECT doctorScheduleID FROM doctorschedule WHERE scheduleID = '" + scheduleID +"');" ;
 			statement = connect.getConnection().prepareStatement(query);
-			statement.setString(1, specialization);
-			statement.setInt(2, scheduleID);
 			rs = statement.executeQuery();
 			while (rs.next()) {
 
@@ -239,4 +238,5 @@ public class DoctorDAO implements DAOInterface {
 		return dList.iterator();
 	}
 
+	
 }

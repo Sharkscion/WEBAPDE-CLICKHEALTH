@@ -1,12 +1,12 @@
+<%@page import="model.UserContact"%>
+<%@page import="model.Doctor"%>
+<%@page import="model.Hospital"%>
 <%@page import="model.DoctorSchedule"%>
+<%@page import="model.Appointment"%>
+<%@page import="model.User"%>
 <%@page import="controller.Controller"%>
 <%@page import="java.sql.Time"%>
-<%@page import="model.UserContact"%>
 <%@page import="java.util.Date"%>
-<%@page import="model.User"%>
-<%@page import="model.Hospital"%>
-<%@page import="model.Appointment"%>
-<%@page import="model.Doctor"%>
 <%@page import="java.util.Iterator"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -51,10 +51,7 @@
             </ul>
 
             <section class="top-bar-section" id = "clickHealth-menu">
-                <!-- Right Nav Section -->
-                <input id = "searchbox" input="text" placeholder=" Search Here ">
-                        <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a>
-                <ul class="right">
+                                             <ul class="right">
                     <li class="divider"></li>
                     <li class ="active-button"><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
@@ -62,6 +59,12 @@
                     <li class="divider"></li>
                     <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
+                <!-- Right Nav Section -->
+                <form action = "SearchServlet" method = "post">
+                <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
+                	<input type="image" id= "searchicon" src="Assets/icon-search.png" alt="Submit">
+                       <!-- <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a> -->
+                 </form>
             </section>
         </nav>
         </div>

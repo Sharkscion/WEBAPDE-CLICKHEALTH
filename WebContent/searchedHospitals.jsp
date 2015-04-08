@@ -1,42 +1,57 @@
-
-<%@page import="controller.Controller"%>
 <%@page import="model.Hospital"%>
+<%@page import="model.Doctor"%>
+<%@page import="model.DoctorSchedule"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="model.User"%>
+<%@page import="controller.Controller"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <html>
     <head>
         <link rel = "stylesheet" type="text/css" href="CSS/style-menu.css">
         <link rel = "stylesheet" type="text/css" href="CSS/style-scrollbar.css">
-        <link rel = "stylesheet" type="text/css" href="CSS/style-hospital.css">
         <link rel = "stylesheet" type="text/css" href="CSS/style-doctor.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
+
     </head>
+	<% 
+	  	Controller c = new Controller();
+		String userID = "";
+	    Cookie[] cookies = request.getCookies();
+	    for(Cookie cookie:cookies){
+	        if(cookie.getName().equals("user")){
+	            userID = cookie.getValue();
+	        }
+	    }
+	    
+	   User user = c.getUserInstance(userID);
+	   String uName = user.getUsername();
+	%>
     <body id = "scroll-style" class = "page-content">
         <div class="fixed">
-          <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
-            <ul class="title-area">
-                <!-- Title Area -->
-                <li class="name">
-                    <img id ="clickHealth-logo" src ="Assets/clickHealth.png"/>
-                </li>
-                <li class="toggle-topbar menu-icon">
-                    <a href="#">
-                        <span>ClickHealth Menu</span>
-                    </a>
-                </li>
-            </ul>
-            
+            <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
+                <ul class="title-area">
+                    <!-- Title Area -->
+                    <li class="name">
+                        <img id ="clickHealth-logo" src ="Assets/clickHealth.png"/>
+                    </li>
+                    <li class="toggle-topbar menu-icon">
+                        <a href="#">
+                            <span>ClickHealth Menu</span>
+                        </a>
+                    </li>
+                </ul>
+
             <section class="top-bar-section" id = "clickHealth-menu">
                 <ul class="right">
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
-                    <li class = "active-button"><a  href = "#">HOSPITALS</a></li>
+                    <li><a  href = "hospitals.jsp">HOSPITALS</a></li>
                     <li class="divider"></li>
-                    <li><a href="availabledocs.jsp">DOCTORS</a></li>
-                    <li><a style= "margin-right: 10px;" href="contactdoc.jsp">CONTACTS</a></li>
+                    <li class = "active-button" style= "margin-right: 10px;" ><a href="availabledocs.jsp">DOCTORS</a></li>
+                  <!--   <li><a  " href="contactdoc.jsp">CONTACTS</a></li>-->
                 </ul>
                 <!-- Right Nav Section --> 
 	            <form action = "SearchServlet" method = "post">
@@ -47,11 +62,10 @@
                  <!-- Winona inserted line below -->
                  <!-- <div id = "suggest">
                  </div> -->
-                
             </section>
                      
             
-        </nav>
+            </nav>
         </div>
         <div class = "content-wrapper">
             <section id = "main-content">
@@ -61,60 +75,54 @@
                             <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name">Shark Tan</label>
-                            <a href = "account.html"><label id = "left-bar-account">Account Settings</label></a>
+                            <label id = "left-bar-name"><%=uName%></label>
+                            <a href = "user-account-settings.jsp"><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
-                            
+
                         </div>
+
                     </div>
                 </div>
-                <div id = "mid-content" class = "row hospital-content">
- 	     		<form action="SearchDoctorsServlet" method="post">
-
-                    <div class = "large-12 columns">
-                        <%
+                <div id = "mid-content" class = "row doctor-content"> 
+                    <div  id="doctorsList" class = "large-12 columns"> <br>
+                        <form action="SearchDoctorsServlet" method="post">
+                         <%
 	                    	Controller con = new Controller();
 	                   		Iterator<Hospital> hospitals = (Iterator<Hospital>) session.getAttribute("hospitals");
 	                   		//session.setAttribute("specialization", session.getAttribute("specialization"));
                         	while(hospitals.hasNext())
                         	{
                         		Hospital hospital = hospitals.next();
+                        		String address = hospital.getStreet() + ", "+hospital.getCity();
                         %>
-		                        <div class = "row">
-		                            <div class = "large-2 columns">
-		                                 <img class = "hospital-img" src="Assets/clickHealth2.png">
-		                            </div>
-		                           <div class = "large-10 columns">
-		                                <h4><%=hospital.getName() %></h4>
-		                                <p><%=hospital.getStreet() %></p>
-		                            </div>
-		                            <div class = "large-2 columns">
-		                                  <input type="submit" class = "contact-button" id = "<%=hospital.getHospID() %>" name  = "<%=hospital.getHospID() %>" value="Choose Hospital" onClick = "getHospID(this);">
-		                            </div>
-		                        </div>
-		                         <hr>
-                         <%
-                        	 }
-                         %>
-                         <input type = "hidden" name = "hospID" id = "hospID">
+   
+	                            <div class = "row">
+	                                <div class = "large-2 columns"> <img class = "hospital-img" src="Assets/clickHealth2.png"></div>
+	                                <div class = "large-8 columns">
+	
+	                                    <p>Hospital: <%=hospital.getName()%></p>
+	                                    <p>Hospital Address: <%=address%></p>	                                
+	                                </div>
+	                                <div class = "large-2 columns">
+							            <input type="submit" class = "contact-button" id = "<%=hospital.getHospID() %>" name  = "<%=hospital.getHospID() %>" value="Choose Hospital" onClick = "getHospID(this);">
+	                                </div>
+	                            </div>
+	                        	<hr>
+                        <% } %>
+                        <input type = "hidden" name = "hospID" id = "hospID">
+                        </form>
+                        
                     </div>
-                    </form>
-    
                 </div>
             </section>
         </div>
-          <script src="Foundation/js/vendor/jquery.js"></script>
-          <script src="Foundation/js/foundation.min.js"></script>
-          <script src="Foundation/js/foundation/foundation.js"></script>
-          <script src="Foundation/js/foundation/foundation.topbar.js"></script>
-          <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
-		  <script src = "javascript.js"></script> 
-          
-        
-        <script>
-        
-        
-        </script>
-        
+
+        <script src="Foundation/js/vendor/jquery.js"></script>
+        <script src="Foundation/js/foundation.min.js"></script>
+        <script src="Foundation/js/foundation/foundation.js"></script>
+        <script src="Foundation/js/foundation/foundation.topbar.js"></script>
+        <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
+		<script src = "javascript.js"></script> 
+
     </body>
 </html>

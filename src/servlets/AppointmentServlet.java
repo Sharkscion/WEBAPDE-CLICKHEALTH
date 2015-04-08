@@ -52,7 +52,7 @@ public class AppointmentServlet extends HttpServlet {
         schedId =  request.getParameter("docID");
 //        System.out.println("DOC ID: "+ docId);
         	System.out.println("CHEDID: "+ schedId);
-        if(schedId.equals("") == false)
+        //if(schedId.equals("") == false)
         	pangilan = Integer.parseInt((String) request.getParameter("docID"));
         
         DoctorSchedule ds = c.getDoctorSchedule(pangilan);

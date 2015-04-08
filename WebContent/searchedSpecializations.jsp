@@ -1,6 +1,5 @@
 <%@page import="controller.Controller"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.Hospital"%>
 <%@page import="java.util.Iterator"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>

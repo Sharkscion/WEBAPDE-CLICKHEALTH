@@ -172,5 +172,44 @@ public class DoctorScheduleDAO implements DAOInterface {
 		connect.close();
 		return ds;
 	}
+	
+	public Iterator<DoctorSchedule> getSpecializationHospitalDoctorScheds(String specialization, int scheduleID)
+	{
+		try 
+		{
+			sList = new ArrayList<DoctorSchedule>();
+			DoctorSchedule ds = null;
+
+			String query = "SELECT ds.scheduleID, ds.scheduleDay, ds.startTime, ds.endTime, ds.doctorScheduleID, ds.hospitalScheduleID "
+					+ "FROM doctorschedule ds "
+					+ "INNER JOIN hospital h "
+					+ "ON ds.hospitalScheduleID = h.hospitalID "
+					+ "INNER JOIN doctor d "
+					+ "ON d.licenseID = ds.doctorScheduleID "
+					+ "INNER JOIN user u "
+					+ "ON u.userID = d.user_ID "
+					+ "WHERE d.specialization LIKE '%" + specialization +"%' "
+					+ "AND ds.scheduleID = " + scheduleID + " "
+					+ "ORDER BY u.lastname;";
+			statement = connect.getConnection().prepareStatement(query);
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				ds = new DoctorSchedule(rs.getInt("scheduleID"), rs.getString("scheduleDay"), 
+										rs.getTime("startTime"), rs.getTime("endTime"), rs.getInt("doctorScheduleID"), 
+										rs.getInt("hospitalScheduleID"));
+
+				sList.add(ds);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Unable to get all schedules");
+			e.printStackTrace();
+		}
+		connect.close();
+
+		return  sList.iterator();
+	}
 
 }

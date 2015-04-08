@@ -1,10 +1,10 @@
 <%@page import="model.UserContact"%>
-<%@page import="java.sql.Time"%>
 <%@page import="model.Hospital"%>
+<%@page import="model.Doctor"%>
+<%@page import="model.User"%>
 <%@page import="model.DoctorSchedule"%>
 <%@page import="controller.Controller"%>
-<%@page import="model.User"%>
-<%@page import="model.Doctor"%>
+<%@page import="java.sql.Time"%>
 <%@page import="java.util.Iterator"%>
 
 <html>

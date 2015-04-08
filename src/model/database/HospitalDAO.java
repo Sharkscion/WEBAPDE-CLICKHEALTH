@@ -167,9 +167,8 @@ public class HospitalDAO implements DAOInterface {
 			String query = "SELECT * "
 					+ "FROM Hospital "
 					+ "WHERE hospitalid IN (SELECT hospitalscheduleID FrOm doctorschedule WHERE doctorScheduleID "
-					+ "IN (SELECT licenseID FROM doctor WHERE specialization LIKE \"%?%\"));";
+					+ "IN (SELECT licenseID FROM doctor WHERE specialization LIKE \"%" + specialization + "%\"));";
 			statement = connect.getConnection().prepareStatement(query);
-			statement.setString(1, specialization);
 			rs = statement.executeQuery();
 			while (rs.next()) {
 

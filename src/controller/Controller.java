@@ -182,6 +182,10 @@ public class Controller
 		return dd.getSpecializationHospitalDoctors(specialization, hospitalID);
 	}
 	
+	public Iterator<DoctorSchedule> getSpecializationHospitalDoctorScheds(String specialization, int hospitalID)
+	{
+		return sd.getSpecializationHospitalDoctorScheds(specialization, hospitalID);
+	}
 	
 	public Iterator<UserContact> getUserContacts(int id)
 	{

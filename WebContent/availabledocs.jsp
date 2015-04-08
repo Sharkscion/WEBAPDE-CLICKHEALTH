@@ -1,11 +1,9 @@
-
-<%@page import="controller.Controller"%>
 <%@page import="model.Hospital"%>
-<%@page import="model.DoctorSchedule"%>
-<%@page import="model.User"%>
 <%@page import="model.Doctor"%>
+<%@page import="model.DoctorSchedule"%>
 <%@page import="java.util.Iterator"%>
-
+<%@page import="model.User"%>
+<%@page import="controller.Controller"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <html>

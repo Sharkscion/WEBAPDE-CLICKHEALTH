@@ -1,8 +1,9 @@
+
 <%@page import="model.Patient"%>
+<%@page import="model.Appointment"%>
 <%@page import="model.Doctor"%>
 <%@page import="model.User"%>
 <%@page import="controller.Controller"%>
-<%@page import="model.Appointment"%>
 <%@page import="java.util.Iterator"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>

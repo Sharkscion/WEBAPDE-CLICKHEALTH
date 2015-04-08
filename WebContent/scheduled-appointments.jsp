@@ -1,15 +1,13 @@
 <%@page import="model.UserContact"%>
 <%@page import="model.Patient"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.sql.Time"%>
-
-<%@page import="model.Doctor"%>
 <%@page import="model.Hospital"%>
 <%@page import="model.DoctorSchedule"%>
 <%@page import="model.Appointment"%>
 <%@page import="model.User"%>
 <%@page import="controller.Controller"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.sql.Time"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
