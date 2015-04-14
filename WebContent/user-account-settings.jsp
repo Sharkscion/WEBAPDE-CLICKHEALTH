@@ -48,8 +48,6 @@
 
                 <section class="top-bar-section" id = "clickHealth-menu">
                     <!-- Right Nav Section -->
-                    <input id = "searchbox" input="text" placeholder=" Search Here ">
-                    <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a>
                      <ul class="right">
 	                    <li class="divider"></li>
 	                    <li class ="active-button"><a href="user-appointments.jsp">APPOINTMENTS</a></li>
@@ -58,6 +56,13 @@
 	                    <li class="divider"></li>
 	                    <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
                		 </ul>
+                    <form action = "SearchServlet" method = "post">
+                <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
+                <input type="image" id= "searchicon" src="Assets/icon-search.png" alt="Submit">
+                <div id = "suggest" name = "suggest">
+                </div>
+             	</form>   
+                    
                 </section>
             </nav>
         </div>
@@ -71,7 +76,7 @@
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name"><%=user.getUsername() %></label>
                             <a><label id = "left-bar-account">Account Settings</label></a>
-                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
 
                         </div>
                     </div>
@@ -288,6 +293,43 @@
                         + "</div><div class=\"large-2 columns\"><button class = \"account-button\" onClick=\"getForm(4);\">Edit</button></div>";
             }
         </script>
+        
+          <script>
+          
+
+          $(document).ready(function()
+          		{
+          			$("#searchbox").keyup(function()
+          			{
+          				$("#suggest").html("");
+          				var searchbox = $("#searchbox").val();
+          				$.ajax({
+          							type: "POST",
+          							url: "SearchCompleteServlet",
+          							data: {"searchbox": searchbox},
+          								error: function(data)
+          								{
+          									alert("ERROR: " + data);
+          								},
+          							success: function(data){
+          								$("#suggest").html(data);
+          								$("#suggest ul li").mouseover(function(){
+          									$("#suggest ul li").removeClass("hover");
+          									$(this).addClass("hover");
+          									
+          								});
+          								$("#suggest ul li").click(function(){
+          									var value = $(this).html();
+          									$("#searchbox").val(value);
+          									$("#suggest ul").remove();
+          								});
+          							}
+
+          				  });
+          			});          			
+          		});
+          
+          </script>
 
     </body>
 </html>

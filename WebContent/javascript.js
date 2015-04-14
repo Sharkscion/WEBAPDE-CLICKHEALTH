@@ -141,3 +141,57 @@ function getRejectID(element)
 }
 
 
+$(document).ready(function() {               
+    $('#pUName').keyup(function(event) {  
+        var username=$('#pUName').val();
+        $.ajax({
+            url: 'SignUpServlet',
+            data: {
+            	   "username": username,
+//                   "status": "toread",
+//                   "author": author,
+//                   "title": title
+                   },
+            error: function (data) {
+            	$('#pUNameError').text(data);
+            	$('#pUNameError').css('color', 'red');
+            },
+            success: function (data) {
+               
+            	//alert("Ok: "+ data);
+            	$('#pUNameError').text(data);
+            	$('#pUNameError').css('color', 'green');
+            },
+            type: 'POST'
+        });         
+        
+    });
+});
+
+
+
+
+
+
+//
+//$.ajax({
+//    url: 'AddToReadingList',
+//    data: {"user": "<%=id%>",
+//           "status": "toread",
+//           "author": author,
+//           "title": title},
+//    error: function () {
+//        alert("ERROR");
+//    },
+//    success: function (data) {
+//        $("#buttonAddToReadBook").hide();
+//        $("#buttonRemFromReadBook").show();
+//        $("#buttonAddToFinishedBook").show();
+//        $("#buttonRemFromFinishedBook").hide();
+//    },
+//    type: 'POST'
+//});
+//<%}else{%>
+//alert("Login first");
+//<%}%>
+

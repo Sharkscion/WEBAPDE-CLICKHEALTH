@@ -53,9 +53,27 @@
    width: 30%;
    margin-left: 9.5%;
    top:5px;  
+   font-family: century gothic, sans-serif;
    
 }
 
+#suggest
+{
+   border-radius: 1px;
+   border: 0px;
+   width: 30%;
+   margin-left: 220px !important;
+   top:5px;
+   background: #ffffff !important;
+   overflow-x: hidden;
+}
+
+#suggest ul li
+{
+   font-family: century gothic, sans-serif; 
+   font-size: 16px;
+   background: #ffffff !important;
+}
 #search-icon
 {
     height: 30px;

@@ -54,13 +54,10 @@
                 </ul>
 	            <form action = "SearchServlet" method = "post">
                 <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
-                	<input type="image" id= "searchicon" src="Assets/icon-search.png" alt="Submit">
-                       <!-- <a href = "#"><img id= "search-icon" src = "Assets/icon-search.png"/></a> -->
-                 </form>
-                 <!-- Winona inserted line below -->
-                 <!-- <div id = "suggest">
-                 </div> -->
-                
+                <input type="image" id= "searchicon" src="Assets/icon-search.png" alt="Submit">
+                <div id = "suggest" name = "suggest">
+                </div>
+             	</form>               
             </section>
                         
         </nav>
@@ -113,6 +110,43 @@
           <script src="Foundation/js/foundation/foundation.topbar.js"></script>
           <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
 		  <script src = "javascript.js"></script> 
+          
+          <script>
+          
+
+          $(document).ready(function()
+          		{
+          			$("#searchbox").keyup(function()
+          			{
+          				$("#suggest").html("");
+          				var searchbox = $("#searchbox").val();
+          				$.ajax({
+          							type: "POST",
+          							url: "SearchCompleteServlet",
+          							data: {"searchbox": searchbox},
+          								error: function(data)
+          								{
+          									alert("ERROR: " + data);
+          								},
+          							success: function(data){
+          								$("#suggest").html(data);
+          								$("#suggest ul li").mouseover(function(){
+          									$("#suggest ul li").removeClass("hover");
+          									$(this).addClass("hover");
+          									
+          								});
+          								$("#suggest ul li").click(function(){
+          									var value = $(this).html();
+          									$("#searchbox").val(value);
+          									$("#suggest ul").remove();
+          								});
+          							}
+
+          				  });
+          			});          			
+          		});
+          
+          </script>
           
         
     </body>

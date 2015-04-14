@@ -177,7 +177,8 @@
 		                	</div>
 		                	 <div class = "large-8 columns">
 		                		 <input type = "text" id = "pUName" name = "pUName" required pattern="[a-zA-Z]+">
-		                    	<small class = "error">Username is required.</small>         	
+		                		 <small style = "font-family: century gothic, sans-serif; font-size: 13px;" id = "pUNameError" name = "pUNameError"> </small>
+		                    	 <small class = "error" > Username is required</small>         	
 		                	</div>
 		                </div>
 	                </div>

@@ -68,7 +68,7 @@
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name">Dr. <%=uName %></label>
                             <a href = "doctor-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
-                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
                         </div>
                     </div>
