@@ -19,10 +19,6 @@ public class SearchCompleteServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 			Controller c = new Controller();
@@ -30,15 +26,18 @@ public class SearchCompleteServlet extends HttpServlet {
 		   String searched = request.getParameter("searchbox");
 		   String respMess = "";
 		   
-		   Iterator<String> it = c.getSpecializations(searched);
-		   respMess = "<ul class = \"unorganized\">";
-		   while(it.hasNext())
+		   if(searched.equals("") == false && searched != null)
 		   {
-			   respMess += "<li>"+ it.next() + "</li>";
-			   respMess += "<hr>";   
+			   Iterator<String> it = c.getSpecializations(searched);
+			   respMess = "<ul class = \"unorganized\">";
+			   while(it.hasNext())
+			   {
+				   respMess += "<li>"+ it.next() + "</li>";
+				   respMess += "<hr>";   
+			   }
+			   
+			   respMess += "</ul>";
 		   }
-		   
-		   respMess += "</ul>";
 	       response.setContentType("text/plain");
 	       response.setCharacterEncoding("UTF-8");
 	       response.getWriter().write(respMess);

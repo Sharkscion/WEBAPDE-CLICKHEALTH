@@ -41,8 +41,7 @@ public class SignUpServlet extends HttpServlet {
 		
 	   String username = request.getParameter("username");
 	   String respMess = "";
-	   
-	   System.out.println("USERNAME: "+username+":");
+
 	   if(c.getUser(username) != null)
 	   {
 		   respMess = "username already exists!";

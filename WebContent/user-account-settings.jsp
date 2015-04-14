@@ -141,10 +141,7 @@
         <script src="Foundation/js/foundation/foundation.topbar.js"></script>
         <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
 
-        <script type="text/javascript">
-                                    $(document).foundation();
-        </script>
-
+        <script type="text/javascript"> $(document).foundation(); </script>
         <script>
             $(document).ready(function() {
                 var bodyheight = $(window).height();
@@ -174,18 +171,10 @@
             function getForm(i)
             {
                 switch (i) {
-                    case 1:
-                        nameRow();
-                        break;
-                    case 2:
-                        addressRow();
-                        break;
-                    case 3:
-                        usernameRow();
-                        break;
-                    case 4:
-                        passwordRow();
-                        break;
+                    case 1: nameRow(); break;
+                    case 2: addressRow(); break;
+                    case 3: usernameRow(); break;
+                    case 4: passwordRow(); break;
                 }
             }
 
@@ -229,8 +218,6 @@
                 });
             }
 
-
-
             function addressRow() {
                 alert("2");
                 $("#addressRow").fadeOut(400, function() {
@@ -268,8 +255,6 @@
                 });
             }
 
-
-
             function retainName() {
                 return "<div class=\"large-3 columns account-label\"><p>Name:</p></div><div class=\"large-7 columns account-current\">"
                         + "<p>Shark Tan</p></div><div class=\"large-2 columns\"><button class = \"account-button\" onClick=\"getForm(1);\">Edit</button></div>";
@@ -293,43 +278,6 @@
                         + "</div><div class=\"large-2 columns\"><button class = \"account-button\" onClick=\"getForm(4);\">Edit</button></div>";
             }
         </script>
-        
-          <script>
-          
-
-          $(document).ready(function()
-          		{
-          			$("#searchbox").keyup(function()
-          			{
-          				$("#suggest").html("");
-          				var searchbox = $("#searchbox").val();
-          				$.ajax({
-          							type: "POST",
-          							url: "SearchCompleteServlet",
-          							data: {"searchbox": searchbox},
-          								error: function(data)
-          								{
-          									alert("ERROR: " + data);
-          								},
-          							success: function(data){
-          								$("#suggest").html(data);
-          								$("#suggest ul li").mouseover(function(){
-          									$("#suggest ul li").removeClass("hover");
-          									$(this).addClass("hover");
-          									
-          								});
-          								$("#suggest ul li").click(function(){
-          									var value = $(this).html();
-          									$("#searchbox").val(value);
-          									$("#suggest ul").remove();
-          								});
-          							}
-
-          				  });
-          			});          			
-          		});
-          
-          </script>
-
+     
     </body>
 </html>

@@ -60,10 +60,9 @@
 #suggest
 {
    border-radius: 1px;
-   border: 0px;
+   border: 1px;
    width: 30%;
    margin-left: 220px !important;
-   top:5px;
    background: #ffffff !important;
    overflow-x: hidden;
 }
@@ -71,7 +70,7 @@
 #suggest ul li
 {
    font-family: century gothic, sans-serif; 
-   font-size: 16px;
+   font-size: 13px;
    background: #ffffff !important;
 }
 #search-icon

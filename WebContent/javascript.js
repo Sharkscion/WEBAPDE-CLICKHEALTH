@@ -1,12 +1,63 @@
 $(document).foundation();
 
-$(document).ready(function() {
-    var bodyheight = $(window).height();
+$(document).ready(function() 
+{  
+	var bodyheight = $(window).height();
     $(".windowheight").css('min-height', bodyheight);
     $(window).resize(function() {
         var bodyheight = $(window).height();
         $(".windowheight").css('min-height', bodyheight);
     });
+	    
+    $('#pUName').keyup(function(event) {  
+        var username=$('#pUName').val();
+        $.ajax({
+            url: 'SignUpServlet',
+            data: {"username": username,},
+            error: function (data) {
+            	$('#pUNameError').text(data);
+            	$('#pUNameError').css('color', 'red');
+            },
+            success: function (data) {
+               
+            	//alert("Ok: "+ data);
+            	$('#pUNameError').text(data);
+            	$('#pUNameError').css('color', 'green');
+            },
+            type: 'POST'
+        });         
+        
+    });
+    
+    $("#searchbox").keyup(function(event)
+    {
+		$("#suggest").html("");
+		var searchbox = $("#searchbox").val();
+		$.ajax({
+					
+					url: "SearchCompleteServlet",
+					data: {"searchbox": searchbox,},
+						error: function(data)
+						{
+							alert("ERROR: " + data);
+						},
+					success: function(data){
+						$("#suggest").html(data);
+						$("#suggest ul li").mouseover(function(){
+							$("#suggest ul li").removeClass("hover");
+							$(this).addClass("hover");
+							
+						});
+						$("#suggest ul li").click(function(){
+							var value = $(this).html();
+							$("#searchbox").val(value);
+							$("#suggest ul").remove();
+						});
+					},
+					type: "POST"
+	
+		  });
+     });    
 });
 
 
@@ -131,6 +182,9 @@ function loadModalOnLoad()
     }
 }
 
+
+
+
 function getRejectID(element)
 {
     var pressedBtn = element.id;
@@ -139,59 +193,4 @@ function getRejectID(element)
     document.getElementById("rejectID").value = lastChar;
    // alert("here is " + document.getElementById("rejectID").value);
 }
-
-
-$(document).ready(function() {               
-    $('#pUName').keyup(function(event) {  
-        var username=$('#pUName').val();
-        $.ajax({
-            url: 'SignUpServlet',
-            data: {
-            	   "username": username,
-//                   "status": "toread",
-//                   "author": author,
-//                   "title": title
-                   },
-            error: function (data) {
-            	$('#pUNameError').text(data);
-            	$('#pUNameError').css('color', 'red');
-            },
-            success: function (data) {
-               
-            	//alert("Ok: "+ data);
-            	$('#pUNameError').text(data);
-            	$('#pUNameError').css('color', 'green');
-            },
-            type: 'POST'
-        });         
-        
-    });
-});
-
-
-
-
-
-
-//
-//$.ajax({
-//    url: 'AddToReadingList',
-//    data: {"user": "<%=id%>",
-//           "status": "toread",
-//           "author": author,
-//           "title": title},
-//    error: function () {
-//        alert("ERROR");
-//    },
-//    success: function (data) {
-//        $("#buttonAddToReadBook").hide();
-//        $("#buttonRemFromReadBook").show();
-//        $("#buttonAddToFinishedBook").show();
-//        $("#buttonRemFromFinishedBook").hide();
-//    },
-//    type: 'POST'
-//});
-//<%}else{%>
-//alert("Login first");
-//<%}%>
 

@@ -50,15 +50,9 @@ public class AppointmentServlet extends HttpServlet {
         Controller c = new Controller();
         
         schedId =  request.getParameter("docID");
-//        System.out.println("DOC ID: "+ docId);
-        	System.out.println("CHEDID: "+ schedId);
-        //if(schedId.equals("") == false)
-        	pangilan = Integer.parseInt((String) request.getParameter("docID"));
-        
+        pangilan = Integer.parseInt((String) request.getParameter("docID"));  
         DoctorSchedule ds = c.getDoctorSchedule(pangilan);
-        
-        System.out.println("DOCTOR SCHED in APPOINTMENT: "+ ds);
-        
+
         if(ds != null)
         {
         	request.getSession().setAttribute("doctorSched", ds);
@@ -67,6 +61,8 @@ public class AppointmentServlet extends HttpServlet {
         else
         {
         	response.sendRedirect("availabledocs.jsp");
+        	System.out.println("CODE PA MOOOOOOOORE");
+        	System.out.println("ERROR");
         }
         
     }

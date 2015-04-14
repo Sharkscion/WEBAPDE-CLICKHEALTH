@@ -60,34 +60,21 @@ public class ContactDocServlet extends HttpServlet {
 			Date appointmentDate = df.parse(appDate);
 			Date dateToday = new Date();
 			Time requestTime = new Time(dateToday.getTime());
-			System.out.println("USER: "+ request.getSession().getAttribute("currentUser"));
+			
 			String userId = String.valueOf(((User)request.getSession().getAttribute("currentUser")).getUserID());
-			System.out.println("USREID:"+ userId);
+			
 			User user = (User) con.getUserInstance(userId);
 	        DoctorSchedule ds = (DoctorSchedule) request.getSession().getAttribute("doctorSched");
 	        Patient p = con.getPatientInstance(user.getUsername());
 
-	       Appointment a =  new Appointment(0, "request", concern, remarks, startTime, requestTime,
+	        Appointment a =  new Appointment(0, "request", concern, remarks, startTime, requestTime,
 	    		   							dateToday, appointmentDate, 0, 0, p.getPatientID(), ds.getScheduleID());
-	       	String message = "Rando ";
 	       	int success = 0;
 	        if(con.addAppointment(a) == true)
 	        {
-	        	message = "<div data-alert class=\"alert-box success radius\"> "
-					    +  "Appointment Schedule has been successfully requested! "
-				        +  "<a href=\"#\" class=\"close\">&times;</a> "
-						+  "</div>";
-	        	System.out.println("HELLO");
 	        	success = 1;
 	        }
-//	        else
-//	        {
-//	        	message = "<div data-alert class=\"alert-box alert radius\"> "
-//					    +  "Appointment Schedule has already been occupied "
-//				        +  "<a href=\"#\" class=\"close\">&times;</a> "
-//						+  "</div>";
-//	        }
-	        //request.setAttribute("successMessage", message);
+
 			response.sendRedirect("contactdoc.jsp?Success="+ success);
         }catch(ParseException e){
             e.printStackTrace();
