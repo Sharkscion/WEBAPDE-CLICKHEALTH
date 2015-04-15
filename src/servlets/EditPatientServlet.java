@@ -75,11 +75,16 @@ public class EditPatientServlet extends HttpServlet {
             con.editUser(u);
             
         } else if (type.equals("password")) {
-            u.setPassword(request.getParameter("passwordTxt"));
-            con.editUser(u);
+            if(u.getPassword().equals(request.getParameter("currentpasswordTxt"))){
+                if(request.getParameter("newpasswordTxt").equals(request.getParameter("confirmpasswordTxt"))){
+                    u.setPassword(request.getParameter("passwordTxt"));
+                    con.editUser(u);
+                    response.sendRedirect("user-account-settings.jsp");
+                }
+            }
         }
         
-        response.sendRedirect("user-account-settings.jsp");
+        //response.sendRedirect("user-account-settings.jsp");
 
     }
 

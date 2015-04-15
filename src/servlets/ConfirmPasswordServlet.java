@@ -9,19 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
+import javax.servlet.http.Cookie;
+import model.Patient;
+import model.User;
 
 /**
  * Servlet implementation class SignUpServlet
  */
-@WebServlet("/SignUpServlet")
-public class SignUpServlet extends HttpServlet {
+@WebServlet("/ConfirmPasswordServlet")
+public class ConfirmPasswordServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignUpServlet() {
+    public ConfirmPasswordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,15 +43,29 @@ public class SignUpServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        Controller c = new Controller();
+        Controller con = new Controller();
+        Patient p;
+        String userID = "";
+        User u;
 
-        String username = request.getParameter("username");
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("user")) {
+                userID = cookie.getValue();
+            }
+        }
+
+        u = con.getUserInstance(userID);
+        p = con.getPatientInstance(u.getUsername());
+
+        String password = request.getParameter("password");
         String respMess = "";
 
-        if (c.getUser(username) != null) {
-            respMess = "username already exists!";
+        if (!u.getPassword().equals(password)) {
+            respMess = "wrong password!";
         } else {
-            respMess = "username is valid!";
+            
+            respMess = "password accepted!";
         }
 
         response.setContentType("text/plain");

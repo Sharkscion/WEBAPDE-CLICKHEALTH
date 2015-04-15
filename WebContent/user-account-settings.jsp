@@ -140,6 +140,7 @@
         <script src="Foundation/js/foundation/foundation.js"></script>
         <script src="Foundation/js/foundation/foundation.topbar.js"></script>
         <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
+        
 
         <script type="text/javascript"> $(document).foundation(); </script>
         <script>
@@ -225,7 +226,7 @@
                             + "<label>City:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"cityTxt\" placeholder=\"City\""
                             + " tabindex=\"1\"/></div></div>"
                             + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Street</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"streetTxt\" placeholder=\"Street\""
+                            + "<label>Street:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"streetTxt\" placeholder=\"Street\""
                             + " tabindex=\"1\"/></div></div>"
                             +"<input type = \"hidden\" value =\"address\" name = \"settingCategory\" id = \"settingCategory\">"
                             +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(2);\"/"
@@ -248,11 +249,21 @@
                 alert("4");
                 $("#passwordRow").fadeOut(400, function() {
                     $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"passwordTxt\" "
-                            + "placeholder=\"Password\" tabindex=\"1\"/></div></div>"
+                            + "<label>Current Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" id=\"currentpasswordTxt\" name=\"currentpasswordTxt\" required pattern=\"[a-zA-Z]+\" "
+                            + "placeholder=\"Password\" tabindex=\"1\"/><small style = \"font-family: century gothic, sans-serif; font-size: 13px;\" id = \"currentpasswordError\" name = \"currentpasswordError\"> </small></div></div>"
+                    
+                            + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"newpasswordTxt\" placeholder=\"New Password\""
+                            + " tabindex=\"1\"/></div></div>"
+                    
+                            + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>Confirm New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"confirmpasswordTxt\" placeholder=\"Confirm Password\""
+                            + " tabindex=\"1\"/></div></div>"
+                    
                             +"<input type = \"hidden\" value =\"password\" name = \"settingCategory\" id = \"settingCategory\">"
-                            + "<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();
+                            + "<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"confirmPassword();\"/></form>").fadeIn();
                 });
+                confirmPassword();
             }
 
             function retainName() {

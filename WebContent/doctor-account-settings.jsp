@@ -1,12 +1,12 @@
 <html>
     <head>
-        <link rel = "stylesheet" type="text/css" href="style-menu.css">
-        <link rel = "stylesheet" type="text/css" href="scrollbar.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/style-menu.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/scrollbar.css">
         <link rel = "stylesheet" type="text/css" href="font-imports.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
-        <link rel = "stylesheet" type="text/css" href="style-doctor.css">
-        <link rel = "stylesheet" type="text/css" href="style-accounts.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/style-doctor.css">
+        <link rel = "stylesheet" type="text/css" href="CSS/style-accounts.css">
         
     </head>
     <body id = "scroll-style" class = "page-content">
@@ -235,48 +235,64 @@
                 }
             }
               
-            function nameRow(){
-                
-                $("#nameRow").fadeOut(400,function(){
-                    $(this).html("<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\"><div class=\"large-5 columns "
-                    +"account-label\">"+"<label>First Name:</label></div><div class=\"large-7 columns account-current\">"
-                    +"<input type=\"text\" name=\"text\" placeholder=\"First Name\" tabindex=\"1\"/></div></div><div class=\"row\">"
-                    +"<div class=\"large-5 columns account-label\"><label>Last Name:</label></div><div class=\"large-7 columns account-current\">"
-                    +"<input type=\"text\" name=\"text\" placeholder=\"Last Name\" tabindex=\"2\"/></div></div><input type=\"submit\" class=\""
-                    +"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(1);\"/></form>").fadeIn();  
+            function nameRow() {
+
+                $("#nameRow").fadeOut(400, function() {
+                    $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns "
+                            + "account-label\">" + "<label>First Name:</label></div><div class=\"large-7 columns account-current\">"
+                            + "<input type=\"text\" name=\"firstNameTxt\" placeholder=\"First Name\" tabindex=\"1\"/></div></div><div class=\"row\">"
+                            + "<div class=\"large-5 columns account-label\"><label>Last Name:</label></div><div class=\"large-7 columns account-current\">"
+                            + "<input type=\"text\" name=\"lastNameTxt\" placeholder=\"Last Name\" tabindex=\"2\"/></div></div>"
+                            +"<input type = \"hidden\" value =\"name\" name = \"settingCategory\" id = \"settingCategory\">"
+                            + "<input type=\"submit\" class=\""
+                            + "account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(1);\"/></form>").fadeIn();
                 });
             }
 
-              
-              
-            function addressRow(){
-                $("#addressRow").fadeOut(400,function(){
-                $(this).html("<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\"><div class=\"large-5 columns "
-                +"account-label\">"
-                +"<label>Address:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"text\" placeholder=\"Address\""
-                +" tabindex=\"1\"/></div></div><input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(2);\"/"
-                +"></form>").fadeIn();  
+            function addressRow() {
+                alert("2");
+                $("#addressRow").fadeOut(400, function() {
+                    $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>City:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"cityTxt\" placeholder=\"City\""
+                            + " tabindex=\"1\"/></div></div>"
+                            + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>Street:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"streetTxt\" placeholder=\"Street\""
+                            + " tabindex=\"1\"/></div></div>"
+                            +"<input type = \"hidden\" value =\"address\" name = \"settingCategory\" id = \"settingCategory\">"
+                            +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(2);\"/"
+                            + "></form>").fadeIn();
                 });
             }
-              
-            function usernameRow(){
-                $("#usernameRow").fadeOut(400,function(){
-                $(this).html("<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\"><div class=\"large-5 columns "
-                +"account-label\">"
-                +"<label>Username:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"text\" "
-                +"placeholder=\"Username\" tabindex=\"1\"/></div></div>"
-                +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(3);\"/></form>").fadeIn();  
+
+            function usernameRow() {
+                alert("3");
+                $("#usernameRow").fadeOut(400, function() {
+                    $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>Username:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"usernameTxt\" "
+                            + "placeholder=\"Username\" tabindex=\"1\"/></div></div>"
+                            +"<input type = \"hidden\" value =\"username\" name = \"settingCategory\" id = \"settingCategory\">"
+                            + "<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(3);\"/></form>").fadeIn();
                 });
             }
-              
-            function passwordRow(){
-                $("#passwordRow").fadeOut(400,function(){
-                $(this).html("<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\"><div class=\"large-5 columns "
-                +"account-label\">"
-                +"<label>Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"text\" "
-                +"placeholder=\"Password\" tabindex=\"1\"/></div></div>"
-                +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();  
-            });
+
+            function passwordRow() {
+                alert("4");
+                $("#passwordRow").fadeOut(400, function() {
+                    $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>Current Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"currentpasswordTxt\" "
+                            + "placeholder=\"Password\" tabindex=\"1\"/></div></div>"
+                    
+                            + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"newpasswordTxt\" placeholder=\"New Password\""
+                            + " tabindex=\"1\"/></div></div>"
+                    
+                            + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
+                            + "<label>Confirm New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"confirmpasswordTxt\" placeholder=\"Confirm Password\""
+                            + " tabindex=\"1\"/></div></div>"
+                    
+                            +"<input type = \"hidden\" value =\"password\" name = \"settingCategory\" id = \"settingCategory\">"
+                            + "<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();
+                });
             }
               
             function specializationRow(){
