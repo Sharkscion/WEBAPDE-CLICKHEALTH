@@ -211,59 +211,5 @@ public class DoctorScheduleDAO implements DAOInterface {
 
 		return  sList.iterator();
 	}
-	
-	public boolean checkDay(String day, int doctor)
-	{
-		String dayofweek = day;
-		int licenseID = (Integer) doctor;
-		DoctorSchedule ds = null;
-		try {
-			String query = "SELECT * "
-					+ "FROM doctorschedule "
-					+ "WHERE scheduleDay = ? AND doctorScheduleID = ?";
-			statement = connect.getConnection().prepareStatement(query);
-			statement.setString(1, dayofweek);
-			statement.setInt(2, licenseID);
-			rs = statement.executeQuery();
-			if (rs.next()) {
-				return true;
-			}
-
-		} catch (SQLException e) {
-			System.out.println("ERROR in getting all users from DB");
-			e.printStackTrace();
-		}
-		connect.close();
-		return false;
-	}
-	
-	public DoctorSchedule getDoctorScheduleByDay(String day, int doctor)
-	{
-		String dayofweek = day;
-		int licenseID = (Integer) doctor;
-		DoctorSchedule ds = null;
-		try {
-			String query = "SELECT * "
-					+ "FROM doctorschedule "
-					+ "WHERE scheduleDay = ? AND doctorScheduleID = ?";
-			statement = connect.getConnection().prepareStatement(query);
-			statement.setString(1, dayofweek);
-			statement.setInt(2, licenseID);
-			rs = statement.executeQuery();
-			if (rs.next()) {
-				ds  = new DoctorSchedule(rs.getInt("scheduleID"), rs.getString("scheduleDay"), rs.getTime("startTime"), 
-							rs.getTime("endTime"),rs.getInt("doctorScheduleID"), 
-							rs.getInt("hospitalScheduleID"));
-
-				
-			}
-
-		} catch (SQLException e) {
-			System.out.println("ERROR in getting all users from DB");
-			e.printStackTrace();
-		}
-		connect.close();
-		return ds;
-	}
 
 }
