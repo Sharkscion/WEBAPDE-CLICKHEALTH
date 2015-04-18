@@ -135,14 +135,13 @@
             </section>
         </div>
 
-        <script src="Foundation/js/vendor/jquery.js"></script>
-        <script src="Foundation/js/foundation.min.js"></script>
-        <script src="Foundation/js/foundation/foundation.js"></script>
-        <script src="Foundation/js/foundation/foundation.topbar.js"></script>
-        <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
+        <script src = "Foundation/js/vendor/jquery.js"></script>
+        <script src = "Foundation/js/foundation.min.js"></script>
+        <script src = "Foundation/js/foundation/foundation.js"></script>
+        <script src = "Foundation/js/foundation/foundation.topbar.js"></script>
+        <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
+        <script src = "javascript.js"></script>
         
-
-        <script type="text/javascript"> $(document).foundation(); </script>
         <script>
             $(document).ready(function() {
                 var bodyheight = $(window).height();

@@ -45,6 +45,8 @@
             <section class="top-bar-section" id = "clickHealth-menu">
                 <!-- Right Nav Section --> 
                 <ul class="right">
+                	<li><a href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png"><span>3</span> </a></li>
+                	<li><a href="user-appointments.jsp"></a></li>
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
@@ -104,6 +106,19 @@
                 </div>
             </section>
         </div>
+<!--**************************************************Login Drop Down*************************************************************-->
+        <div id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
+            <!--  <form  action="doctor-account.html" method="get">  -->
+     <!--        <form data-abide action = "LoginServlet" method = "post">	 -->
+                <div class="notificationBox">
+                	
+                </div>
+	            
+            
+          <!--   </form> -->
+        </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
+   
           <script src = "Foundation/js/vendor/jquery.js"></script>
           <script src = "Foundation/js/foundation.min.js"></script>
           <script src = "Foundation/js/foundation/foundation.js"></script>
