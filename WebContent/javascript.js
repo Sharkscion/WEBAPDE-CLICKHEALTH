@@ -7,11 +7,7 @@ $(document).ready(function()
     $(window).resize(function() {
         var bodyheight = $(window).height();
         $(".windowheight").css('min-height', bodyheight);
-    });
-
-    
-
-    
+    }); 
 
     $('#pUName').keyup(function(event) {
         var username = $('#pUName').val();
@@ -31,6 +27,8 @@ $(document).ready(function()
             type: 'POST'
         });
     });
+     
+    
     
     
     //i also tried document din, ayaw pa din :<
@@ -89,10 +87,6 @@ function setMinTime(min, max) {
     maxStartTime = max;
 }
 
-
-
-
-
 var logic = function() {
     this.setOptions({
         minTime: minStartTime,
@@ -100,7 +94,7 @@ var logic = function() {
     });
 };
 
-$('#datetimepicker').datetimepicker({
+$('#startTime').datetimepicker({
     datepicker: false,
     format: 'H:i',
     onShow: logic

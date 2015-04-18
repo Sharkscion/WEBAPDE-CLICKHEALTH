@@ -217,7 +217,7 @@
 	                         <small id = "dateTimeError" name = "dateError"> </small>
 	                            
 	                        <label>Start Time: </label>
-		                    <input id="datetimepicker" id = "startTime" name = "startTime" type="text" required>
+		                    <input id="startTime" name = "startTime" type="text" required>
 		                     <small id = "startTimeError" name = "startTimeError"> </small>
 		                    <small class="error">Schedule start time is required.</small>
 	                            
@@ -232,9 +232,9 @@
 	                         </div>
                             <label>Remarks: </label>
                             <textarea id="remarks" name = "remarks" cols = "45" rows = "6"></textarea>
-                            <input type="submit" class="contact-button" value="SUBMIT">
+                            <input type="submit" id = "subm" name = "subm" class="contact-button" value="SUBMIT">
 	                      </div> 
-	                    </form>
+ 	                    </form>
                       </div>       
                   </section>
               </div>
@@ -248,5 +248,28 @@
           <script src="Foundation/js/foundation/foundation.alert.js"></script>
           <script src="jquery.datetimepicker.js"></script>
 		  <script src = "javascript.js"></script> 
+		  
+		  <script>
+		    
+		    $('#subm').click(function() {
+		        var scheddate = $('#date').val();
+		        var schedtime = $('#startTime').val();
+		        $.ajax({
+		            url: 'CheckSchedServlet',
+		            data: {"schedDate": scheddate,
+		            		"schedTime": schedtime,
+		            		"schedDoctor": "<%=d.getLicenseID()%>",
+		            	  },
+		            error: function(data) {
+		            },
+		            success: function(data) {
+		            	alert(data);
+		            },
+		            type: 'POST'
+		        });
+		    });
+		  
+		  </script>
+		  
     </body>
 </html>

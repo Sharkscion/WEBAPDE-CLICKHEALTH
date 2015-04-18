@@ -206,6 +206,23 @@ public class Controller
 	{
 		return ad.resolveDoctorAppointment(appId);
 	}
+	
+	public boolean checkDay(String day, int doctor)
+	{
+		return sd.checkDay(day, doctor);
+	}
+	
+	public DoctorSchedule getDoctorScheduleByDay(String day, int doctor)
+	{
+		return sd.getDoctorScheduleByDay(day, doctor);
+	}
+
+	public boolean checkDaySched(DoctorSchedule ds, String time, String date) {
+		
+		return ad.checkDaySched(ds, time, date);
+	}
+	
+	
 }
 
 
