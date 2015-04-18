@@ -248,15 +248,15 @@
                 alert("4");
                 $("#passwordRow").fadeOut(400, function() {
                     $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Current Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" id=\"currentpasswordTxt\" name=\"currentpasswordTxt\" required pattern=\"[a-zA-Z]+\" "
+                            + "<label>Current Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"password\" id=\"currentpasswordTxt\" name=\"currentpasswordTxt\"  "
                             + "placeholder=\"Password\" tabindex=\"1\"/><small style = \"font-family: century gothic, sans-serif; font-size: 13px;\" id = \"currentpasswordError\" name = \"currentpasswordError\"> </small></div></div>"
                     
                             + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"newpasswordTxt\" placeholder=\"New Password\""
+                            + "<label>New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"password\" name=\"newpasswordTxt\" placeholder=\"New Password\""
                             + " tabindex=\"1\"/></div></div>"
                     
                             + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Confirm New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"confirmpasswordTxt\" placeholder=\"Confirm Password\""
+                            + "<label>Confirm New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"password\" name=\"confirmpasswordTxt\" placeholder=\"Confirm Password\""
                             + " tabindex=\"1\"/></div></div>"
                     
                             +"<input type = \"hidden\" value =\"password\" name = \"settingCategory\" id = \"settingCategory\">"

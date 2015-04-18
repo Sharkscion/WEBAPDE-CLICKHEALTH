@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 import javax.servlet.http.Cookie;
 import model.Patient;
 import model.User;
@@ -61,7 +65,7 @@ public class ConfirmPasswordServlet extends HttpServlet {
         String password = request.getParameter("password");
         String respMess = "";
 
-        if (!u.getPassword().equals(password)) {
+        if (!u.getPassword().equals(encryptPassword(password))) {
             respMess = "wrong password!";
         } else {
             
@@ -72,6 +76,36 @@ public class ConfirmPasswordServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(respMess);
 
+    }
+    
+    public static String encryptPassword(String password) {
+        String sha1 = "";
+        System.out.println("PASSWORD: " + password);
+        if (password.equals("") == false) {
+            System.out.println("PASSORD");
+            try {
+                MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+                crypt.reset();
+                crypt.update(password.getBytes("UTF-8"));
+                sha1 = byteToHex(crypt.digest());
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return sha1;
+    }
+
+    private static String byteToHex(final byte[] hash) {
+        Formatter formatter = new Formatter();
+        for (byte b : hash) {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
     }
 
 }

@@ -1,3 +1,6 @@
+<%@page import="model.Doctor"%>
+<%@page import="model.User"%>
+<%@page import="controller.Controller"%>
 <html>
     <head>
         <link rel = "stylesheet" type="text/css" href="CSS/style-menu.css">
@@ -9,6 +12,27 @@
         <link rel = "stylesheet" type="text/css" href="CSS/style-accounts.css">
         
     </head>
+    
+    <%  
+        Controller con = new Controller();
+        String userID = "";
+        User user;
+        Doctor doctor = null;
+        
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("user")) {
+                userID = cookie.getValue();
+            }
+        }
+        
+        
+        user = con.getUserInstance(userID);
+        doctor = con.getDoctor(user.getUsername());
+    
+    
+    %>
+    
     <body id = "scroll-style" class = "page-content">
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
@@ -43,7 +67,7 @@
                             <img id = "left-bar-dp" src = "Assets/doctor-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name">Dr. Sharko Tan</label>
+                            <label id = "left-bar-name">Dr. <%=user.getFirstname()%> <%=user.getLastname()%></label>
                             <a href = "doctor-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
                             
@@ -57,19 +81,19 @@
                                     <p>Name:</p>
                                 </div>
                                 <div class="large-7 columns account-current">
-                                    <p id="currentId">Shark Tan</p>
+                                    <p id="currentId"><%=user.getFirstname()%> <%=user.getLastname()%></p>
                                 </div>
                                 <div class="large-2 columns">
                                     <button class = "account-button" onClick="getForm(1);">Edit</button>
                                 </div>
                             </div>
                             <hr>
-                            <div id="addressRow" class="row" >
+                            <div id="specializationRow" class="row" >
                                 <div class="large-3 columns account-label">
-                                    <p>Address:</p>
+                                    <p>Specialization:</p>
                                 </div>
                                 <div class="large-7 columns account-current">
-                                    <p id="currentAddress">P. Sherman 42 Wallaby Way, Sydney</p>
+                                    <p id="currentSpecialization"><%=doctor.getSpecialization()%></p>
                                 </div>
                                 <div class="large-2 columns">
                                     <button class = "account-button" onClick="getForm(2);">Edit</button>
@@ -81,7 +105,7 @@
                                     <p>Username:</p>
                                 </div>
                                 <div class="large-7 columns account-current">
-                                    <p id="currentUsername">SharkTan</p>
+                                    <p id="currentUsername"><%=user.getUsername()%></p>
                                 </div>
                                 <div class="large-2 columns">
                                     <button class = "account-button" onClick="getForm(3);">Edit</button>
@@ -100,17 +124,11 @@
                                 </div>
                             </div>  
                             <hr>
-                            <div id="specializationRow" class="row" >
-                                <div class="large-3 columns account-label">
-                                    <p>Specialization:</p>
-                                </div>
-                                <div class="large-7 columns account-current">
-                                    <p id="currentSpecialization">Dermatology</p>
-                                </div>
-                                <div class="large-2 columns">
-                                    <button class = "account-button" onClick="getForm(5);">Edit</button>
-                                </div>
-                            </div> 
+                            
+                            
+                            
+                            
+                            
                             <hr>
                             <div id="schedulesRow" class="row" >
                                 <div class="large-3 columns account-label">
@@ -200,10 +218,9 @@
             {
                 switch(i){
                         case 1: nameRow();break;
-                        case 2: addressRow();break;
+                        case 2: specializationRow();break;
                         case 3: usernameRow();break;
                         case 4: passwordRow();break;
-                        case 5: specializationRow();break;
                         case 6: schedulesRow();break;
                 }
             }
@@ -229,7 +246,7 @@
             {
                 switch(i){
                         case 1: document.getElementById('nameRow').innerHTML = retainName();break;
-                        case 2: document.getElementById('addressRow').innerHTML = retainAddress();break;
+                        case 2: document.getElementById('specializationRow').innerHTML = retainSpecialization();break;
                         case 3: document.getElementById('usernameRow').innerHTML = retainUsername();break;
                         case 4: document.getElementById('passwordRow').innerHTML = retainPassword();break;
                 }
@@ -249,16 +266,14 @@
                 });
             }
 
-            function addressRow() {
+            function specializationRow() {
                 alert("2");
-                $("#addressRow").fadeOut(400, function() {
+                $("#specializationRow").fadeOut(400, function() {
                     $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>City:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"cityTxt\" placeholder=\"City\""
+                            + "<label>Specialization</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"specializationTxt\" placeholder=\"Specialization\""
                             + " tabindex=\"1\"/></div></div>"
-                            + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Street:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"streetTxt\" placeholder=\"Street\""
-                            + " tabindex=\"1\"/></div></div>"
-                            +"<input type = \"hidden\" value =\"address\" name = \"settingCategory\" id = \"settingCategory\">"
+                            
+                            +"<input type = \"hidden\" value =\"specialization\" name = \"settingCategory\" id = \"settingCategory\">"
                             +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"returnRow(2);\"/"
                             + "></form>").fadeIn();
                 });
@@ -279,31 +294,24 @@
                 alert("4");
                 $("#passwordRow").fadeOut(400, function() {
                     $(this).html("<form action=\"EditPatientServlet\" method=\"post\"><div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Current Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"currentpasswordTxt\" "
-                            + "placeholder=\"Password\" tabindex=\"1\"/></div></div>"
+                            + "<label>Current Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"password\" id=\"currentpasswordTxt\" name=\"currentpasswordTxt\"  "
+                            + "placeholder=\"Password\" tabindex=\"1\"/><small style = \"font-family: century gothic, sans-serif; font-size: 13px;\" id = \"currentpasswordError\" name = \"currentpasswordError\"> </small></div></div>"
                     
                             + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"newpasswordTxt\" placeholder=\"New Password\""
+                            + "<label>New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"password\" name=\"newpasswordTxt\" placeholder=\"New Password\""
                             + " tabindex=\"1\"/></div></div>"
                     
                             + "<div class=\"row\"><div class=\"large-5 columns account-label\">"
-                            + "<label>Confirm New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"confirmpasswordTxt\" placeholder=\"Confirm Password\""
+                            + "<label>Confirm New Password:</label></div><div class=\"large-7 columns account-current\"><input type=\"password\" name=\"confirmpasswordTxt\" placeholder=\"Confirm Password\""
                             + " tabindex=\"1\"/></div></div>"
                     
                             +"<input type = \"hidden\" value =\"password\" name = \"settingCategory\" id = \"settingCategory\">"
-                            + "<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();
+                            + "<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"confirmPassword();\"/></form>").fadeIn();
                 });
+                confirmPassword();
             }
               
-            function specializationRow(){
-                $("#specializationRow").fadeOut(400,function(){
-                $(this).html("<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\"><div class=\"large-5 columns "
-                +"account-label\">"
-                +"<label>Specialization:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"text\" "
-                +"placeholder=\"Specialization\" tabindex=\"1\"/></div></div>"
-                +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();  
-            });
-            }
+            
               
             function schedulesRow(){
                 $("#schedulesRow").fadeOut(400,function(){
