@@ -49,10 +49,12 @@ public class AppointmentServlet extends HttpServlet {
 
         Controller c = new Controller();
         
-        schedId =  request.getParameter("docID");
-        pangilan = Integer.parseInt((String) request.getParameter("docID"));  
+        schedId =  request.getParameter("docSchedID");
+        System.out.println("SCHED ID: "+ schedId);
+        pangilan = Integer.parseInt(schedId);  
         DoctorSchedule ds = c.getDoctorSchedule(pangilan);
 
+     
         if(ds != null)
         {
         	request.getSession().setAttribute("doctorSched", ds);

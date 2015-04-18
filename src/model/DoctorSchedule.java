@@ -13,7 +13,7 @@ public class DoctorSchedule {
 	public DoctorSchedule(int scheduleID, String scheduleDay, Time startTime, Time endTime,
 						  int doctorScheduleID, int hospitalScheduleID)
 	{
-		setScheduleID(hospitalScheduleID);
+		setScheduleID(scheduleID);
 		setScheduleDay(scheduleDay);
 		setStartTime(startTime);
 		setEndTime(endTime);

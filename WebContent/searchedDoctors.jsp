@@ -86,9 +86,10 @@
                         <form action="AppointmentServlet" method="post">
                         <% 
                            //Controller c = Controller.getInstance();
-                        	Iterator iterator = (Iterator)session.getAttribute("doctors");
-                        	
-                        	System.out.println("ITERATOR: "+ iterator.hasNext());
+                        String searchedSpecialization = (String)request.getSession().getAttribute("specialization");
+                        System.out.println("Specialziation: "+ searchedSpecialization);
+                        System.out.println("HospitalID: "+ request.getParameter("hospID"));
+                        Iterator iterator = c.getSpecializationHospitalDoctorScheds(searchedSpecialization, Integer.parseInt((String) request.getParameter("hospID")));
                         	while (iterator.hasNext()) 
                         	{
                                 DoctorSchedule ds = (DoctorSchedule) iterator.next();
@@ -99,16 +100,17 @@
                                 System.out.println("Hospital: "+ h.getName());
                                 
                                 String address = h.getStreet() + ", "+h.getCity();
+                                System.out.println("Sched ID LOOP: "+ds.getScheduleID());
                         %>    
 	                            <div class = "row">
 	                                <div class = "large-2 columns"> <img class = "hospital-img" src="Assets/clickHealth2.png"></div>
 	                                <div class = "large-8 columns">
 	
-	                                    <p>Hospital: <%=h.getName()%></p>
-	                                    <p>Hospital Address: <%=address%></p>
-	                                    <p>Doctor: Dr. <%=d.getFirstname() + " " + d.getLastname()%> </p>
-	                                    <p>Specialization: <%=d.getSpecialization()%></p>
-	                                   	<p>Schedule Day: <%=ds.getScheduleDay()%></p>
+	                                    <p><b>Hospital:</b> <%=h.getName()%></p>
+	                                    <p><b>Hospital Address:</b> <%=address%></p>
+	                                    <p><b>Doctor:</b> Dr. <%=d.getFirstname() + " " + d.getLastname()%> </p>
+	                                    <p><b>Specialization:</b> <%=d.getSpecialization()%></p>
+	                                   	<p><b>Schedule Day:</b> <%=ds.getScheduleDay()%></p>
 	                                </div>
 	                                <div class = "large-2 columns">
 	                                  <input type="submit" class = "contact-button" id = "<%=ds.getScheduleID()%>" name  = "<%=ds.getScheduleID() %>" value="Set Appointment" onClick = "getDocID(this);">
@@ -116,7 +118,7 @@
 	                            </div>
 	                        	<hr>
                         <% } %>
-                        <input type = "hidden" name = "docID" id = "docID">
+                        <input type = "hidden" name = "docSchedID" id = "docSchedID">
                         </form>
                         
                     </div>

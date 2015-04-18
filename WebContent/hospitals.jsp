@@ -1,3 +1,9 @@
+<%@page import="model.Doctor"%>
+<%@page import="model.DoctorSchedule"%>
+<%@page import="model.Appointment"%>
+<%@page import="servlets.AppointmentServlet"%>
+<%@page import="model.Notification"%>
+<%@page import="model.Patient"%>
 <%@page import="model.Hospital"%>
 <%@page import="model.User"%>
 <%@page import="controller.Controller"%>
@@ -45,7 +51,13 @@
             <section class="top-bar-section" id = "clickHealth-menu">
                 <!-- Right Nav Section --> 
                 <ul class="right">
-                	<li><a href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png"><span>3</span> </a></li>
+                	<li><a id = "notifIcon" data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
+                	<%
+                		Patient p = con.getPatientInstance(user.getUsername());
+                	    int notifCount = con.getNotifCount(p.getPatientID());
+                	%>
+                		<span id = "notifCount"><%=notifCount%></span></a></li>
+                
                 	<li><a href="user-appointments.jsp"></a></li>
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
@@ -73,6 +85,7 @@
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name"><%=uName%></label>
+                            <input type= hidden id = "username" name="username" value = "<%=uName%>">
                             <a href = "user-account-settings.jsp">
                             	<label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
@@ -106,16 +119,16 @@
                 </div>
             </section>
         </div>
-<!--**************************************************Login Drop Down*************************************************************-->
-        <div id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
-            <!--  <form  action="doctor-account.html" method="get">  -->
-     <!--        <form data-abide action = "LoginServlet" method = "post">	 -->
-                <div class="notificationBox">
-                	
-                </div>
-	            
-            
-          <!--   </form> -->
+<!--**************************************************Notif Drop Down*************************************************************-->
+       <div class="reveal-modal small form" id ="viewNotif-modal" data-reveal>     		
+       	
+            <a class="close-reveal-modal">&#215;</a>
+       </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
+       
+<!--**************************************************Notif Drop Down*************************************************************-->
+        <div  id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
+     		
         </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
    
@@ -124,6 +137,7 @@
           <script src = "Foundation/js/foundation/foundation.js"></script>
           <script src = "Foundation/js/foundation/foundation.topbar.js"></script>
           <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
+          <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
 		  <script src = "javascript.js"></script> 
     </body>
 </html>

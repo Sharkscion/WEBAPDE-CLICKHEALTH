@@ -176,7 +176,7 @@
 		                		<label>Username:</label>             	
 		                	</div>
 		                	 <div class = "large-8 columns">
-		                		 <input type = "text" id = "pUName" name = "pUName" required pattern="[a-zA-Z]+">
+		                		 <input type = "text" id = "pUName" name = "pUName" required pattern="[a-zA-Z]+"  autocomplete="off">
 		                		 <small style = "font-family: century gothic, sans-serif; font-size: 13px;" id = "pUNameError" name = "pUNameError"> </small>
 		                    	 <small class = "error" > Username is required</small>         	
 		                	</div>
@@ -189,7 +189,7 @@
 	                			<label>Lastname:</label> 
 	                		</div>
 	                		<div class = "large-8 columns">
-	                			<input type = "text" id = "pLName" name = "pLName" required pattern = "[a-zA-Z]+">
+	                			<input type = "text" id = "pLName" name = "pLName" required pattern = "[a-zA-Z]+" >
 	                    		<small class = "error">Lastname is required.</small>
 	                		</div>
 	                	</div>
@@ -252,7 +252,8 @@
 	                    <div class = "row">
 	                        <div clas ="large-12 columns" style = "margin-left: 15px;">
 	                            <label> Username: </label>
-	                          	<input type = "text" id = "dUName" name = "dUName" required pattern="[a-zA-Z]+">
+	                          	<input type = "text" id = "dUName" name = "dUName" required pattern="[a-zA-Z]+"  autocomplete="off">
+		                    	 <small style = "font-family: century gothic, sans-serif; font-size: 13px;" id = "dUNameError" name = "dUNameError"> </small>
 		                    	<small class = "error">Username is required.</small>  
 	                        </div>
 	                    </div>
@@ -333,12 +334,12 @@
 	                    <div class = "row">
 	                        <div class = "large-6 columns">
 	                            <label>Start Time:</label>
-	                            <input id="datetimepicker" name = "startTime" type="text" required = ""> 
+	                            <input id="startTime" name = "startTime" type="text" required = ""  autocomplete="off"> 
 	                            <small class="error">Schedule start time is required.</small>
 	                        </div>
 	                        <div class = "large-6 columns">
 	                            <label>End Time:</label>
-	                            <input id="datetimepicker2" name = "endTime" type="text" required> 
+	                            <input id="datetimepicker2" name = "endTime" type="text" required  autocomplete="off"> 
 	                            <small class="error">Schedule end time is required.</small>
 	                        </div>
 	                    </div>

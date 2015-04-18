@@ -24,10 +24,6 @@ public class SearchServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -37,10 +33,6 @@ public class SearchServlet extends HttpServlet {
 		request.getSession().setAttribute("hospitals", con.getSpecializationHospitals(searchedSpecialization));
 		response.sendRedirect("searchedHospitals.jsp");
 		
-		/*Controller con = new Controller();
-		String searchedSpecialization = (String)request.getParameter("searchbox");
-		request.getSession().setAttribute("specialization", searchedSpecialization);
-		response.sendRedirect("searchedSpecializations.jsp");*/
 					
 	}
 	

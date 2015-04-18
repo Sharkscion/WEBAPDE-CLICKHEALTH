@@ -30,6 +30,31 @@ public class UserDAO implements DAOInterface {
         return uD;
     }
 
+    public User getAppointmentDoctorUserInfo(int appointment)
+    {
+    	User u = null;
+        try {
+            String query = "SELECT user.userID, user.username, user.email, user.password, user.lastname, user.firstname, user.type "
+            		+ "FROM user "
+            		+ "INNER JOIN doctor d ON d.user_ID = user.userID "
+            		+ "INNER JOIN doctorschedule ds ON d.licenseID = ds.doctorScheduleID "
+            		+ "INNER JOIN appointments a ON a.appointmentsID = ?;";
+            statement = connect.getConnection().prepareStatement(query);
+            statement.setInt(1, appointment);
+     
+            rs = statement.executeQuery();
+
+            if (rs.next()) {
+                u = new User(rs.getInt("user.userID"), rs.getString("user.username"), rs.getString("user.email"), rs.getString("user.password"),
+                        rs.getString("user.lastname"), rs.getString("user.firstname"), rs.getString("user.type"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connect.close();
+        return u;
+    }
     public User validateUser(String username, String password) {
 
         User u = null;

@@ -30,6 +30,7 @@ public class DoctorDAO implements DAOInterface {
 		return dD;
 	}
 
+	
 	@Override
 	public Iterator<Doctor> getAllData() {
 

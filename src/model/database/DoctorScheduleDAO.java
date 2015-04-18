@@ -70,6 +70,7 @@ public class DoctorScheduleDAO implements DAOInterface {
 		DoctorSchedule ds = (DoctorSchedule) obj;
 		try {
 
+			
 			String query = "INSERT INTO doctorschedule VALUES(NULL,?,?,?,?,?)";
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setString(1, ds.getScheduleDay());
@@ -173,7 +174,7 @@ public class DoctorScheduleDAO implements DAOInterface {
 		return ds;
 	}
 	
-	public Iterator<DoctorSchedule> getSpecializationHospitalDoctorScheds(String specialization, int scheduleID)
+	public Iterator<DoctorSchedule> getSpecializationHospitalDoctorScheds(String specialization, int hospitalID)
 	{
 		try 
 		{
@@ -189,16 +190,17 @@ public class DoctorScheduleDAO implements DAOInterface {
 					+ "INNER JOIN user u "
 					+ "ON u.userID = d.user_ID "
 					+ "WHERE d.specialization LIKE '%" + specialization +"%' "
-					+ "AND ds.scheduleID = " + scheduleID + " "
+					+ "AND h.hospitalID = " + hospitalID + " "
 					+ "ORDER BY u.lastname;";
 			statement = connect.getConnection().prepareStatement(query);
 			rs = statement.executeQuery();
 
 			while (rs.next()) {
+				System.out.println("CSHEDLE ID DAO: "+ rs.getInt("scheduleID"));
 				ds = new DoctorSchedule(rs.getInt("scheduleID"), rs.getString("scheduleDay"), 
 										rs.getTime("startTime"), rs.getTime("endTime"), rs.getInt("doctorScheduleID"), 
 										rs.getInt("hospitalScheduleID"));
-
+				System.out.println("SCHEDULE DAU: "+ ds.getScheduleID());
 				sList.add(ds);
 			}
 		}

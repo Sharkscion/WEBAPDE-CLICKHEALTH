@@ -83,11 +83,11 @@
                 </div>
                 <div id = "mid-content" class = "row doctor-content"> 
                     <div  id="doctorsList" class = "large-12 columns"> <br>
-                        <form action="SearchDoctorsServlet" method="post">
+                        <form action="searchedDoctors.jsp" method="post">
                          <%
 	                    	Controller con = new Controller();
 	                   		Iterator<Hospital> hospitals = (Iterator<Hospital>) session.getAttribute("hospitals");
-	                   		//session.setAttribute("specialization", session.getAttribute("specialization"));
+	                   		session.setAttribute("specialization", session.getAttribute("specialization"));
                         	while(hospitals.hasNext())
                         	{
                         		Hospital hospital = hospitals.next();
@@ -98,8 +98,8 @@
 	                                <div class = "large-2 columns"> <img class = "hospital-img" src="Assets/clickHealth2.png"></div>
 	                                <div class = "large-8 columns">
 	
-	                                    <p>Hospital: <%=hospital.getName()%></p>
-	                                    <p>Hospital Address: <%=address%></p>	                                
+	                                    <p><b>Hospital:</b> <%=hospital.getName()%></p>
+	                                    <p><b>Hospital Address:</b> <%=address%></p>	                                
 	                                </div>
 	                                <div class = "large-2 columns">
 							            <input type="submit" class = "contact-button" id = "<%=hospital.getHospID() %>" name  = "<%=hospital.getHospID() %>" value="Choose Hospital" onClick = "getHospID(this);">

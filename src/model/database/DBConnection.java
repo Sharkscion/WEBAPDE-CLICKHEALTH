@@ -20,7 +20,11 @@ public class DBConnection {
         url = "jdbc:mysql://127.0.0.1:3306/";
         database = "clickhealth";
         username = "root";
+<<<<<<< HEAD
+        passwordDB = "Cs20";
+=======
         passwordDB = "iloveyouGod";
+>>>>>>> origin/master
     }
 
     public static DBConnection getInstance() {
