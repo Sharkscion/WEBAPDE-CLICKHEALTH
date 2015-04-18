@@ -234,7 +234,7 @@
                             <textarea id="remarks" name = "remarks" cols = "45" rows = "6"></textarea>
                             <input type="submit" id = "subm" name = "subm" class="contact-button" value="SUBMIT">
 	                      </div> 
-	                    </form>
+ 	                    </form>
                       </div>       
                   </section>
               </div>
@@ -254,11 +254,18 @@
 		    $('#subm').click(function() {
 		        var scheddate = $('#date').val();
 		        var schedtime = $('#startTime').val();
+<<<<<<< HEAD
                         alert("time issssss "+ $('#startTime').val());
+=======
+>>>>>>> 2247597c1c6cc7e71ed7cede9f922fbcbce3d8f9
 		        $.ajax({
 		            url: 'CheckSchedServlet',
 		            data: {"schedDate": scheddate,
 		            		"schedTime": schedtime,
+<<<<<<< HEAD
+=======
+		            		"schedDoctor": "<%=d.getLicenseID()%>",
+>>>>>>> 2247597c1c6cc7e71ed7cede9f922fbcbce3d8f9
 		            	  },
 		            error: function(data) {
 		            },

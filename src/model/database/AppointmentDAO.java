@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import model.Appointment;
 import model.Doctor;
+import model.DoctorSchedule;
 import model.Hospital;
 
 public class AppointmentDAO implements DAOInterface{
@@ -346,6 +347,33 @@ public class AppointmentDAO implements DAOInterface{
 		}
 		connect.close();
 		return false;
+	}
+
+	public boolean checkDaySched(DoctorSchedule ds, String time, String date)
+	{
+		try
+		{
+			String query = "SELECT * FROM appointments WHERE startTime = ? and doctorSched_ID = ? and appointmentDate = ? and status = \"pending\"";	
+			statement = connect.getConnection().prepareStatement(query);
+			statement.setString(1, time);
+			statement.setInt(2, ds.getScheduleID());
+			statement.setString(3, date);
+			rs = statement.executeQuery();
+			
+			if (rs.next())
+			{
+				return false;
+			}
+		}
+		
+		catch (SQLException e)
+		{
+			System.out.println("Unable to SELECT cinema");
+			e.printStackTrace();
+		}
+		
+		connect.close();
+		return true;
 	}
 
 

@@ -87,10 +87,6 @@ function setMinTime(min, max) {
     maxStartTime = max;
 }
 
-
-
-
-
 var logic = function() {
     this.setOptions({
         minTime: minStartTime,
