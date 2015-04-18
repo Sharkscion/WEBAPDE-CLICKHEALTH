@@ -349,6 +349,7 @@ public class AppointmentDAO implements DAOInterface{
 		return false;
 	}
 
+
 	public boolean checkDaySched(DoctorSchedule ds, String time, String date)
 	{
 		try
@@ -375,6 +376,4 @@ public class AppointmentDAO implements DAOInterface{
 		connect.close();
 		return true;
 	}
-
-
 }

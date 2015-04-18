@@ -41,7 +41,7 @@ public class NotificationDAO implements DAOInterface {
 			while (rs.next()) 
 			{
 				n = new Notification(rs.getInt("notificationID"), rs.getInt("appID"), rs.getString("notificationContent"),
-								     rs.getDate("notifDate"), rs.getTime("notifTime"),rs.getInt("isViewed"));
+								     rs.getDate("notifDate"), rs.getTime("notifTime"),rs.getInt("isViewed"), rs.getInt("isRejected"));
 				nList.add(n);
 
 			}
@@ -60,13 +60,15 @@ public class NotificationDAO implements DAOInterface {
 		Notification n = (Notification) obj;
 		try {
 
-			String query = "INSERT INTO notification VALUES(NULL, ?, ?, ?, ?, ?);";
+			String query = "INSERT INTO notification VALUES(NULL, ?, ?, ?, ?, ?, ?);";
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setInt(1, n.getNotifID());
 			statement.setInt(2,  n.getAppID());
 			statement.setString(3, n.getNotifContent());
 			statement.setDate(4, new Date(n.getNotifDate().getTime()));
 			statement.setTime(5, n.getNotifTime());
+			statement.setInt(6, n.getIsViewed());
+			statement.setInt(7, n.getIsRejected());
 			statement.execute();
 			connect.close();
 			return true;
@@ -84,12 +86,13 @@ public class NotificationDAO implements DAOInterface {
 	public boolean updateData(Object obj) {
 		Notification n = (Notification)obj;
 		String query = "UPDATE Notification "
-					 + "SET  isViewed = ?"
-				     + "WHERE notificationID = ?";
+					 + "SET  isViewed = ? "
+				     + "WHERE notificationID = ? ";
 		try 
 		{
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setInt(1, n.getIsViewed());
+			statement.setInt(2, n.getNotifID());
 			statement.execute();
 			connect.close();
 			return true;
@@ -107,10 +110,11 @@ public class NotificationDAO implements DAOInterface {
 		Notification n = null;
 		nList = new ArrayList<Notification>();
 		try {
-			String query = "SELECT notificationID, appID, notificationContent, notifDate, notifTime, isViewed "
+			String query = "SELECT notificationID, appID, notificationContent, notifDate, notifTime, isViewed, isRejected "
 					+ "FROM notification "
 					+ "INNER JOIN appointments "
-					+ "ON appID = appointmentsID AND patient_ID = ?;";
+					+ "ON notification.appID = appointments.appointmentsID AND appointments.patient_ID = ? and isViewed = 0 "
+					+ "ORDER BY notification.notifDate DESC, notification.notifTime DESC;";
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setInt(1, patientID);
 			rs = statement.executeQuery();
@@ -118,7 +122,7 @@ public class NotificationDAO implements DAOInterface {
 			while (rs.next()) {
 
 				n = new Notification(rs.getInt("notificationID"), rs.getInt("appID"), rs.getString("notificationContent"),
-					     			 rs.getDate("notifDate"), rs.getTime("notifTime"),rs.getInt("isViewed"));
+					     			 rs.getDate("notifDate"), rs.getTime("notifTime"),rs.getInt("isViewed"),rs.getInt("isRejected"));
 				nList.add(n);
 			}
 
@@ -129,7 +133,7 @@ public class NotificationDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		connect.close();
-
+		System.out.println("NLIST SIZE: "+ nList);
 		return nList.iterator();
 	}
 
@@ -148,7 +152,7 @@ public class NotificationDAO implements DAOInterface {
 			rs = statement.executeQuery();
 			if (rs.next()) {
 				 n = new Notification(rs.getInt("notificationID"), rs.getInt("appID"), rs.getString("notificationContent"),
-					     rs.getDate("notifDate"), rs.getTime("notifTime"),rs.getInt("isViewed"));
+					     rs.getDate("notifDate"), rs.getTime("notifTime"),rs.getInt("isViewed"),rs.getInt("isRejected"));
 				
 			}
 		}
@@ -161,14 +165,14 @@ public class NotificationDAO implements DAOInterface {
 		return n;
 	}
 	
-	public int notificationCount(int patientID)
+	public int getNotificationCount(int patientID)
 	{
 		int count = 0;
 		try {
 			String query = "SELECT COUNT(notificationID) "
 					+ "FROM notification "
 					+ "INNER JOIN appointments "
-					+ "ON appID = appointmentsID AND patient_ID = ?;";
+					+ "ON appID = appointmentsID AND patient_ID = ? AND isViewed = 0;";
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setInt(1, patientID);
 			rs = statement.executeQuery();

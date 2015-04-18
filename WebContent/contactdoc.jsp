@@ -232,9 +232,8 @@
 	                         </div>
                             <label>Remarks: </label>
                             <textarea id="remarks" name = "remarks" cols = "45" rows = "6"></textarea>
-                            <input type="submit" id = "subm" name = "subm" class="contact-button" value="SUBMIT">
-	                      </div> 
- 	                    </form>
+							<input type="submit" id = "subm" name = "subm" class="contact-button" value="SUBMIT">	                      </div> 
+	                    </form>
                       </div>       
                   </section>
               </div>
@@ -248,7 +247,6 @@
           <script src="Foundation/js/foundation/foundation.alert.js"></script>
           <script src="jquery.datetimepicker.js"></script>
 		  <script src = "javascript.js"></script> 
-		  
 		  <script>
 		    
 		    $('#subm').click(function() {
@@ -270,6 +268,5 @@
 		    });
 		  
 		  </script>
-		  
     </body>
 </html>

@@ -10,8 +10,8 @@ public class Notification {
 	private Date notifDate;
 	private Time notifTime;
 	private int isViewed;
-	
-	public Notification(int notifID, int appID, String notifContent, Date notifDate, Time notifTime, int isViewed)
+	private int isRejected;
+	public Notification(int notifID, int appID, String notifContent, Date notifDate, Time notifTime, int isViewed, int isRejected)
 	{
 		setNotifID(notifID);
 		setAppID(appID);
@@ -19,6 +19,7 @@ public class Notification {
 		setNotifDate(notifDate);
 		setNotifTime(notifTime);
 		setIsViewed(isViewed);
+		setIsRejected(isRejected);
 	}
 	public int getNotifID() {
 		return notifID;
@@ -55,5 +56,12 @@ public class Notification {
 	}
 	public void setIsViewed(int isViewed) {
 		this.isViewed = isViewed;
+	}
+	
+	public int getIsRejected() {
+		return isRejected;
+	}
+	public void setIsRejected(int isRejected) {
+		this.isRejected = isRejected;
 	}
 }

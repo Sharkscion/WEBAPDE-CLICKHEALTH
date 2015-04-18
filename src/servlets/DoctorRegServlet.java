@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Doctor;
 import model.DoctorSchedule;
+import model.Hospital;
 import model.UserContact;
 import controller.Controller;
 
@@ -25,27 +26,12 @@ import controller.Controller;
 public class DoctorRegServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public DoctorRegServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     * response)
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     * response)
-     */
+   
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         Controller con = new Controller();
@@ -60,7 +46,7 @@ public class DoctorRegServlet extends HttpServlet {
         String specialization = request.getParameter("dSpec");
 
         String hospital = request.getParameter("hospital");
-        String schedDay = request.getParameter("schedDay");
+        String schedDay = request.getParameter("schedDays");
         String start = request.getParameter("startTime");
         String end = request.getParameter("endTime");
 
@@ -78,11 +64,13 @@ public class DoctorRegServlet extends HttpServlet {
                 licenseID = Integer.parseInt(license);
             }
 
+            Hospital h = con.getHospital(hospital);
+            System.out.println("HOSPITAL: "+ hospital + " ID: "+ h.getHospID());
             Doctor d = new Doctor(0, username, email, password, lastname, firstname, "doctor", licenseID, specialization);
             con.addUser(d);
             con.addDoctor(d);
 
-            DoctorSchedule ds = new DoctorSchedule(0, schedDay, startTime, endTime, licenseID, 0);
+            DoctorSchedule ds = new DoctorSchedule(0, schedDay, startTime, endTime, licenseID, h.getHospID());
             con.addDoctorSchedule(ds);
 
             UserContact c = new UserContact(con.getUser(username).getUserID(), email, "E-mail");

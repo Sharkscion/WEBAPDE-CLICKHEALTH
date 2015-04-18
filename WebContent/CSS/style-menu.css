@@ -182,16 +182,16 @@
     border-radius: 3px;
 }
 .tasks {
-  margin-top: 8px;
+  margin-top: 5px;
   width: 30px;
   height: 30px;
 }
-span {
-  display: inline-block;
 
+#notifCount{
+  display: inline-block;
   vertical-align: text-top;
   margin-left: 10px;
-  margin-top: 8px;
+  margin-top: 5px;
   padding: 0 5px;
   line-height: 16px;
   font-size: 11px;
@@ -206,3 +206,30 @@ span {
   -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.2);
 }
+
+.notification-box
+{
+  display: inline-block;
+  vertical-align: text-top;
+  margin-left: 10px;
+  padding: 0 5px;
+  line-height: 16px;
+  font-size: 13px;
+  font-family: monospace;
+  border-radius: 2px;
+}
+
+ .notification-header
+{
+	font-family: century gothic, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+#notif-dropdown
+{
+	padding-top: 20px !important;
+	margin-top: 20px !important;
+	width: 1000px !important;
+}
+

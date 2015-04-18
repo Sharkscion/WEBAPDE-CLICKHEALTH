@@ -7,7 +7,8 @@ $(document).ready(function()
     $(window).resize(function() {
         var bodyheight = $(window).height();
         $(".windowheight").css('min-height', bodyheight);
-    }); 
+    });
+    
 
     $('#pUName').keyup(function(event) {
         var username = $('#pUName').val();
@@ -27,9 +28,25 @@ $(document).ready(function()
             type: 'POST'
         });
     });
-     
     
-    
+    $('#dUName').keyup(function(event) {
+        var username = $('#dUName').val();
+        $.ajax({
+            url: 'SignUpServlet',
+            data: {"username": username, },
+            error: function(data) {
+                $('#dUNameError').text(data);
+                $('#dUNameError').css('color', 'red');
+            },
+            success: function(data) {
+
+                //alert("Ok: "+ data);
+                $('#dUNameError').text(data);
+                $('#dUNameError').css('color', 'green');
+            },
+            type: 'POST'
+        });
+    });
     
     //i also tried document din, ayaw pa din :<
     //btw yung currentpasswordTxt is under the passwordRow() function in user-accounts
@@ -41,6 +58,51 @@ $(document).ready(function()
     alert("Working");
   }); 
 
+	
+  $("#notifIcon").click(function(event){
+	   var username =  $('#username').val();
+	 
+	   $.ajax({
+          url: "NotificationServlet",
+          data: {"user_name": username},
+          error: function(data)
+          {
+              alert("ERROR: " + data);
+          },
+          success: function(data) {
+       
+       	   var splitUrl = data.split('|');
+              $("#notif-dropdown").html(splitUrl[0]);
+              $("#notifCount").html(splitUrl[1]);
+              $("#notif-dropdown div").click(function(event) {
+            	      var value = $(this).attr('id');
+            	      $.ajax({
+            	          url: "ShowNotificationServlet",
+            	          data: {"notifID": value,
+            	        	     "user_name": username},
+            	          error: function(data)
+            	          {
+            	              alert("ERROR: " + data);
+            	          },
+            	          success: function(data) {
+            	        	  var splitUrl = data.split('|');
+            	        	  var n = data.localeCompare(splitUrl[0]);
+            	        	 
+            	        	   $("#notifCount").html(splitUrl[1]);
+            	        	 if(n == 1)
+            	        		 window.location.replace("user-appointments.jsp");
+            	        	 else
+            	        		 alert('Hello');
+            	       	
+            	          },
+            	          type: "POST"
+            	      });
+            	  });
+          },
+          type: "POST"
+      });
+  });
+  
 
     $("#searchbox").keyup(function(event)
     {
@@ -72,20 +134,16 @@ $(document).ready(function()
     });
 });
 
-$('#passwordRow').delegate('#currentpasswordTxt', 'keyup', function() {
-    alert("Working");
-});
-
-// Only the first textarea responds      
-$('#passwordRow').on('keyup', '#currentpasswordTxt', function() {
-    alert("Working");
-});   
 
 var minStartTime, maxStartTime;
 function setMinTime(min, max) {
     minStartTime = min;
     maxStartTime = max;
 }
+
+
+
+
 
 var logic = function() {
     this.setOptions({
@@ -134,8 +192,8 @@ function getDocID(element)
     var pressedBtn = element.id;
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
-    document.getElementById("docID").value = lastChar;
-    //alert("here is " + document.getElementById("docID").value);
+    document.getElementById("docSchedID").value = lastChar;
+    alert("here is ScheduleID" + document.getElementById("docSchedID").value);
 }
 
 function getApproveID(element)

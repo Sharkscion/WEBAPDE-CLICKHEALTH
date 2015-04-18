@@ -15,16 +15,8 @@ public class Controller
 	private PatientDAO pd;
 	private ContactDAO cd;
 	private UserDAO ud;
-//	private static Controller controller;
-//
-//	public static synchronized Controller getInstance() 
-//	{
-//        if (controller == null) {
-//            controller = new Controller();
-//        }
-// 
-//        return controller;
-//    }
+	private NotificationDAO nd;
+
 	public Controller()
 	{
 		ad = new AppointmentDAO();
@@ -34,6 +26,7 @@ public class Controller
 		pd = new PatientDAO();
 		ud = new UserDAO();
 		cd = new ContactDAO();
+		nd = new NotificationDAO();
 	}
 	
 	public boolean changeAppointmentStat(int id, String stat)
@@ -44,7 +37,14 @@ public class Controller
 	{
 		return ad.insertData(app);
 	}
-	
+	public boolean changeNotificationStat(Notification n)
+	{
+		return nd.updateData(n);
+	}
+	public boolean addNotification(Notification notif)
+	{
+		return nd.insertData(notif);
+	}
 	public boolean addContact(UserContact uc)
 	{
 		return cd.insertData(uc);
@@ -77,7 +77,10 @@ public class Controller
     public void editUser(User u){
         ud.updateData(u);
     }
-    
+    public User getAppointmentDoctorInfo(int appointment)
+    {
+    	return ud.getAppointmentDoctorUserInfo(appointment);
+    }
 	public Appointment getAppointment(int appId)
 	{
 		return ad.getData(appId);
@@ -107,10 +110,15 @@ public class Controller
 		return dd.getData(licenseID);
 	}
 	
+	public Notification getNotification(int notifID)
+	{
+		return nd.getData(notifID);
+	}
 	public Doctor getDoctorByUserId(int userID)
 	{
 		return dd.getDoctorByUserId(userID);
 	}
+	
 	public User validateUser(String username, String password)
 	{
 		return ud.validateUser(username, password);
@@ -136,6 +144,10 @@ public class Controller
 		return dd.getAllSpecializations();
 	}
 	
+	public Iterator<Notification> getAllNotificationNotViewed(int patientID)
+	{
+		return nd.getAllNotificationNotViewed(patientID);
+	}
 	public Iterator<User> getAllUsers()
 	{
 		return ud.getAllData();
@@ -184,6 +196,7 @@ public class Controller
 	
 	public Iterator<DoctorSchedule> getSpecializationHospitalDoctorScheds(String specialization, int hospitalID)
 	{
+		
 		return sd.getSpecializationHospitalDoctorScheds(specialization, hospitalID);
 	}
 	
@@ -206,6 +219,10 @@ public class Controller
 	{
 		return ad.resolveDoctorAppointment(appId);
 	}
+	public int getNotifCount(int patientID)
+	{
+		return nd.getNotificationCount(patientID);
+	}
 	
 	public boolean checkDay(String day, int doctor)
 	{
@@ -221,8 +238,6 @@ public class Controller
 		
 		return ad.checkDaySched(ds, time, date);
 	}
-	
-	
 }
 
 
