@@ -51,9 +51,9 @@
             <section class="top-bar-section" id = "clickHealth-menu">
                 <ul class="right">
                     <li class="divider"></li>
-                    <li class ="active-button"><a href="appointment-requests.html">APPOINTMENT REQUESTS</a></li>
+                    <li class ="active-button"><a href="doctor-appointment-requests.jsp">APPOINTMENT REQUESTS</a></li>
                     <li class="divider"></li>
-                    <li  style= "margin-right: 10px"><a  href="scheduled-appointments.html">SCHEDULED APPOINTMENTS</a></li>
+                    <li  style= "margin-right: 10px"><a  href="scheduled-appointments.jsp">SCHEDULED APPOINTMENTS</a></li>
                     <li class="divider"></li>
                 </ul>
             </section>
@@ -68,8 +68,8 @@
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
                             <label id = "left-bar-name">Dr. <%=user.getFirstname()%> <%=user.getLastname()%></label>
-                            <a href = "doctor-account-settings.html"><label id = "left-bar-account">Account Settings</label></a>
-                            <a href= "index.html" id = "left-bar-logout">Logout </a> <br>
+                            <a href = "doctor-account-settings.jsp"><label id = "left-bar-account">Account Settings</label></a>
+                            <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
                         </div>
                     </div>
@@ -327,52 +327,7 @@
                 +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();  
                 });
             }
-              
-              
-              
-//              "<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\"><div class=\"large-5 columns "
-//                +"account-label\">"
-//                +"<label>Schedules:</label></div><div class=\"large-7 columns account-current\"><input type=\"text\" name=\"text\" "
-//                +"placeholder=\"Specialization\" tabindex=\"1\"/></div></div>"
-//                +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>"
-              
-//            "<form class=\"account-form" action=\"doctor-account-settings.html\"><div class=\"row\">"
-//            +"<div class=\"large-3 columns account-label\"><label>Schedules:</label></div>"
-//            +"<div class=\"large-9 columns account-current\"><div id=\"schedulesDIV\"><div class=\"row\">"
-//            +"<div class=\"large-3 columns\"><input type=\"text\" name=\"text\" placeholder=\"Day\" tabindex=\"1\"/>"
-//            +"</div><div class=\"large-3 columns\"><input type=\"text\" name=\"text\" placeholder=\"Time slot\" tabindex=\"1\"/>"
-//            +"</div><div class=\"large-4 columns\"><input type=\"text\" name=\"text\" placeholder=\"Hospital\" tabindex=\"1\"/>"
-//            +"</div><div class=\"large-2 columns\"><div id=\"addSchedule\">"
-//            +"<input type=\"submit\" class=\"account-button\" value=\"+\" tabindex=\"3\" onClick = \"addSched();\"/>"
-//            +"</div></div></div></div></div></div>"
-//            +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>"
-              
-              
-//          <div class="row">
-//            <div class="large-3 columns">
-//                <input type="text" name="text" placeholder="Specialization" tabindex="1"/>
-//            </div>
-//            <div class="large-3 columns">
-//                <input type="text" name="text" placeholder="Specialization" tabindex="1"/>
-//            </div>
-//            <div class="large-4 columns">
-//                <input type="text" name="text" placeholder="Specialization" tabindex="1"/>
-//            </div>
-//            <div class="large-2 columns">
-//                <div id="addSchedule">
-//                    <input type="submit" class="account-button" value="+" tabindex="3" onClick = ""/>
-//                </div>
-//            </div>
-//          </div>
-              
-              
-              
-              
-              
-              
-              
-              
-              
+ 
             function retainName(){
                 return "<div class=\"large-3 columns account-label\"><p>Name:</p></div><div class=\"large-7 columns account-current\">"
                 +"<p>Shark Tan</p></div><div class=\"large-2 columns\"><button class = \"account-button\" onClick=\"getForm(1);\">Edit</button></div>";

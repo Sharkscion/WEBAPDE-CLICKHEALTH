@@ -121,9 +121,9 @@
                 String msg = "";
                 if (success != null) {
                     if (success.equals("1")) {
-                        msg = "<span style= \"color: #119525;\">This appointment has successfully been approved!</span>";
+                        msg = "<span style= \"color: #119525;\">Appointment has successfully been approved!</span>";
                     } else if (success.equals("2")) {
-                        msg = "<span style= \"color: #119525;\">This appointment have been rejected! <br>"
+                        msg = "<span style= \"color: #119525;\">Appointment has been rejected! <br>"
                                 + "A notification will be sent to the patient concerning the status of the appointment!</span>";
                     } else {
                         msg = "<span style= \"color: red;\">Error: The status of this appointment has failed to change.</span>";

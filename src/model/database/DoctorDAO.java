@@ -134,16 +134,17 @@ public class DoctorDAO implements DAOInterface {
 	@Override
 	public Doctor getData(Object key) 
 	{
-		String username = (String)key;
-
+		System.out.println("LICENSE ID: "+ key);
+		int licenseID = (Integer) key;
+		
 		Doctor d = null;
 		try 
 		{
 			String query = "SELECT * FROM user u, doctor d "
 					+ "WHERE u.userID = d.user_ID "
-					+ "AND u.username = ?;";
+					+ "AND d.licenseID = ?;";
 			statement = connect.getConnection().prepareStatement(query);
-			statement.setString(1, username);
+			statement.setInt(1, licenseID);
 			rs = statement.executeQuery();
 			if (rs.next()) {
 				d = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), 
@@ -160,7 +161,6 @@ public class DoctorDAO implements DAOInterface {
 		connect.close();
 		return d;
 	}
-
 	public Doctor getDoctorByUserId(int userId) 
 	{
 		Doctor d = null;

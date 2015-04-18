@@ -67,11 +67,6 @@ $(document).ready(function()
             type: 'POST'
         });
   });  
-  
-<<<<<<< HEAD
-  $('#passwordRow').delegate('#currentpasswordTxt','keyup',function() {
-    alert("Working");
-  }); 
 
 	
   $("#notifIcon").click(function(event){
@@ -117,9 +112,6 @@ $(document).ready(function()
           type: "POST"
       });
   });
-  
-=======
->>>>>>> origin/master
 
     $("#searchbox").keyup(function(event)
     {
@@ -150,20 +142,12 @@ $(document).ready(function()
         });
     });
 });
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> origin/master
 
 var minStartTime, maxStartTime;
 function setMinTime(min, max) {
     minStartTime = min;
     maxStartTime = max;
 }
-
-
-
 
 
 var logic = function() {
