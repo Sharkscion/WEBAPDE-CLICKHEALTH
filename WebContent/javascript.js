@@ -34,13 +34,23 @@ $(document).ready(function()
     //i also tried document din, ayaw pa din :<
     //btw yung currentpasswordTxt is under the passwordRow() function in user-accounts
   $('#passwordRow').on('keyup','#currentpasswordTxt',function() {
-    alert("Working");
+    var password = $('#currentpasswordTxt').val();
+        $.ajax({
+            url: 'ConfirmPasswordServlet',
+            data: {"password": password, },
+            error: function(data) {
+                $('#currentpasswordError').text(data);
+                $('#currentpasswordError').css('color', 'red');
+            },
+            success: function(data) {
+
+                $('#currentpasswordError').text(data);
+                $('#currentpasswordError').css('color', 'green');
+            },
+            type: 'POST'
+        });
   });  
   
-  $('#passwordRow').delegate('#currentpasswordTxt','keyup',function() {
-    alert("Working");
-  }); 
-
 
     $("#searchbox").keyup(function(event)
     {
@@ -71,15 +81,7 @@ $(document).ready(function()
         });
     });
 });
-
-$('#passwordRow').delegate('#currentpasswordTxt', 'keyup', function() {
-    alert("Working");
-});
-
-// Only the first textarea responds      
-$('#passwordRow').on('keyup', '#currentpasswordTxt', function() {
-    alert("Working");
-});   
+ 
 
 var minStartTime, maxStartTime;
 function setMinTime(min, max) {

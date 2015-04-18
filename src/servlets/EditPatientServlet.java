@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 import javax.servlet.http.Cookie;
 
 import model.Appointment;
@@ -55,37 +59,81 @@ public class EditPatientServlet extends HttpServlet {
         }
         
         u = con.getUserInstance(userID);
-        p = con.getPatientInstance(u.getUsername());
+        
+        if(u.getType().equals("patient"))
+            u = con.getPatientInstance(u.getUsername());
+        else
+            u = con.getDoctor(u.getUsername());
 
         String type = request.getParameter("settingCategory");
         System.out.println("WENT HERE Type: "+type);
         if (type.equals("name")) {
+            String first =request.getParameter("firstNameTxt");
+            String last = request.getParameter("lastNameTxt");
             
-            u.setFirstname(request.getParameter("firstNameTxt"));
-            u.setLastname(request.getParameter("lastNameTxt"));
+            if(!first.equals(""))
+                u.setFirstname(first);
+            if(!last.equals(""))
+                u.setLastname(last);
             con.editUser(u);
             
         } else if (type.equals("address")) {
-            p.setStreet(request.getParameter("streetTxt"));
-            p.setCity(request.getParameter("cityTxt"));
-            con.editPatient(p);
+            ((Patient)u).setStreet(request.getParameter("streetTxt"));
+            ((Patient)u).setCity(request.getParameter("cityTxt"));
+            con.editPatient(((Patient)u));
             
         } else if (type.equals("username")) {
             u.setUsername(request.getParameter("usernameTxt"));
             con.editUser(u);
             
         } else if (type.equals("password")) {
-            if(u.getPassword().equals(request.getParameter("currentpasswordTxt"))){
+            if(u.getPassword().equals(encryptPassword(request.getParameter("currentpasswordTxt")))){
                 if(request.getParameter("newpasswordTxt").equals(request.getParameter("confirmpasswordTxt"))){
-                    u.setPassword(request.getParameter("passwordTxt"));
+                    u.setPassword(request.getParameter("confirmpasswordTxt"));
                     con.editUser(u);
                     response.sendRedirect("user-account-settings.jsp");
                 }
             }
+        } else if (type.equals("specialization")) {
+            ((Doctor)u).setSpecialization(request.getParameter("specializationTxt"));
+            con.editDoctor((Doctor)u);
+            
         }
         
-        //response.sendRedirect("user-account-settings.jsp");
+        if(u.getType().equals("patient"))
+            response.sendRedirect("user-account-settings.jsp");
+        else
+            response.sendRedirect("doctor-account-settings.jsp");
+    }
+    
+    public static String encryptPassword(String password) {
+        String sha1 = "";
+        System.out.println("PASSWORD: " + password);
+        if (password.equals("") == false) {
+            System.out.println("PASSORD");
+            try {
+                MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+                crypt.reset();
+                crypt.update(password.getBytes("UTF-8"));
+                sha1 = byteToHex(crypt.digest());
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
+        return sha1;
+    }
+
+    private static String byteToHex(final byte[] hash) {
+        Formatter formatter = new Formatter();
+        for (byte b : hash) {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
     }
 
 }

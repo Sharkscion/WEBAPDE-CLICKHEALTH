@@ -93,6 +93,7 @@ public class DoctorDAO implements DAOInterface {
 		{
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setString(1, d.getSpecialization());
+                        statement.setInt(2, d.getLicenseID());
 			statement.execute();
 			connect.close();
 			return true;
@@ -132,16 +133,16 @@ public class DoctorDAO implements DAOInterface {
 	@Override
 	public Doctor getData(Object key) 
 	{
-		int licenseID = (Integer) key;
+		String username = (String)key;
 
 		Doctor d = null;
 		try 
 		{
 			String query = "SELECT * FROM user u, doctor d "
 					+ "WHERE u.userID = d.user_ID "
-					+ "AND d.licenseID = ?;";
+					+ "AND u.username = ?;";
 			statement = connect.getConnection().prepareStatement(query);
-			statement.setInt(1, licenseID);
+			statement.setString(1, username);
 			rs = statement.executeQuery();
 			if (rs.next()) {
 				d = new Doctor(rs.getInt("userID"), rs.getString("username"), rs.getString("email"), 
