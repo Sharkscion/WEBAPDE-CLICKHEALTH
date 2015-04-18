@@ -117,7 +117,7 @@ public class UserDAO implements DAOInterface {
             statement.setString(2, user.getLastname());
             statement.setString(3, user.getUsername());
             statement.setString(4, user.getEmail());
-            statement.setString(5, encryptPassword(user.getPassword()));
+            statement.setString(5, user.getPassword());
             statement.setInt(6, user.getUserID());
             statement.execute();
             return true;
