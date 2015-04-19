@@ -166,7 +166,8 @@ public class DoctorDAO implements DAOInterface {
 		try 
 		{
 			String query = "SELECT * FROM user u, doctor d "
-					+ "WHERE u.userID = ?";
+						 + "WHERE user_ID = userID "
+						 + "AND u.userID = ?";
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setInt(1, userId);
 			rs = statement.executeQuery();
