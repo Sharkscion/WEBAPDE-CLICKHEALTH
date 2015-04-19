@@ -1,0 +1,550 @@
+
+.about-page-1
+{
+    background: #e17100;
+    font-family: Century Gothic, sans-serif;
+    font-size: 20px;
+    color: #ebe7e0;
+    width: 100%;
+    height: 700px;
+}
+.about-page-1 h1
+{
+    color: #ffffff;
+    font-family: Century Gothic, sans-serif;
+    margin-top: 250px;
+    font-size: 50px;
+}
+
+.about-page-1 p
+{
+    color: #c6d4e1;
+    font-size: 20px;
+    text-align: left;
+}
+
+.about-page-1 img
+{
+    height: 200px;
+    margin-top: 300px;
+    margin-left: 30px;
+    position: relative;
+}
+.about-page-2
+{
+    background: #ebe7e0;
+    font-family: Century Gothic, sans-serif;
+    font-size: 20px;
+    color: #44749d;
+    width: 100%;
+    height: 700px;
+}
+.about-page-2 h1
+{
+    color: #44749d;
+    margin-top: 200px;
+    font-size: 50px;
+    font-family: Century Gothic, sans-serif;
+}
+
+.about-page-3
+{
+    background: #44749d;
+    font-family: Century Gothic, sans-serif;
+    font-size: 20px;
+    color: #44749d;
+    width: 100%;
+    height: 700px;
+}
+.about-page-3 h1
+{
+    color: #ffffff;
+    font-size: 50px;
+    margin-top: 100px;
+    font-family: Century Gothic, sans-serif;
+}
+
+.about-page-3 img
+{
+    height: 500px;
+    margin-top: -20px;
+}
+
+#sample-screen
+{
+    height: 420px;   
+}
+body
+{
+  background: white;
+  transition: background 0.75s;
+  min-height: 400px;
+}
+
+.bottom-bar
+{
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.bottom-bar a
+{
+    font-family: Century Gothic, sans-serif; 
+    color: #44749d;
+    font-size: 20px;
+}
+.button-padding
+{
+   margin-left: 10px;
+   margin-right: 10px;
+}
+
+.demo-3 
+{
+  margin-top: 20px;
+  overflow:hidden;   
+}
+
+.demo-3 figure 
+{
+  margin:0;
+  padding:0;
+  position: relative;
+  cursor:pointer;
+}
+
+.demo-3 figure img 
+{
+  display:block;
+  z-index:10;
+  position: relative;
+  border-radius: 50%;
+}
+
+.demo-3 figure figcaption 
+{
+  display:block;
+  border-radius: 50%;
+  position: absolute;
+  z-index:5;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box
+}
+
+.demo-3 figure h2 
+{
+  margin-top:20px;
+  font-family:Century Gothic, sans-serif;
+  color:#fff;
+  font-size:20px;
+  text-align:left
+}
+
+.demo-3 figure p 
+{
+  display:block;
+  font-family:Century Gothic, sans-serif;
+  font-size:12px;
+  line-height:18px;
+  margin:0;
+  color:#fff;
+  text-align:left;
+}
+
+.demo-3 figure figcaption 
+{
+  top:0;
+  left:0;
+  height: 250px;
+  width: 250px;
+  padding:29px 44px;
+  backface-visibility:hidden;
+  background-color:rgba(61,63,64,0.8);
+  text-align:center;
+  -webkit-transform:rotateY(-180deg);
+  -moz-transform:rotateY(-180deg);
+  transform:rotateY(-180deg);
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  transition:all .5s
+}
+.demo-3 figure img 
+{
+  backface-visibility:hidden;
+
+  /*height: 100%;
+  width:100%;*/
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  transition:all .5s
+}
+.demo-3 figure:hover img,figure.hover img 
+{
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
+  transform:rotateY(180deg)
+}
+.demo-3 figure:hover figcaption,figure.hover figcaption 
+{
+  -webkit-transform:rotateY(0);
+  -moz-transform:rotateY(0);
+  transform:rotateY(0)
+}
+
+.dropdown-options select {
+   background: transparent;
+   font-family: century gothic, sans-serif;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 1;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
+
+
+.footer
+{
+  color: #969185;
+  font-family: Century Gothic, sans-serif;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 0;
+}
+.form h5
+{
+   font-family: Century Gothic, sans-serif; 
+   color: #44749d;
+}
+
+.form label
+{
+   font-family: Century Gothic, sans-serif; 
+   font-size: 16px;
+   color:#969185
+}
+
+.user-form ul li
+{
+    list-style-type: none;
+    margin-top: 10px;
+    padding: 0;
+    float: left;
+    margin-left: 25px;
+    border-radius: 3px;
+}
+
+.user-form ul li a
+{
+    display: inline;
+    background: #44749d;
+    color: #ffffff;
+    font-family: century gothic, sans-serif;
+    font-size: 15px;
+}
+
+.user-form a:hover 
+{
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: background;
+  transition-property: background;
+  box-shadow: inset 0 0 0 4px #c6d4e1, 0 0 1px rgba(0, 0, 0, 0);
+}
+
+
+.form-dropdown
+{
+   position: fixed !important; 
+}
+
+.form-login-button
+{
+   font-size: 20px;
+   margin-left: 33%;
+   border-radius: 3px;
+   border-color: transparent;
+   background:#44749d;
+   color: #ffffff;
+   width: 100px;
+   font-family: Century Gothic, sans-serif; 
+}
+.form-submit-button
+{
+    font-size: 16px;
+    background: #44749d; 
+    text-align: center;
+    margin-left: 40%;
+    width: 100px;
+    height: 30px;
+    border-radius: 3px;
+    color: #ffffff;
+    border-color: transparent;
+}
+
+
+/* Float */
+.hvr-float 
+{
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+
+.hvr-float:before
+{
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  /* W3C */
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, opacity;
+  transition-property: transform, opacity;
+}
+
+.hvr-float:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active 
+{
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+  /* move the element up by 5px */
+}
+
+.hvr-float:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before 
+{
+  opacity: 1;
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+  /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
+}
+
+.intro-page
+{
+  background: white;
+  width: 100%;
+  height: 700px;
+}
+
+.line-LearnMore
+{
+  height: 20px;
+  margin-top: 0px;
+}
+
+#logo
+{
+    height: 40px;
+    margin-top: 5px;
+}
+
+#login-dropdown 
+{
+    position: fixed !important;
+    top: 69px !important;
+}
+
+#menu
+{
+  background: #ffffff;
+  width: auto;
+}
+
+#menu ul
+{
+    display: block;   
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    zoom: 1;
+}
+
+#menu ul:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+#menu ul li {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#menu.align-right ul li {
+  float: right;
+}
+#menu.align-center ul {
+  text-align: center;
+}
+#menu ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 15px 25px;
+  font-family: Century Gothic, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 15px;
+  position: relative;
+  -webkit-transition: color .25s;
+  -moz-transition: color .25s;
+  -ms-transition: color .25s;
+  -o-transition: color .25s;
+  transition: color .25s;
+}
+#menu ul li a:hover {
+  color: #44749d !important; 
+  background:#ffffff;
+}
+#menu ul li a:hover:before {
+  width: 100%;
+}
+.member-name h3
+{
+  color: #696660;
+  font-family: Century Gothic, sans-serif;
+  margin-left: 25%;
+}
+
+.nav-button
+{
+    background: #37668e;
+    border: 0;
+    height: 50px;
+    width: 120px;
+    margin-top: 1px;
+    text-align: center;   
+    line-height: 5px;
+    font-size: 20px;
+}
+
+.reveal-modal-bg 
+{
+  position: fixed;
+}
+
+#tagLine
+{
+  color: #696660;
+  font-family: Century Gothic, sans-serif;
+}
+
+.team-page
+{
+  background: #ebe7e0;
+  width: 100%;
+  height: 700px;
+}
+
+.team-page h1
+{
+  color: #44749d;
+  margin-top: 10%;
+  font-family: Century Gothic, sans-serif;
+  font-weight: 100;
+}
+
+.team-page img
+{
+  height: 250px !important;
+  margin-top: 10px;
+  margin-left: 10%;
+}
+
+.top-bar
+{
+    height: 50px !important;   
+}
+
+.doctor-SignUp-header
+{
+    font-family: century gothic, sans-serif;
+    color: #e68208;
+}
+
+
+
+#error-box
+{
+    font-family: Century Gothic, sans-serif;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    margin-right: 100px;
+    margin-left: 180px;
+    margin-top: 80px;
+    border-style: solid;
+    border-color: #696660;   
+    border-width: 2px;
+}
+
+#schedDays
+{
+	text-transform: uppercase;
+	font-family: Century Gothic, sans-serif;
+}
+
+#datetimepicker, #datetimepicker2
+{
+	font-family: Century Gothic, sans-serif;
+}
+#error-box h4
+{
+  font-family: Century Gothic, sans-serif;
+    margin-left: 100px;
+}
+#error-form
+{
+    font-family: Century Gothic, sans-serif;
+    font-size: 15px;
+}
+
+.error-login-button
+{
+   font-size: 20px;
+   margin-top:10px;
+   margin-left: 50%;
+   margin-right: 50%;
+   border-radius: 3px;
+   border-color: transparent;
+   background:#44749d;
+   color: #ffffff;
+   width: 100px;
+   font-family: Century Gothic, sans-serif; 
+}
+
+.error-page {
+    background: #ffffff;
+    width: 100%;
+    height: 700px;
+}
