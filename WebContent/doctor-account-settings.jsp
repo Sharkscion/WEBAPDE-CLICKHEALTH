@@ -32,7 +32,8 @@
         
         
         user = con.getUserInstance(userID);
-        doctor = con.getDoctor(user.getUsername());
+        
+        doctor = con.getDoctorByUserId(user.getUserID());
     
         Iterator<DoctorSchedule> schedules = con.getSchedules(doctor.getLicenseID());
     

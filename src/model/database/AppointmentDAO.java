@@ -244,16 +244,10 @@ public class AppointmentDAO implements DAOInterface{
 	{
 		try 
 		{
-			String query = "SELECT appointmentsID, appointments.status, concern,remarks, appointments.startTime, requestedTime, requestedDate, appointmentDate, "
-					+"isResolvedPatient, isResolvedDoctor, patient_ID, doctorSched_ID "
-					+"FROM appointments "
-					+"INNER JOIN  doctorschedule "
-					+"ON doctorSched_ID = scheduleID "
-					+"INNER JOIN doctor "
-					+"ON licenseID = ? "
-					+"WHERE appointments.status = 'request' "
-					+"AND isResolvedDoctor = 0 "
-					+"GROUP BY requestedDate DESC, requestedTime DESC;";
+			String query = "SELECT * "
+						+"FROM appointments "
+						+"WHERE status = \"request\" "
+						+"AND doctorSched_ID IN (SELECT scheduleID FROM DoctorSchedule WHERE doctorScheduleID = ?);";
 
 			statement = connect.getConnection().prepareStatement(query);
 			statement.setInt(1, licenseID);
@@ -265,8 +259,8 @@ public class AppointmentDAO implements DAOInterface{
 			while (rs.next()) 
 			{
 				
-				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("appointments.status"), rs.getString("concern"), rs.getString("remarks"), 
-								  rs.getTime("appointments.startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
+				a = new Appointment(rs.getInt("appointmentsID"), rs.getString("status"), rs.getString("concern"), rs.getString("remarks"), 
+								  rs.getTime("startTime"), rs.getTime("requestedTime"), rs.getDate("requestedDate"), rs.getDate("appointmentDate"), 
 								  rs.getInt("isResolvedPatient"), rs.getInt("isResolvedDoctor"), rs.getInt("patient_ID"), 
 								  rs.getInt("doctorSched_ID"));
 				aList.add(a);

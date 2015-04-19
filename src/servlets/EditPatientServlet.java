@@ -64,7 +64,7 @@ public class EditPatientServlet extends HttpServlet {
         if (u.getType().equals("patient")) {
             u = con.getPatientInstance(u.getUsername());
         } else {
-            u = con.getDoctor(u.getUsername());
+            u = con.getDoctorByUserId(u.getUserID());
         }
 
         String type = request.getParameter("settingCategory");
