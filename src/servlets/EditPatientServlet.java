@@ -23,6 +23,7 @@ import javax.servlet.http.Cookie;
 import model.Appointment;
 import model.Doctor;
 import model.DoctorSchedule;
+import model.Hospital;
 import model.Patient;
 import model.User;
 
@@ -57,55 +58,99 @@ public class EditPatientServlet extends HttpServlet {
                 userID = cookie.getValue();
             }
         }
-        
+
         u = con.getUserInstance(userID);
-        
-        if(u.getType().equals("patient"))
+
+        if (u.getType().equals("patient")) {
             u = con.getPatientInstance(u.getUsername());
-        else
+        } else {
             u = con.getDoctor(u.getUsername());
+        }
 
         String type = request.getParameter("settingCategory");
-        System.out.println("WENT HERE Type: "+type);
+        System.out.println("WENT HERE Type: " + type);
         if (type.equals("name")) {
-            String first =request.getParameter("firstNameTxt");
+            String first = request.getParameter("firstNameTxt");
             String last = request.getParameter("lastNameTxt");
-            
-            if(!first.equals(""))
+
+            if (!first.equals("")) {
                 u.setFirstname(first);
-            if(!last.equals(""))
+            }
+            if (!last.equals("")) {
                 u.setLastname(last);
+            }
             con.editUser(u);
-            
+
         } else if (type.equals("address")) {
-            ((Patient)u).setStreet(request.getParameter("streetTxt"));
-            ((Patient)u).setCity(request.getParameter("cityTxt"));
-            con.editPatient(((Patient)u));
-            
+            ((Patient) u).setStreet(request.getParameter("streetTxt"));
+            ((Patient) u).setCity(request.getParameter("cityTxt"));
+            con.editPatient(((Patient) u));
+
         } else if (type.equals("username")) {
             u.setUsername(request.getParameter("usernameTxt"));
             con.editUser(u);
-            
+
         } else if (type.equals("password")) {
-            if(u.getPassword().equals(encryptPassword(request.getParameter("currentpasswordTxt")))){
-                if(request.getParameter("newpasswordTxt").equals(request.getParameter("confirmpasswordTxt"))){
+            if (u.getPassword().equals(encryptPassword(request.getParameter("currentpasswordTxt")))) {
+                if (request.getParameter("newpasswordTxt").equals(request.getParameter("confirmpasswordTxt"))) {
                     u.setPassword(encryptPassword(request.getParameter("confirmpasswordTxt")));
                     con.editUser(u);
-                    response.sendRedirect("user-account-settings.jsp");
+                    if (u.getType().equals("patient")) {
+                        response.sendRedirect("user-account-settings.jsp");
+                    } else {
+                        response.sendRedirect("doctor-account-settings.jsp");
+                    }
                 }
             }
         } else if (type.equals("specialization")) {
-            ((Doctor)u).setSpecialization(request.getParameter("specializationTxt"));
-            con.editDoctor((Doctor)u);
-            
+            ((Doctor) u).setSpecialization(request.getParameter("specializationTxt"));
+            con.editDoctor((Doctor) u);
+        } else if (type.equals("schedule")) {
+            int i = 1;
+            con.deleteSchedules(((Doctor) u).getLicenseID());
+            Hospital hosp = null;
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            DoctorSchedule ds = null;
+            String day, start, end, hospital;
+            String checker = request.getParameter("day" + i);
+            System.out.println("CHECKER: " + checker);
+            while (checker != null) {
+                day = request.getParameter("day" + i);
+                start = request.getParameter("startTime" + i);
+                end = request.getParameter("endTime" + i);
+                hospital = request.getParameter("hospital" + i);
+                
+
+                if (!day.equals("") && !start.equals("") && !end.equals("") && !hospital.equals("")) {
+                    hosp = con.getHospital(hospital);
+                    try {
+                        Date dateStart = sdf.parse(start);
+                        Time startTime = new Time(dateStart.getTime());
+
+                        Date dateEnd = sdf.parse(end);
+                        Time endTime = new Time(dateEnd.getTime());
+
+                        ds = new DoctorSchedule(0, day, startTime, endTime, ((Doctor) u).getLicenseID(), hosp.getHospID());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    con.addDoctorSchedule(ds);
+                }
+                i++;
+                checker = request.getParameter("day" + i);
+            }
         }
-        
-        if(u.getType().equals("patient"))
-            response.sendRedirect("user-account-settings.jsp");
-        else
-            response.sendRedirect("doctor-account-settings.jsp");
+
+        if (!type.equals("password")) {
+            if (u.getType().equals("patient")) {
+                response.sendRedirect("user-account-settings.jsp");
+            } else {
+                response.sendRedirect("doctor-account-settings.jsp");
+            }
+        }
     }
-    
+
     public static String encryptPassword(String password) {
         String sha1 = "";
         System.out.println("PASSWORD: " + password);

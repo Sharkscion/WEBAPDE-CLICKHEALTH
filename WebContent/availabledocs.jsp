@@ -93,7 +93,7 @@
                         	while (iterator.hasNext()) 
                         	{
                                 DoctorSchedule ds = (DoctorSchedule) iterator.next();
-                                Doctor d = c.getDoctor(ds.getDoctorScheduleID());
+                                Doctor d = c.getDoctor(user.getUsername());
                                 Hospital h =  c.getHospitalByID(ds.getHospitalScheduleID());
                                 
                                 System.out.println("doCtOR: "+ d.getFirstname());

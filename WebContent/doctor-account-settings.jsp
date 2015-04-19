@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Hospital"%>
+<%@page import="model.DoctorSchedule"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="model.Doctor"%>
 <%@page import="model.User"%>
 <%@page import="controller.Controller"%>
@@ -30,6 +34,7 @@
         user = con.getUserInstance(userID);
         doctor = con.getDoctor(user.getUsername());
     
+        Iterator<DoctorSchedule> schedules = con.getSchedules(doctor.getLicenseID());
     
     %>
     
@@ -128,51 +133,45 @@
                             
                             
                             
-                            
                             <hr>
                             <div id="schedulesRow" class="row" >
                                 <div class="large-3 columns account-label">
                                     <p>Schedules:</p>
                                 </div>
                                 <div class="large-7 columns account-current">
+                                    
+                                    <%while(schedules.hasNext()){
+                                        DoctorSchedule ds = schedules.next();
+                                        Hospital hosp = con.getHospitalByID(ds.getHospitalScheduleID());
+                                        String schedDay = ds.getScheduleDay();
+                                        SimpleDateFormat form = new SimpleDateFormat("hh:mm");  
+                                        String startTime = form.format(ds.getStartTime());
+                                        String endTime = form.format(ds.getEndTime());
+                                        
+                                        %>
+                                        
+                                    
                                     <div class="row">
                                         <div class="large-4 columns">
-                                            <p id="currentSpecialization">Monday:</p>
+                                            <p id="currentSpecialization"><%=schedDay%></p>
                                         </div>
                                         <div class="large-4 columns">
-                                            <p id="currentSpecialization">5PM - 9PM</p>
+                                            <p id="currentSpecialization"><%=startTime%> - <%=endTime%></p>
                                         </div>
                                         <div class="large-4 columns">
-                                            <p id="currentSpecialization">St. Luke's Hospital</p>
+                                            <p id="currentSpecialization"><%=hosp.getName()%></p>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="large-4 columns">
-                                            <p id="currentSpecialization">Wednesday:</p>
-                                        </div>
-                                        <div class="large-4 columns">
-                                            <p id="currentSpecialization">8AM - 4PM</p>
-                                        </div>
-                                        <div class="large-4 columns">
-                                            <p id="currentSpecialization">Heart Center</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="large-4 columns">
-                                            <p id="currentSpecialization">Friday:</p>
-                                        </div>
-                                        <div class="large-4 columns">
-                                            <p id="currentSpecialization">1PM - 5PM</p>
-                                        </div>
-                                        <div class="large-4 columns">
-                                            <p id="currentSpecialization">Makati Medical Center</p>
-                                        </div>
-                                    </div>
+                                    <%}%>
+                                    
                                 </div>
                                 <div class="large-2 columns">
                                     <button class = "account-button" onClick="getForm(6);">Edit</button>
                                 </div>
                             </div> 
+                            
+                            
+                            
                     </div>
                 </div>
             </section>
@@ -225,19 +224,39 @@
                 }
             }
               
-            function addSched()
+            function addSched(i)
             {
                 var addSched = document.getElementById('addSchedule');
                 addSched.parentNode.removeChild(addSched);
-                 
-                var html = "<div class=\"row\"><div class=\"large-3 columns\">"
-                            +"<input type=\"text\" name=\"text\" placeholder=\"Day\" tabindex=\"1\"/>"
-                            +"</div><div class=\"large-3 columns\"><input type=\"text\" name=\"text\" placeholde"
-                            +"r=\"Time slot\" tabindex=\"1\"/></div><div class=\"large-4 columns\">"
-                            +"<input type=\"text\" name=\"text\" placeholder=\"Hospital\" tabindex=\"1\"/>"
-                            +"</div><div class=\"large-2 columns\"><div id=\"addSchedule\">"
-                            +"<input type=\"submit\" class=\"account-button\" value=\"+\" tabindex=\"3\" onClick = \"addSched();\"/>"
-                            +"</div></div></div>";
+                var n = i.toString();
+                var tobeplaced = i+1;
+                var plus = tobeplaced.toString();
+                var html = "<div class=\"row\">"
+                            
+                            +"<div class=\"large-2 columns\">"
+                            +"<input  type=\"text\" name=\"day"+n+"\" placeholder=\"Day\" tabindex=\"1\"/>"
+                            +"</div>"
+                    
+                            +"<div class=\"large-2 columns\">"
+                            +"<input  type=\"text\" name=\"startTime"+n+"\" placeholder=\"Start time\" tabindex=\"1\"/>"
+                            +"</div>"
+                            +"<div class=\"large-2 columns\">"
+                            +"<input  type=\"text\" name=\"endTime"+n+"\" placeholder=\"End time\" tabindex=\"1\"/>"
+                            +"</div>"
+                    
+                            +"<div class=\"large-4 columns\">"
+                            +"<input value=\"\" type=\"text\" name=\"hospital"+n+"\" placeholder=\"Hospital\" tabindex=\"1\"/>"
+                            +"</div>"
+                    
+                            
+                    
+                            +"<div class=\"large-2 columns\">"
+                            +"<div id=\"addSchedule\">"
+                            +"<input type=\"button\" class=\"account-button\" value=\"+\" tabindex=\"3\" onClick = \"addSched("+plus+");\"/>"
+                            +"</div></div>"
+                    
+                    
+                            +"</div>";
                 
                 $(html).hide().appendTo("#schedulesDIV").fadeIn(1000);
             }  
@@ -315,15 +334,78 @@
               
             function schedulesRow(){
                 $("#schedulesRow").fadeOut(400,function(){
-                $(this).html("<form class=\"account-form\" action=\"doctor-account-settings.html\"><div class=\"row\">"
+                $(this).html("<form action=\"EditPatientServlet\" method=\"post\">"
+                 +"<div class=\"row\">"
                 +"<div class=\"large-3 columns account-label\"><label>Schedules:</label></div>"
-                +"<div class=\"large-9 columns account-current\"><div id=\"schedulesDIV\"><div class=\"row\">"
-                +"<div class=\"large-3 columns\"><input type=\"text\" name=\"text\" placeholder=\"Day\" tabindex=\"1\"/>"
-                +"</div><div class=\"large-3 columns\"><input type=\"text\" name=\"text\" placeholder=\"Time slot\" tabindex=\"1\"/>"
-                +"</div><div class=\"large-4 columns\"><input type=\"text\" name=\"text\" placeholder=\"Hospital\" tabindex=\"1\"/>"
-                +"</div><div class=\"large-2 columns\"><div id=\"addSchedule\">"
-                +"<input type=\"submit\" class=\"account-button\" value=\"+\" tabindex=\"3\" onClick = \"addSched();\"/>"
-                +"</div></div></div></div></div></div>"
+                +"<div class=\"large-9 columns account-current\"><div id=\"schedulesDIV\">"
+        
+                +"<div class=\"row\">"
+                +"<div class=\"large-2 columns\">"
+                +"<label>Day/s:</label>"
+                +"</div>"
+        
+                +"<div class=\"large-2 columns\">"
+                +"<label>Start time:</label>"
+                +"</div>"
+        
+                +"<div class=\"large-2 columns\">"
+                +"<label>End time:</label>"
+                +"</div>"
+        
+                +"<div class=\"large-4 columns\">"
+                +"<label>Hospital:</label>"
+                +"</div>"
+                
+                +"<div class=\"large-2 columns\">"
+                +"</div></div>"
+        
+                <% Iterator<DoctorSchedule> scheds = con.getSchedules(doctor.getLicenseID());
+                int num=1;
+                                    while(scheds.hasNext()){
+                                        
+                                        String i = ""+num;
+                                        DoctorSchedule ds = scheds.next();
+                                        Hospital hosp = con.getHospitalByID(ds.getHospitalScheduleID());
+                                        String schedDay = ds.getScheduleDay();
+                                        SimpleDateFormat form = new SimpleDateFormat("hh:mm");  
+                                        String startTime = form.format(ds.getStartTime());
+                                        String endTime = form.format(ds.getEndTime());
+                                    
+                            %>
+                +"<div class=\"row\">"
+                +"<div class=\"large-2 columns\">"
+                +"<input value=\"<%=schedDay%>\" type=\"text\" name=\"day<%=i%>\" placeholder=\"Day\" tabindex=\"1\"/>"
+                +"</div>"
+        
+                +"<div class=\"large-2 columns\">"
+                +"<input value=\"<%=startTime%>\" type=\"text\" name=\"startTime<%=i%>\" placeholder=\"Day\" tabindex=\"1\"/>"
+                +"</div>"
+        
+                +"<div class=\"large-2 columns\">"
+                +"<input value=\"<%=endTime%>\" type=\"text\" name=\"endTime<%=i%>\" placeholder=\"Day\" tabindex=\"1\"/>"
+                +"</div>"
+        
+                +"<div class=\"large-4 columns\">"
+                +"<input value=\"<%=hosp.getName()%>\" type=\"text\" name=\"hospital<%=i%>\" placeholder=\"Hospital\" tabindex=\"1\"/>"
+                +"</div>"
+        
+                <%if(!scheds.hasNext()){%>
+                +"<div class=\"large-2 columns\"><div id=\"addSchedule\">"
+                +"<input type=\"button\" class=\"account-button\" value=\"+\" tabindex=\"3\" onClick = \"addSched(<%=num+1%>);\"/>"
+                +"</div></div>"
+                <%}else{%>
+                +"<div class=\"large-2 columns\"><div id=\"emptyaddSchedule\">"
+                +"</div></div>"
+                <%}%>
+                
+                +"</div>"//row
+                <%num++; 
+                                    }%>
+                    //tobe added divs rows
+                +"</div>"//schedsdiv
+        
+                +"</div>"
+                +"<input type = \"hidden\" value =\"schedule\" name = \"settingCategory\" id = \"settingCategory\">"
                 +"<input type=\"submit\" class=\"account-button\" value=\"Submit\" tabindex=\"3\" onClick = \"\"/></form>").fadeIn();  
                 });
             }
