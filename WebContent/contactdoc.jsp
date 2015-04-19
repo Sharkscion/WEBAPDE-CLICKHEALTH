@@ -1,3 +1,4 @@
+<%@page import="model.Patient"%>
 <%@page import="model.UserContact"%>
 <%@page import="model.Hospital"%>
 <%@page import="model.Doctor"%>
@@ -33,8 +34,6 @@
     	    }
     	    
     	   User user = c.getUserInstance(userID);
-    	   System.out.println("USEr NAME ID: "+ userID);
-    	   System.out.println("USEr NAME: "+ user.getUsername());
     	   String uName = user.getUsername();
     	
             Cookie cookieDoc = new Cookie("doctorSched", String.valueOf(ds.getScheduleID()));
@@ -88,6 +87,13 @@
 
             <section class="top-bar-section" id = "clickHealth-menu">
            		<ul class="right">
+           				<li id = "notifIcon"><a  data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
+                	<%
+                		Patient p = c.getPatientInstance(user.getUsername());
+                	    int notifCount = c.getNotifCount(p.getPatientID());
+                	%>
+                		<span id = "notifCount"><%=notifCount%></span></a></li>
+                
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
@@ -237,7 +243,13 @@
                       </div>       
                   </section>
               </div>
-
+<!--**************************************************Notif Drop Down*************************************************************-->
+        <div  id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
+     		
+        </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
+   
+   	<script src="Foundation/js/foundation/foundation.dropdown.js"></script>
           <script src="Foundation/js/vendor/jquery.js"></script>
           <script src="Foundation/js/foundation.min.js"></script>
           <script src="Foundation/js/foundation/foundation.js"></script>
@@ -252,18 +264,16 @@
 		    $('#subm').click(function() {
 		        var scheddate = $('#date').val();
 		        var schedtime = $('#startTime').val();
-<<<<<<< HEAD
+
                         alert("time issssss "+ $('#startTime').val());
-=======
->>>>>>> 2247597c1c6cc7e71ed7cede9f922fbcbce3d8f9
+
 		        $.ajax({
 		            url: 'CheckSchedServlet',
 		            data: {"schedDate": scheddate,
 		            		"schedTime": schedtime,
-<<<<<<< HEAD
-=======
+
 		            		"schedDoctor": "<%=d.getLicenseID()%>",
->>>>>>> 2247597c1c6cc7e71ed7cede9f922fbcbce3d8f9
+
 		            	  },
 		            error: function(data) {
 		            },

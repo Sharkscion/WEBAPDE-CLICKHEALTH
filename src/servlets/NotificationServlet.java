@@ -28,21 +28,28 @@ public class NotificationServlet extends HttpServlet {
 		String username = request.getParameter("user_name");
 		System.out.println("USRENAME: "+username);
 		Patient p = c.getPatientInstance(username);
-		Iterator<Notification> nList = c.getAllNotificationNotViewed(p.getPatientID());
 		int hasNext = 0;
-		while(nList.hasNext())
+		int notifCount = 0;
+		if(p!=null)
 		{
-			Notification n = nList.next();
-			respMess += " <div id = "+n.getNotifID()+" class = \"notification-box\">";
-			respMess += "<span class =\"notification-header\">"+ n.getNotifContent() + "</span> <br>";
-			respMess +=  n.getNotifDate()+" " + n.getNotifTime();   
-			respMess += "</div><hr>";
+			Iterator<Notification> nList = c.getAllNotificationNotViewed(p.getPatientID());
+			
+			while(nList.hasNext())
+			{
+				Notification n = nList.next();
+				respMess += " <div id = "+n.getNotifID()+" class = \"notification-box\">";
+				respMess += "<span class =\"notification-header\">"+ n.getNotifContent() + "</span> <br>";
+				respMess +=  n.getNotifDate()+" " + n.getNotifTime();   
+				respMess += "</div><hr>";
 
-			System.out.println("HELLO");
-			hasNext = 1;
+				System.out.println("HELLO");
+				hasNext = 1;
+			}
+
+			notifCount = c.getNotifCount(p.getPatientID());
 		}
-
-		int notifCount = c.getNotifCount(p.getPatientID());
+			
+		
 		if(hasNext == 0)
 			respMess += "No Notifications";
 		if(notifCount > 0)
@@ -50,7 +57,7 @@ public class NotificationServlet extends HttpServlet {
 			respMess += "|"+notifCount;
 		}
 
-		System.out.println("RESPMESS: "+ respMess);
+
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(respMess);

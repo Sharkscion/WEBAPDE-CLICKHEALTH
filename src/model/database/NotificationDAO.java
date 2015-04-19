@@ -62,13 +62,12 @@ public class NotificationDAO implements DAOInterface {
 
 			String query = "INSERT INTO notification VALUES(NULL, ?, ?, ?, ?, ?, ?);";
 			statement = connect.getConnection().prepareStatement(query);
-			statement.setInt(1, n.getNotifID());
-			statement.setInt(2,  n.getAppID());
-			statement.setString(3, n.getNotifContent());
-			statement.setDate(4, new Date(n.getNotifDate().getTime()));
-			statement.setTime(5, n.getNotifTime());
-			statement.setInt(6, n.getIsViewed());
-			statement.setInt(7, n.getIsRejected());
+			statement.setInt(1,  n.getAppID());
+			statement.setString(2, n.getNotifContent());
+			statement.setDate(3, new Date(n.getNotifDate().getTime()));
+			statement.setTime(4, n.getNotifTime());
+			statement.setInt(5, n.getIsViewed());
+			statement.setInt(6, n.getIsRejected());
 			statement.execute();
 			connect.close();
 			return true;

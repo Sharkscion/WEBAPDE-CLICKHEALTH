@@ -6,6 +6,7 @@ import java.util.Iterator;
 import model.*;
 import model.database.*;
 
+<<<<<<< HEAD
 public class Controller {
 
     private AppointmentDAO ad;
@@ -94,6 +95,74 @@ public class Controller {
     public User getAppointmentDoctorInfo(int appointment) {
         return ud.getAppointmentDoctorUserInfo(appointment);
     }
+=======
+public class Controller
+{
+	private AppointmentDAO ad;
+	private DoctorDAO dd;
+	private DoctorScheduleDAO sd;
+	private HospitalDAO hd;
+	private PatientDAO pd;
+	private ContactDAO cd;
+	private UserDAO ud;
+	private NotificationDAO nd;
+
+	public Controller()
+	{
+		ad = new AppointmentDAO();
+		dd = new DoctorDAO();
+		sd = new DoctorScheduleDAO();
+		hd = new HospitalDAO();
+		pd = new PatientDAO();
+		ud = new UserDAO();
+		cd = new ContactDAO();
+		nd = new NotificationDAO();
+	}
+	 public User getAppointmentDoctorInfo(int appointment)
+	    {
+	    	return ud.getAppointmentDoctorUserInfo(appointment);
+	    }
+	public boolean changeAppointmentStat(int id, String stat)
+	{
+		return ad.changeAppointmentStat(id, stat);
+	}
+	public boolean addAppointment(Appointment app)
+	{
+		return ad.insertData(app);
+	}
+	public boolean changeNotificationStat(Notification n)
+	{
+		return nd.updateData(n);
+	}
+	public boolean addNotification(Notification notif)
+	{
+		return nd.insertData(notif);
+	}
+	public boolean addContact(UserContact uc)
+	{
+		return cd.insertData(uc);
+	}
+	
+	public boolean addDoctor(Doctor d)
+	{
+		return dd.insertData(d);
+	}
+	
+	public boolean addDoctorSchedule(DoctorSchedule ds)
+	{
+		return sd.insertData(ds);
+	}
+	
+	public boolean addUser(User u)
+	{
+		return ud.insertData(u);
+	}
+
+	public boolean addPatient(Patient p)
+	{
+		return pd.insertData(p);
+	}
+>>>>>>> 0eb59bfc561046a868f6646e67bda4c88775180e
 
     public Appointment getAppointment(int appId) {
         return ad.getData(appId);
@@ -119,11 +188,18 @@ public class Controller {
     public Doctor getDoctor(String username) {
         return dd.getData(username);
     }
+<<<<<<< HEAD
 
     public Notification getNotification(int notifID) {
         return nd.getData(notifID);
     }
 
+=======
+    public Doctor getDoctor(int licenseID)
+	{
+		return dd.getData(licenseID);
+	}
+>>>>>>> 0eb59bfc561046a868f6646e67bda4c88775180e
     public Doctor getDoctorByUserId(int userID) {
         return dd.getDoctorByUserId(userID);
     }
@@ -233,4 +309,33 @@ public class Controller {
 
         return ad.checkDaySched(ds, time, date);
     }
+<<<<<<< HEAD
+=======
+    public void editDoctor(Doctor d) {
+        dd.updateData(d);
+    }
+
+    public void editPatient(Patient p) {
+        pd.updateData(p);
+    }
+
+    public void editUser(User u) {
+        ud.updateData(u);
+    }
+    
+	public Iterator<Notification> getAllNotificationNotViewed(int patientID)
+	{
+		return nd.getAllNotificationNotViewed(patientID);
+	}
+	
+	public Notification getNotification(int notifID)
+	{
+		return nd.getData(notifID);
+	}
+	
+	public int getNotifCount(int patientID)
+	{
+		return nd.getNotificationCount(patientID);
+	}
+>>>>>>> 0eb59bfc561046a868f6646e67bda4c88775180e
 }

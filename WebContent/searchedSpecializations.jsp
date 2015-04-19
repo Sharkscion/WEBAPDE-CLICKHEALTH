@@ -1,3 +1,5 @@
+<%@page import="model.User"%>
+<%@page import="model.Patient"%>
 <%@page import="controller.Controller"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
@@ -11,7 +13,19 @@
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
     </head>
-   
+   <%
+        Controller con = new Controller();
+	    String userID = "";
+	    Cookie[] cookies = request.getCookies();
+	    for(Cookie cookie:cookies){
+	        if(cookie.getName().equals("user")){
+	            userID = cookie.getValue();
+	        }
+	    }
+	    
+	   User user = con.getUserInstance(userID);
+	   String uName = user.getUsername();
+    %>
     <body id = "scroll-style" class = "page-content">
         <div class="fixed">
           <nav class="top-bar" id = "clickHealth-navbar" data-topbar>
@@ -35,10 +49,18 @@
                  <div id = "suggest">
                  </div>
                 <ul class="right">
+                	<li id = "notifIcon"><a data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
+                	<%
+                
+                		Patient p = con.getPatientInstance(user.getUsername());
+                	    int notifCount = con.getNotifCount(p.getPatientID());
+                	%>
+                		<span id = "notifCount"><%=notifCount%></span></a></li>
+                
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
-                    <li class = "active-button"><a  href = "#">HOSPITALS</a></li>
+                    <li><a  href = "#">HOSPITALS</a></li>
                     <li class="divider"></li>
                     <li><a href="availabledocs.jsp">DOCTORS</a></li>
                     <li><a style= "margin-right: 10px;" href="contactdoc.jsp">CONTACTS</a></li>
@@ -56,8 +78,8 @@
                             <img id = "left-bar-dp" src = "Assets/user-icon.png"/> 
                         </div>
                         <div class = "large-7 columns" id = "left-bar-name-box">
-                            <label id = "left-bar-name">Shark Tan</label>
-                            <a href = "account.html"><label id = "left-bar-account">Account Settings</label></a>
+                            <label id = "left-bar-name"><%=uName%></label>
+                            <a href = "user-account-settings.jsp"><label id = "left-bar-account">Account Settings</label></a>
                             <a href= "index.jsp" id = "left-bar-logout">Logout </a> <br>
                             
                         </div>
@@ -67,7 +89,7 @@
                     <div class = "large-12 columns">
  
                         <%
-                      		Controller  con = new Controller();
+                      		
                     		Iterator<String> specs = con.getSpecializations((String) session.getAttribute("specialization"));
                         	while(specs.hasNext())
                         	{
@@ -87,6 +109,13 @@
                 </div>
             </section>
         </div>
+<!--**************************************************Notif Drop Down*************************************************************-->
+        <div  id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
+     		
+        </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
+   
+   	<script src="Foundation/js/foundation/foundation.dropdown.js"></script>
           <script src="Foundation/js/vendor/jquery.js"></script>
           <script src="Foundation/js/foundation.min.js"></script>
           <script src="Foundation/js/foundation/foundation.js"></script>

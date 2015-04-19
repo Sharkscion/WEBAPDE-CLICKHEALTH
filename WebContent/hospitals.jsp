@@ -51,7 +51,7 @@
             <section class="top-bar-section" id = "clickHealth-menu">
                 <!-- Right Nav Section --> 
                 <ul class="right">
-                	<li><a id = "notifIcon" data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
+                	<li id = "notifIcon"><a  data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
                 	<%
                 		Patient p = con.getPatientInstance(user.getUsername());
                 	    int notifCount = con.getNotifCount(p.getPatientID());

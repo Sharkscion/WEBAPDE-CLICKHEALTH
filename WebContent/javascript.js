@@ -67,7 +67,10 @@ $(document).ready(function()
             type: 'POST'
         });
   });  
+<<<<<<< HEAD
   
+=======
+>>>>>>> 0eb59bfc561046a868f6646e67bda4c88775180e
 
 	
   $("#notifIcon").click(function(event){
@@ -113,7 +116,10 @@ $(document).ready(function()
           type: "POST"
       });
   });
+<<<<<<< HEAD
   
+=======
+>>>>>>> 0eb59bfc561046a868f6646e67bda4c88775180e
 
     $("#searchbox").keyup(function(event)
     {
@@ -150,9 +156,6 @@ function setMinTime(min, max) {
     minStartTime = min;
     maxStartTime = max;
 }
-
-
-
 
 
 var logic = function() {

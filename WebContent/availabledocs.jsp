@@ -1,3 +1,4 @@
+<%@page import="model.Patient"%>
 <%@page import="model.Hospital"%>
 <%@page import="model.Doctor"%>
 <%@page import="model.DoctorSchedule"%>
@@ -45,6 +46,13 @@
 
             <section class="top-bar-section" id = "clickHealth-menu">
                 <ul class="right">
+                	<li id = "notifIcon"><a data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
+                	<%
+                		Patient p = c.getPatientInstance(user.getUsername());
+                	    int notifCount = c.getNotifCount(p.getPatientID());
+                	%>
+                		<span id = "notifCount"><%=notifCount%></span></a></li>
+                
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
@@ -117,14 +125,20 @@
 	                            </div>
 	                        	<hr>
                         <% } %>
-                        <input type = "hidden" name = "docID" id = "docID">
+                        <input type = "hidden" name = "docSchedID" id = "docSchedID">
                         </form>
                         
                     </div>
                 </div>
             </section>
         </div>
-
+<!--**************************************************Notif Drop Down*************************************************************-->
+        <div  id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
+     		
+        </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
+   
+   	<script src="Foundation/js/foundation/foundation.dropdown.js"></script>
         <script src="Foundation/js/vendor/jquery.js"></script>
         <script src="Foundation/js/foundation.min.js"></script>
         <script src="Foundation/js/foundation/foundation.js"></script>

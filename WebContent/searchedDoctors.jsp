@@ -1,3 +1,4 @@
+<%@page import="model.Patient"%>
 <%@page import="model.Hospital"%>
 <%@page import="model.Doctor"%>
 <%@page import="model.DoctorSchedule"%>
@@ -45,6 +46,13 @@
 
             <section class="top-bar-section" id = "clickHealth-menu">
                 <ul class="right">
+                		<li id = "notifIcon" ><a data-dropdown="notif-dropdown" href="hospitals.jsp" ><img class = "tasks" src="Assets/notifFalse.png">
+                	<%
+                		Patient p = c.getPatientInstance(user.getUsername());
+                	    int notifCount = c.getNotifCount(p.getPatientID());
+                	%>
+                		<span id = "notifCount"><%=notifCount%></span></a></li>
+                
                     <li class="divider"></li>
                     <li><a href="user-appointments.jsp">APPOINTMENTS</a></li>
                     <li class="divider"></li>
@@ -85,22 +93,15 @@
                     <div  id="doctorsList" class = "large-12 columns"> <br>
                         <form action="AppointmentServlet" method="post">
                         <% 
-                           //Controller c = Controller.getInstance();
+
                         String searchedSpecialization = (String)request.getSession().getAttribute("specialization");
-                        System.out.println("Specialziation: "+ searchedSpecialization);
-                        System.out.println("HospitalID: "+ request.getParameter("hospID"));
                         Iterator iterator = c.getSpecializationHospitalDoctorScheds(searchedSpecialization, Integer.parseInt((String) request.getParameter("hospID")));
                         	while (iterator.hasNext()) 
                         	{
                                 DoctorSchedule ds = (DoctorSchedule) iterator.next();
                                 Doctor d = c.getDoctor(ds.getDoctorScheduleID());
                                 Hospital h =  c.getHospitalByID(ds.getHospitalScheduleID());
-                                
-                                System.out.println("doCtOR: "+ d.getFirstname());
-                                System.out.println("Hospital: "+ h.getName());
-                                
                                 String address = h.getStreet() + ", "+h.getCity();
-                                System.out.println("Sched ID LOOP: "+ds.getScheduleID());
                         %>    
 	                            <div class = "row">
 	                                <div class = "large-2 columns"> <img class = "hospital-img" src="Assets/clickHealth2.png"></div>
@@ -125,7 +126,13 @@
                 </div>
             </section>
         </div>
-
+<!--**************************************************Notif Drop Down*************************************************************-->
+        <div  id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
+     		
+        </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
+   
+   	<script src="Foundation/js/foundation/foundation.dropdown.js"></script>
         <script src="Foundation/js/vendor/jquery.js"></script>
         <script src="Foundation/js/foundation.min.js"></script>
         <script src="Foundation/js/foundation/foundation.js"></script>
