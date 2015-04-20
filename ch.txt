@@ -1,0 +1,285 @@
+CREATE DATABASE  IF NOT EXISTS `clickhealthtwo` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `clickhealthtwo`;
+-- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
+--
+-- Host: localhost    Database: clickhealthtwo
+-- ------------------------------------------------------
+-- Server version	5.6.17
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `appointments` (
+  `appointmentsID` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(100) NOT NULL,
+  `concern` varchar(255) NOT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `startTime` time NOT NULL,
+  `requestedTime` time NOT NULL,
+  `requestedDate` date NOT NULL,
+  `appointmentDate` date NOT NULL,
+  `isResolvedPatient` int(11) NOT NULL,
+  `isResolvedDoctor` int(11) NOT NULL,
+  `patient_ID` int(11) NOT NULL,
+  `doctorSched_ID` int(11) NOT NULL,
+  PRIMARY KEY (`appointmentsID`),
+  UNIQUE KEY `appointmentsID_UNIQUE` (`appointmentsID`),
+  KEY `patientID_idx` (`patient_ID`),
+  KEY `doctor_schedID_idx` (`doctorSched_ID`),
+  CONSTRAINT `doctor_schedID` FOREIGN KEY (`doctorSched_ID`) REFERENCES `doctorschedule` (`scheduleID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `patientID` FOREIGN KEY (`patient_ID`) REFERENCES `patient` (`patientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointments`
+--
+
+LOCK TABLES `appointments` WRITE;
+/*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (1,'request','Check-up','Hello Dudes','09:00:00','00:02:08','2015-04-19','2015-04-21',0,0,1,2),(2,'request','Medication','Hi Doc Jerry','10:00:00','00:29:33','2015-04-19','2015-04-21',0,0,2,3),(3,'request','Therapy','One apple a day keeps the doctor away\r\n','11:00:00','00:33:55','2015-04-19','2015-04-26',0,0,2,2),(4,'pending','Therapy','Dr Winona and Patient XGB Cote','11:00:00','21:27:12','2015-04-19','2015-04-28',0,0,3,4);
+/*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctor`
+--
+
+DROP TABLE IF EXISTS `doctor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `doctor` (
+  `licenseID` int(11) NOT NULL,
+  `specialization` varchar(100) NOT NULL,
+  `user_ID` int(11) NOT NULL,
+  PRIMARY KEY (`licenseID`),
+  UNIQUE KEY `licenseID_UNIQUE` (`licenseID`),
+  KEY `userID_idx` (`user_ID`),
+  CONSTRAINT `userID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctor`
+--
+
+LOCK TABLES `doctor` WRITE;
+/*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
+INSERT INTO `doctor` VALUES (102661,'Optometrist',4),(5021997,'Pediatrician',7),(11181994,'Pediatrician',3);
+/*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctorschedule`
+--
+
+DROP TABLE IF EXISTS `doctorschedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `doctorschedule` (
+  `scheduleID` int(11) NOT NULL AUTO_INCREMENT,
+  `scheduleDay` varchar(11) NOT NULL,
+  `startTime` time NOT NULL,
+  `endTime` time NOT NULL,
+  `doctorScheduleID` int(11) NOT NULL,
+  `hospitalScheduleID` int(11) NOT NULL,
+  PRIMARY KEY (`scheduleID`),
+  UNIQUE KEY `scheduleID_UNIQUE` (`scheduleID`),
+  KEY `doctor_ID_idx` (`doctorScheduleID`),
+  KEY `hospital_ID_idx` (`hospitalScheduleID`),
+  CONSTRAINT `doctor_ID` FOREIGN KEY (`doctorScheduleID`) REFERENCES `doctor` (`licenseID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `hospital_ID` FOREIGN KEY (`hospitalScheduleID`) REFERENCES `hospital` (`hospitalID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctorschedule`
+--
+
+LOCK TABLES `doctorschedule` WRITE;
+/*!40000 ALTER TABLE `doctorschedule` DISABLE KEYS */;
+INSERT INTO `doctorschedule` VALUES (2,'M-W-Sa','09:00:00','18:00:00',11181994,4),(3,'T-Th-Sa','07:00:00','15:00:00',102661,5),(4,'T-TH-W','11:00:00','18:00:00',5021997,1);
+/*!40000 ALTER TABLE `doctorschedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hospital`
+--
+
+DROP TABLE IF EXISTS `hospital`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hospital` (
+  `hospitalID` int(11) NOT NULL AUTO_INCREMENT,
+  `hospitalName` varchar(255) NOT NULL,
+  `hospitalStreet` varchar(255) NOT NULL,
+  `hospitalCity` varchar(255) NOT NULL,
+  `hospitalImage` varchar(255) NOT NULL,
+  PRIMARY KEY (`hospitalID`,`hospitalName`),
+  UNIQUE KEY `hospitalID_UNIQUE` (`hospitalID`),
+  UNIQUE KEY `hospitalName_UNIQUE` (`hospitalName`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hospital`
+--
+
+LOCK TABLES `hospital` WRITE;
+/*!40000 ALTER TABLE `hospital` DISABLE KEYS */;
+INSERT INTO `hospital` VALUES (1,'Makati Med','Armosolo Street','Makati City','Assets/resources/makatimed.png'),
+(2,'Philippine Orthopedic Center','Maria Clara corner Banawe Streets','Quezon City','Assets/resources/poc.jpg'),
+(3,'General Miguel Malvar Medical Foundation Hospital','Commonwealth Avenue','Quezon City','Assets/resources/gmm.jpg'),
+(4,'Chinese General Hospital and Medical Center','Blumentritt Road, Santa Cruz','Manila','Assets/resources/chinesegeneral.jpg'),
+(5,'Manila Doctors\' Hospital','United Nations Avenue, Ermita','Manila','Assets/resources/maniladoctors.jpg'),
+(6,'Ospital ng Tondo','Jose Abad Santos Avenue, Tondo','Manila','Assets/resources/tondo.jpg'),
+(7,'Philippine General Hospital','Taft Avenue, Ermita','Manila','Assets/resources/pgh.jpg'),
+(8,'Mary Immaculate Hospital','E. Rodriguez Avenue, Bagong Ilog','Pasig','Assets/resources/maryimmaculate.jpg'),
+(9,'Pasig Doctors Medical Center','254 A. Rodriguez Avenue, Manggahan','Pasig','Assets/resources/pasigdoctors.jpg'),
+(10,'The Medical City','Ortigas Avenue','Pasig','Assets/resources/medicalcity.jpg');
+/*!40000 ALTER TABLE `hospital` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `notificationID` int(11) NOT NULL AUTO_INCREMENT,
+  `appID` int(11) NOT NULL,
+  `notificationContent` varchar(255) NOT NULL,
+  `notifDate` date NOT NULL,
+  `notifTime` time NOT NULL,
+  `isViewed` int(11) NOT NULL,
+  `isRejected` int(11) NOT NULL,
+  PRIMARY KEY (`notificationID`),
+  KEY `appointmentID_idx` (`appID`),
+  CONSTRAINT `appointmentID` FOREIGN KEY (`appID`) REFERENCES `appointments` (`appointmentsID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES (1,4,'Dr. Sharlyn Tan has approved your appointment on 2015-04-28 at 11:00:00','2015-04-19','21:54:12',0,0);
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patient`
+--
+
+DROP TABLE IF EXISTS `patient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient` (
+  `patientID` int(11) NOT NULL AUTO_INCREMENT,
+  `street` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `user_ID` int(11) NOT NULL,
+  PRIMARY KEY (`patientID`),
+  UNIQUE KEY `patientID_UNIQUE` (`patientID`),
+  KEY `useID_idx` (`user_ID`),
+  CONSTRAINT `useID` FOREIGN KEY (`user_ID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patient`
+--
+
+LOCK TABLES `patient` WRITE;
+/*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+INSERT INTO `patient` VALUES (1,'Commonwealth Aveneu','Quezon City',1),(2,'Santo Domingo Street','Quezon City',5),(3,'Taft Aveneu','Manila',6);
+/*!40000 ALTER TABLE `patient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `userID_UNIQUE` (`userID`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'zedPhiggy','zed_lester@yahoo.com','5d966240a0eda0b86979f53e8478cc1aa061b317','Ang','Zed Phiggy','patient'),(3,'sharlynTan','sharlynTan@yahoo.com','fbfb745bd9e087ec396fde26aba0c592cae26c99','Tan','Sharlyn','doctor'),(4,'jerryAyson','jerry_ayson61@yahoo.com','75926e095b28dd773adde5bade93e4836b1d92fc','Tan','Jerry','doctor'),(5,'shayaneTan','shayaneTan@yahoo.com','567da8e9aabc8b30548d6993fc331591db3d4b99','Tan','Shayane','patient'),(6,'xgbCote','xgbCote@yahoo.com','93c7ece9a9f864e502027712c6347cbaa158206d','Cote','XGB','patient'),(7,'winonaErive','winonaErive@yahoo.com','fe50f99f39b24ab4bd07dcdaa97de8d9c2791c34','Erive','Winona ','doctor');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usercontact`
+--
+
+DROP TABLE IF EXISTS `usercontact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usercontact` (
+  `userID` int(11) NOT NULL,
+  `contactNo` varchar(150) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  PRIMARY KEY (`userID`,`contactNo`,`type`),
+  CONSTRAINT `user_ID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usercontact`
+--
+
+LOCK TABLES `usercontact` WRITE;
+/*!40000 ALTER TABLE `usercontact` DISABLE KEYS */;
+INSERT INTO `usercontact` VALUES (1,'zed_lester@yahoo.com','E-mail'),(3,'sharlynTan@yahoo.com','E-mail'),(4,'jerry_ayson61@yahoo.com','E-mail'),(5,'shayaneTan@yahoo.com','E-mail'),(6,'xgbCote@yahoo.com','E-mail'),(7,'winonaErive@yahoo.com','E-mail');
+/*!40000 ALTER TABLE `usercontact` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-04-19 22:24:31

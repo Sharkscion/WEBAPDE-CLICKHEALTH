@@ -6,15 +6,22 @@ public class Hospital
 	private String name;
 	private String street;
 	private String city;
+	private String imageurl;
 	
-	public Hospital(int hospID, String name, String street, String city)
+	public Hospital(int hospID, String name, String street, String city, String imageurl)
 	{
 		setHospID(hospID);
 		setName(name);
 		setStreet(street);
 		setCity(city);
+		setImageURL(imageurl);
 	}
 
+	public String getImageURL()
+	{
+		return imageurl;
+	}
+	
 	public int getHospID() {
 		return hospID;
 	}
@@ -46,6 +53,11 @@ public class Hospital
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public void setImageURL(String imageurl)
+	{
+		this.imageurl = imageurl;
 	}
 	
 }

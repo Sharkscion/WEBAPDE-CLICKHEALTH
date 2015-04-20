@@ -104,7 +104,7 @@
                         %>
 	                        <div class = "row">
 	                            <div class = "large-2 columns">
-	                                 <img class = "hospital-img" src="Assets/clickHealth2.png">
+	                                 <img class = "hospital-img" src="<%=hospital.getImageURL()%>">
 	                            </div>
 	                           <div class = "large-10 columns">
 	                                <h4><%=hospital.getName() %></h4>

@@ -43,7 +43,7 @@ public class HospitalDAO implements DAOInterface {
 
             while (rs.next()) {
                 hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
-                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"), rs.getString("hospitalImage"));
 
                 hList.add(hosp);
             }
@@ -61,11 +61,12 @@ public class HospitalDAO implements DAOInterface {
         Hospital hosp = (Hospital) obj;
         try {
 
-            String query = "INSERT INTO hospital VALUES(NULL,?,?,?);";
+            String query = "INSERT INTO hospital VALUES(NULL,?,?,?,?);";
             statement = connect.getConnection().prepareStatement(query);
             statement.setString(1, hosp.getName());
             statement.setString(2, hosp.getStreet());
             statement.setString(3, hosp.getCity());
+            statement.setString(4, hosp.getImageURL());
             statement.execute();
             connect.close();
             return true;
@@ -88,7 +89,7 @@ public class HospitalDAO implements DAOInterface {
             rs = statement.executeQuery();
             if (rs.next()) {
                 hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
-                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"), rs.getString("hospitalImage"));
             }
 
         } catch (SQLException e) {
@@ -110,7 +111,7 @@ public class HospitalDAO implements DAOInterface {
             rs = statement.executeQuery();
             if (rs.next()) {
                 hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
-                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"), rs.getString("hospitalImage"));
             }
 
         } catch (SQLException e) {
@@ -125,14 +126,15 @@ public class HospitalDAO implements DAOInterface {
     public boolean updateData(Object obj) {
         Hospital h = (Hospital) obj;
         String query = "UPDATE hospital"
-                + "SET  hospitalName = ?, hospitalCity = ?, hospitalStreet = ?"
+                + "SET  hospitalName = ?, hospitalCity = ?, hospitalStreet = ? hospitalImage = ?"
                 + "WHERE hospitalID = ?";
         try {
             statement = connect.getConnection().prepareStatement(query);
             statement.setString(1, h.getName());
             statement.setString(2, h.getCity());
             statement.setString(3, h.getStreet());
-            statement.setInt(4, h.getHospID());
+            statement.setString(4, h.getImageURL());
+            statement.setInt(5, h.getHospID());
             statement.execute();
             return true;
 
@@ -158,7 +160,7 @@ public class HospitalDAO implements DAOInterface {
             rs = statement.executeQuery();
             if (rs.next()) {
                 hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
-                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"), rs.getString("hospitalImage"));
 
             }
         } catch (SQLException e) {
@@ -181,7 +183,7 @@ public class HospitalDAO implements DAOInterface {
             while (rs.next()) {
 
                 Hospital hosp = new Hospital(rs.getInt("hospitalID"), rs.getString("hospitalName"),
-                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"));
+                        rs.getString("hospitalStreet"), rs.getString("hospitalCity"), rs.getString("hospitalImage"));
                 hList.add(hosp);
             }
 
