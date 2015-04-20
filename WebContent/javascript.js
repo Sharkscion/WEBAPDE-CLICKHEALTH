@@ -88,8 +88,8 @@ $(document).ready(function()
             	      
             	      var valueSplit = value.split("_");
             	      
-//            	      if(valueSplit.length == 1)
-//        	    	  {
+            	      if(valueSplit.length == 1)
+        	    	  {
             	    	  alert("Isa lang");
             	    	  //ajax for notification that are not rescheduled 
             	    	  $.ajax({
@@ -110,32 +110,39 @@ $(document).ready(function()
                 	          },
                 	          type: "POST"
                 	      });
-//        	    	  }
-//            	      else
-//        	    	  {
-//            	    	  alert("for reschedule");
-//            	    	  $('#viewNotif-modal').foundation('reveal', 'open');
-//            	    	  //ajax for notification that are not rescheduled 
-//            	    	  $.ajax({
-//                	          url: "ShowNotificationServlet",
-//                	          data: {"notifID": valueSplit[0],
-//                	        	  	 "appID" : valueSplitp[1],
-//                	        	     "user_name": username},
-//                	          error: function(data)
-//                	          {
-//                	              alert("ERROR: " + data);
-//                	          },
-//                	          success: function(data) {
-//                	        	  var splitUrl = data.split('|');
-//                	        	  var n = data.localeCompare(splitUrl[0]);
-//                	        	 
-//                	        	  alert("viewnotifmodal")
-//                	        	   $("#notifCount").html(splitUrl[1]);
-//                	        	 
-//                	          },
-//                	          type: "POST"
-//                	      });
-//        	    	  }
+        	    	  }
+            	      else
+        	    	  {
+            	    	  alert("for reschedule");
+            	    	  var divId = $(this).attr('id');
+            	    	 $("#"+divId).click(function(event) {
+            	    		 //ajax for notification that are not rescheduled 
+            	    		 alert("notifId"+valueSplit[0]);
+            	    		 alert("appId"+valueSplit[1]);
+	               	    	  $.ajax({
+	                   	          url: "ViewReSchedServlet",
+	                   	          data: {"notifID": valueSplit[0],
+	                   	        	  	 "appID" : valueSplit[1],
+	                   	        	     "user_name": username},
+	                   	          error: function(data)
+	                   	          {
+	                   	              alert("ERROR: " + data);
+	                   	          },
+	                   	          success: function(data) {
+	                   	        	  var splitUrl = data.split('|');
+	                   	        	  var n = data.localeCompare(splitUrl[0]);
+	                   	        	 
+	                   	        	  alert("viewnotifmodal")
+	                   	        	   $("#notifCount").html(splitUrl[1]);
+	                   	        	   $('#viewNotif-modal').html(data);
+	                   	        	   $('#viewNotif-modal').foundation('reveal', 'open');
+	                   	        	 
+	                   	          },
+	                   	          type: "POST"
+	                   	      });
+            	    	 });
+            	    	 
+        	    	  }
             	  });
           },
           type: "POST"

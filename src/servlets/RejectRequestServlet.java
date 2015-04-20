@@ -51,7 +51,7 @@ public class RejectRequestServlet extends HttpServlet {
 		if(rejectId != null && rejectId.equals("")== false)
 		{
 			id = Integer.parseInt(rejectId);
-		
+			
 			DateFormat sdf = new SimpleDateFormat("hh:mm");
 			Date dateStart;
 			try {

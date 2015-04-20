@@ -119,9 +119,18 @@
                 </div>
             </section>
         </div>
+      
 <!--**************************************************Notif Drop Down*************************************************************-->
        <div class="reveal-modal small form" id ="viewNotif-modal" data-reveal>     		
-       	
+       		  ${notifId}
+       		  ${appId}
+       		  
+       		  <%
+       		  	String notif = (String)request.getAttribute("notifId");
+       		  
+       		  	System.out.println("Notif inside JSP: "+ notif);
+       		  %>
+       		  <div><%=notif %></div>
             <a class="close-reveal-modal">&#215;</a>
        </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
