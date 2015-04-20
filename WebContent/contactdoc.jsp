@@ -156,7 +156,7 @@
                 			}
 		        		}
                 	%>
-                	<form data-abide action = "ContactDocServlet" method = "post">
+                	<form data-abide action = "ContactDocServlet" method = "post" onSubmit = "return validate();">
                         <div id="form-left-content" class="large-5 columns">
                               <div class = "row">
                               	<div class = "large-3 columns" style = "margin-top: 15px;">
@@ -260,7 +260,8 @@
           <script src="jquery.datetimepicker.js"></script>
 		  <script src = "javascript.js"></script> 
 		  <script>
-		    
+		  	var stat = false;
+		  
 		    $('#subm').click(function() {
 		        var scheddate = $('#date').val();
 		        var schedtime = $('#startTime').val();
@@ -279,11 +280,23 @@
 		            },
 		            success: function(data) {
 		            	alert(data);
+		            	if(data == "successful!")
+		            	{
+		            		stat = true;
+		            	}
+		            	else
+		            		{
+		            		stat = false;
+		            		}
 		            },
 		            type: 'POST'
 		        });
 		    });
 		  
+		    function validate()
+		    {
+		 		return stat;
+		    }
 		  </script>
     </body>
 </html>
