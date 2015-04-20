@@ -18,9 +18,9 @@ public class DBConnection {
     public DBConnection() {
         driverName = "com.mysql.jdbc.Driver";
         url = "jdbc:mysql://127.0.0.1:3306/";
-        database = "clickhealthtwo";
+        database = "clickhealth";
         username = "root";
-        passwordDB = "";
+        passwordDB = "Cs20";
 
     }
 

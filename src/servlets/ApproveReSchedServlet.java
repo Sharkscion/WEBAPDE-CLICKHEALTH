@@ -8,43 +8,60 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.Controller;
 import model.Notification;
+import controller.Controller;
 
 /**
- * Servlet implementation class ApproveReSchedServlet
+ * Servlet implementation class ApproveReschedServlet
  */
-@WebServlet("/ApproveReSchedServlet")
-public class ApproveReSchedServlet extends HttpServlet {
+@WebServlet("/ApproveReschedServlet")
+public class ApproveReschedServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApproveReSchedServlet() {
+    public ApproveReschedServlet() {
         super();
-       
+        // TODO Auto-generated constructor stub
     }
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		
-		String reschedID = request.getParameter("approveSched");
-		System.out.println("RESHED ID IN APPORVE RESCHED SERVLET: "+ reschedID);
+		System.out.println("PPROVE RESCHED!");
+		
+		Controller c = new Controller();
+		String rejectId = request.getParameter("rejectID");
+		String approveId = request.getParameter("approveID");
+		String url = request.getParameter("url");
 		
 		int id = 0;
-		Controller c = new Controller();
-		if(reschedID != null && reschedID.equals("")== false)
+		int success = -8;
+		System.out.println("************REJECTID: "+ rejectId);
+		System.out.println("****************approveID: "+ approveId);
+		if(approveId != null && approveId.equals("")== false)
 		{
 			
-			id = Integer.parseInt(reschedID);
+			id = Integer.parseInt(approveId);
 			c.changeAppointmentStat(id, "pending");
 			
+			success = 0;
+			
 		} 
-		  response.setContentType("text/plain");
-	      response.setCharacterEncoding("UTF-8");
-	      response.getWriter().write("");
+		else if(rejectId != null && rejectId.equals("")== false)
+		{
+			id = Integer.parseInt(rejectId);
+			c.changeAppointmentStat(id, "rejected");
+			success = 2;
+		}
+		else if(rejectId == null && rejectId == null)
+		{
+			success = -1;
+		}
+
+		System.out.println("REQUETS URL: "+  url);
+		response.sendRedirect(url+"?Success="+ success);
 	}
-	
 
 }

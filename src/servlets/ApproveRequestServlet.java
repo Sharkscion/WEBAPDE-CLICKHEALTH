@@ -66,9 +66,7 @@ public class ApproveRequestServlet extends HttpServlet {
 		} 
 		else if(rejectId != null && rejectId.equals("")== false)
 		{
-			
 			success = Integer.parseInt(rejectId);
-			System.out.println("HELLO SUCCES REJECT : "+ success);
 		}
 		else if(rejectId == null && approveId == null)
 		{

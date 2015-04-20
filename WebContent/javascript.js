@@ -48,6 +48,8 @@ $(document).ready(function()
         });
     });
     
+    
+    
     //i also tried document din, ayaw pa din :<
     //btw yung currentpasswordTxt is under the passwordRow() function in user-accounts
   $('#passwordRow').on('keyup','#currentpasswordTxt',function() {
@@ -113,14 +115,12 @@ $(document).ready(function()
         	    	  }
             	      else
         	    	  {
-            	    	  alert("for reschedule");
+            	    	 // alert("for reschedule 23");
             	    	  var divId = $(this).attr('id');
-            	    	 $("#"+divId).click(function(event) {
-            	    		 //ajax for notification that are not rescheduled 
-            	    		 alert("notifId"+valueSplit[0]);
-            	    		 alert("appId"+valueSplit[1]);
+//            	    	 $("#"+divId).click(function(event) {
+            	    		 
 	               	    	  $.ajax({
-	                   	          url: "ViewReSchedServlet",
+	                   	          url: "ViewRescheduleServlet",
 	                   	          data: {"notifID": valueSplit[0],
 	                   	        	  	 "appID" : valueSplit[1],
 	                   	        	     "user_name": username},
@@ -131,16 +131,15 @@ $(document).ready(function()
 	                   	          success: function(data) {
 	                   	        	  var splitUrl = data.split('|');
 	                   	        	  var n = data.localeCompare(splitUrl[0]);
-	                   	        	 
-	                   	        	  alert("viewnotifmodal")
+	                   	        	
 	                   	        	   $("#notifCount").html(splitUrl[1]);
-	                   	        	   $('#viewNotif-modal').html(data);
+	                   	        	   $("#notif-Modal").html(data);
 	                   	        	   $('#viewNotif-modal').foundation('reveal', 'open');
 	                   	        	 
 	                   	          },
 	                   	          type: "POST"
 	                   	      });
-            	    	 });
+//            	    	 });
             	    	 
         	    	  }
             	  });
@@ -148,7 +147,8 @@ $(document).ready(function()
           type: "POST"
       });
   });
-
+  
+  	
     $("#searchbox").keyup(function(event)
     {
         $("#suggest").html("");
@@ -225,25 +225,26 @@ function getHospID(element)
     var pressedBtn = element.id;
     var lastChar = pressedBtn;
     document.getElementById("hospID").value = lastChar;
-    //  alert("here is " + document.getElementById("hospID").value);
+
 }
 
 function getDocID(element)
 {
     var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+
     var lastChar = pressedBtn;
     document.getElementById("docSchedID").value = lastChar;
-    alert("here is ScheduleID" + document.getElementById("docSchedID").value);
+ 
 }
 
 function getApproveID(element)
 {
     var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+
     var lastChar = pressedBtn;
     document.getElementById("approveID").value = element.id;
-    // alert("here is " + document.getElementById("approveID").value);
+    document.getElementById("url").value = window.location.href;
+  
 }
 
 function getResolveID(element)
@@ -251,7 +252,7 @@ function getResolveID(element)
     var pressedBtn = element.id;
     var lastChar = pressedBtn;
     document.getElementById("resolveID").value = element.id;
-    alert("here is " + document.getElementById("resolveID").value);
+    
 }
 
 function getRequestID(element)
@@ -310,25 +311,24 @@ function getRejectID(element)
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("rejectID").value = lastChar;
-   
+    document.getElementById("url").value = window.location.href;
 }
 
 
 function getReSchedID(element)
 {
     var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("reSchedID").value = lastChar;
-    alert("here is " + document.getElementById("reSchedID").value);
+   
 }
 
 function getNotifSchedID(element)
 {
     var pressedBtn = element.id;
-    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+
     var lastChar = pressedBtn;
     document.getElementById("approveSched").value = lastChar;
-    alert("here is " + document.getElementById("approveSched").value);
+  
 }
 

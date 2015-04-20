@@ -262,3 +262,17 @@
 	width: 1000px !important;
 }
 
+.notification-Resched
+{
+	font-family: century gothic, sans-serif !important;
+}
+
+.hospital-img
+{
+    height: 55;
+    width: 90;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+}
+

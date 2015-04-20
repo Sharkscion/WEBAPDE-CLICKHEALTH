@@ -69,7 +69,7 @@
                 </ul>
                 <!-- Right Nav Section -->
                 <form action = "SearchServlet" method = "post">
-                <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
+                <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Specialization Here " autocomplete = "off">
                 <input type="image" id= "searchicon" src="Assets/icon-search.png" alt="Submit">
                 <div id = "suggest" name = "suggest">
                 </div>
@@ -185,14 +185,23 @@
                 </div>
             </section>
         </div>
+
+<!--**************************************************Notif Drop Down*************************************************************-->
+       <div class="reveal-modal small form" id ="viewNotif-modal" data-reveal>     		
+       		 
+       		  <div id="notif-Modal"></div>
+            <a class="close-reveal-modal">&#215;</a>
+       </div>
+<!--*************************************************User Sign In Drop Down*******************************************************-->
        
 <!--**************************************************Notif Drop Down*************************************************************-->
         <div  id ="notif-dropdown" class="f-dropdown small content form form-dropdown" data-dropdown-content>
      		
         </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
-   
-   	<script src="Foundation/js/foundation/foundation.dropdown.js"></script>
+   		<script src="Foundation/js/foundation/foundation.alert.js"></script>
+   		<script src="Foundation/js/vendor/modernizr.js"></script>
+   		<script src="Foundation/js/foundation/foundation.dropdown.js"></script>
         <script src = "Foundation/js/vendor/jquery.js"></script>
         <script src = "Foundation/js/foundation.min.js"></script>
         <script src = "Foundation/js/foundation/foundation.js"></script>
@@ -200,7 +209,7 @@
         <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
         <script src = "Foundation/js/vendor/modernizr.js"></script>
         <script src = "Foundation/js/foundation/foundation.alert.js"></script>
-           <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
+        <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
         <script src = "javascript.js"></script> 
         
     </body>

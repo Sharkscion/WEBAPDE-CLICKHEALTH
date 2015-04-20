@@ -17,6 +17,8 @@
         <link rel = "stylesheet" type="text/css" href="CSS/style-hospital.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
+         <link rel = "stylesheet" type="text/css" href="font-imports.css">
+
     </head>
     
     <%
@@ -67,7 +69,7 @@
                     <li style= "margin-right: 10px;"><a href="availabledocs.jsp">DOCTORS</a></li>
                 </ul>
 	            <form action = "SearchServlet" method = "post">
-                <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Here ">
+                <input id = "searchbox" name = "searchbox" input="text" placeholder=" Search Specialization Here " autocomplete = "off">
                 <input type="image" id= "searchicon" src="Assets/icon-search.png" alt="Submit">
                 <div id = "suggest" name = "suggest">
                 </div>
@@ -119,18 +121,38 @@
                 </div>
             </section>
         </div>
-      
+ <!-- ---------------------------------------------------NOTIFICATION------------------------------------------ -->
+      				<%
+	                	String success = request.getParameter("Success");
+		        		String msg = "";
+		        		System.out.println("Success1"+ success);
+		        		if(success != null)
+		        		{
+                			if(success.equals("0"))
+                			{
+                	%>
+	                			<div data-alert class="alert-box success radius"> 
+						    		Rescheduled appointment has successfully been approved!
+					        		<a href="#" class="close">&times;</a>
+								</div>
+						  <%
+                			} 
+                			else if(success.equals("2"))
+                			{
+						  %>
+						  		<div data-alert class="alert-box alert radius"> 
+						    		Rescheduled appointment has been rejected
+					        		<a href="#" class="close">&times;</a>
+								</div>
+                	<%
+                			}
+		        		}
+                	%>
 <!--**************************************************Notif Drop Down*************************************************************-->
        <div class="reveal-modal small form" id ="viewNotif-modal" data-reveal>     		
-       		  ${notifId}
-       		  ${appId}
-       		  
-       		  <%
-       		  	String notif = (String)request.getAttribute("notifId");
-       		  
-       		  	System.out.println("Notif inside JSP: "+ notif);
-       		  %>
-       		  <div><%=notif %></div>
+       		 
+       		
+       		  <div id="notif-Modal"></div>
             <a class="close-reveal-modal">&#215;</a>
        </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
@@ -140,13 +162,16 @@
      		
         </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
-   
+   		  <script src="Foundation/js/foundation/foundation.alert.js"></script>
+   		  <script src="Foundation/js/vendor/modernizr.js"></script>
           <script src = "Foundation/js/vendor/jquery.js"></script>
           <script src = "Foundation/js/foundation.min.js"></script>
           <script src = "Foundation/js/foundation/foundation.js"></script>
           <script src = "Foundation/js/foundation/foundation.topbar.js"></script>
           <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
           <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
+           <script src="Foundation/js/vendor/modernizr.js"></script>
 		  <script src = "javascript.js"></script> 
+		  
     </body>
 </html>
