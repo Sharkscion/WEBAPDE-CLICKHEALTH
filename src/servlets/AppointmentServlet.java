@@ -63,8 +63,6 @@ public class AppointmentServlet extends HttpServlet {
         else
         {
         	response.sendRedirect("availabledocs.jsp");
-        	System.out.println("CODE PA MOOOOOOOORE");
-        	System.out.println("ERROR");
         }
         
     }

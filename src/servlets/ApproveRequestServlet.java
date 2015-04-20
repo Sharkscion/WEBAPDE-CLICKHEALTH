@@ -44,7 +44,7 @@ public class ApproveRequestServlet extends HttpServlet {
 		int id = -1;
 		String notifContent = "";
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
 		Date dateToday = new Date();
 		Time requestTime = new Time(dateToday.getTime());
 		
@@ -58,25 +58,17 @@ public class ApproveRequestServlet extends HttpServlet {
 		
 			notifContent = "Dr. "+u.getFirstname()+" "+u.getLastname()
 					+" has approved your appointment on "+ a.getAppointmentDate()
-					+" at "+ a.getStartTime();
+					+" at "+ a.getStartTime()+"%";
 			n = new Notification(0, Integer.parseInt(approveId), notifContent, dateToday, requestTime,0,0);
-			success = 1;
+			success = 0;
 			c.addNotification(n);
 			
 		} 
 		else if(rejectId != null && rejectId.equals("")== false)
 		{
-			id = Integer.parseInt(rejectId);
-		
-			c.changeAppointmentStat(id, "rejected");
-			u = c.getAppointmentDoctorInfo(id);
-			a = c.getAppointment(id);
-			notifContent = "Dr. "+u.getFirstname()+" "+u.getLastname()
-					+" has rejected your appointment on "+ a.getAppointmentDate()
-					+" at "+ a.getStartTime();
-			n = new Notification(0, id, notifContent, dateToday, requestTime,0,1);
-			c.addNotification(n);
-			success = 2;
+			
+			success = Integer.parseInt(rejectId);
+			System.out.println("HELLO SUCCES REJECT : "+ success);
 		}
 		else if(rejectId == null && approveId == null)
 		{

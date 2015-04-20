@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Appointment;
 import model.Notification;
 import model.Patient;
 import controller.Controller;
@@ -37,12 +38,33 @@ public class NotificationServlet extends HttpServlet {
 			while(nList.hasNext())
 			{
 				Notification n = nList.next();
-				respMess += " <div id = "+n.getNotifID()+" class = \"notification-box\">";
-				respMess += "<span class =\"notification-header\">"+ n.getNotifContent() + "</span> <br>";
-				respMess +=  n.getNotifDate()+" " + n.getNotifTime();   
-				respMess += "</div><hr>";
+				String[] notif = n.getNotifContent().split("%");
+				for(int i = 0; i< notif.length; i++)
+				{
+					System.out.println("Notif["+i+"] "+ notif[i]);
+				}
+				
+				if(notif.length == 1)
+				{
+					String divId = n.getNotifID()+"_";
+					respMess += " <div id = "+divId+" class = \"notification-box\">";
+					respMess += "<span class =\"notification-header\">"+ notif[0] + "</span> <br>";
+					respMess +=  n.getNotifDate()+" " + n.getNotifTime();   
+					respMess += "</div><hr>";
+				}
+				else
+				{
+					Appointment a = c.getAppointment(Integer.parseInt(notif[2]));
+					String divId = n.getNotifID()+"_"+a.getAppID();
+					respMess += " <div id = "+divId+" class = \"notification-box\">";
+					respMess += " <span class =\"notification-header\">"+ notif[0] + "</span> <br>";
+					//respMess += " <input type = \"hidden\" id = \"approveSched\" name = \"approveSched\"> ";
+					//respMess += " <input class = \" notif-button\" type = \"submit\" id = "+a.getAppID()+" name = "+a.getAppID()+" value = \"View Notification\" onClick = \"getNotifSchedID(this)\";> ";
+					respMess +=  n.getNotifDate()+" " + n.getNotifTime();   
+					respMess += "</div><hr>";
+				}
 
-				System.out.println("HELLO");
+//				System.out.println("HELLO");
 				hasNext = 1;
 			}
 

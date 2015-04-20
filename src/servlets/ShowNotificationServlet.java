@@ -30,6 +30,7 @@ public class ShowNotificationServlet extends HttpServlet {
 		String notifID = request.getParameter("notifID");
 		String username = request.getParameter("user_name");
 		
+		System.out.println("SHOW NOTIFICAITON SRVLET");
 		if(notifID.equals("") == false && notifID != null )
 		{
 			Notification n = c.getNotification(Integer.parseInt(notifID));

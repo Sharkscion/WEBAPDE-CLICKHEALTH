@@ -225,15 +225,15 @@ public class Controller {
 
         return ad.checkDaySched(ds, time, date);
     }
+
+    public boolean reschedAppointment(Appointment a)
+    {
+    	return ad.updateData(a);
+    }
 	
 	public int getNotifCount(int patientID)
 	{
 		return nd.getNotificationCount(patientID);
 	}
 
-	public String getDoctorScheduleDays(int doctorID)
-	{
-		return sd.getDoctorScheduleDays(doctorID);
-	}
-	
 }

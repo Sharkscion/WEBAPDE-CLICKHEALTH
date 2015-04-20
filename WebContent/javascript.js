@@ -85,27 +85,57 @@ $(document).ready(function()
               $("#notifCount").html(splitUrl[1]);
               $("#notif-dropdown div").click(function(event) {
             	      var value = $(this).attr('id');
-            	      $.ajax({
-            	          url: "ShowNotificationServlet",
-            	          data: {"notifID": value,
-            	        	     "user_name": username},
-            	          error: function(data)
-            	          {
-            	              alert("ERROR: " + data);
-            	          },
-            	          success: function(data) {
-            	        	  var splitUrl = data.split('|');
-            	        	  var n = data.localeCompare(splitUrl[0]);
-            	        	 
-            	        	   $("#notifCount").html(splitUrl[1]);
-            	        	 if(n == 1)
-            	        		 window.location.replace("user-appointments.jsp");
-            	        	 else
-            	        		 alert('Hello');
-            	       	
-            	          },
-            	          type: "POST"
-            	      });
+            	      
+            	      var valueSplit = value.split("_");
+            	      
+//            	      if(valueSplit.length == 1)
+//        	    	  {
+            	    	  alert("Isa lang");
+            	    	  //ajax for notification that are not rescheduled 
+            	    	  $.ajax({
+                	          url: "ShowNotificationServlet",
+                	          data: {"notifID": valueSplit[0],
+                	        	     "user_name": username},
+                	          error: function(data)
+                	          {
+                	              alert("ERROR: " + data);
+                	          },
+                	          success: function(data) {
+                	        	  var splitUrl = data.split('|');
+                	        	  var n = data.localeCompare(splitUrl[0]);
+                	        	 
+                	        	   $("#notifCount").html(splitUrl[1]);
+                	        	 if(n == 1)
+                	        		 window.location.replace("user-appointments.jsp");
+                	          },
+                	          type: "POST"
+                	      });
+//        	    	  }
+//            	      else
+//        	    	  {
+//            	    	  alert("for reschedule");
+//            	    	  $('#viewNotif-modal').foundation('reveal', 'open');
+//            	    	  //ajax for notification that are not rescheduled 
+//            	    	  $.ajax({
+//                	          url: "ShowNotificationServlet",
+//                	          data: {"notifID": valueSplit[0],
+//                	        	  	 "appID" : valueSplitp[1],
+//                	        	     "user_name": username},
+//                	          error: function(data)
+//                	          {
+//                	              alert("ERROR: " + data);
+//                	          },
+//                	          success: function(data) {
+//                	        	  var splitUrl = data.split('|');
+//                	        	  var n = data.localeCompare(splitUrl[0]);
+//                	        	 
+//                	        	  alert("viewnotifmodal")
+//                	        	   $("#notifCount").html(splitUrl[1]);
+//                	        	 
+//                	          },
+//                	          type: "POST"
+//                	      });
+//        	    	  }
             	  });
           },
           type: "POST"
@@ -273,6 +303,25 @@ function getRejectID(element)
     //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
     var lastChar = pressedBtn;
     document.getElementById("rejectID").value = lastChar;
-    // alert("here is " + document.getElementById("rejectID").value);
+   
+}
+
+
+function getReSchedID(element)
+{
+    var pressedBtn = element.id;
+    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+    var lastChar = pressedBtn;
+    document.getElementById("reSchedID").value = lastChar;
+    alert("here is " + document.getElementById("reSchedID").value);
+}
+
+function getNotifSchedID(element)
+{
+    var pressedBtn = element.id;
+    //var lastChar = pressedBtn.charAt(pressedBtn.length-1);
+    var lastChar = pressedBtn;
+    document.getElementById("approveSched").value = lastChar;
+    alert("here is " + document.getElementById("approveSched").value);
 }
 

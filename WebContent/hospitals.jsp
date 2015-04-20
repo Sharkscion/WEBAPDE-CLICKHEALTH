@@ -104,7 +104,7 @@
                         %>
 	                        <div class = "row">
 	                            <div class = "large-2 columns">
-	                                 <img class = "hospital-img" src="<%=hospital.getImageURL()%>">
+	                                 <img class = "hospital-img" src="Assets/clickHealth2.png">
 	                            </div>
 	                           <div class = "large-10 columns">
 	                                <h4><%=hospital.getName() %></h4>
@@ -121,7 +121,15 @@
         </div>
 <!--**************************************************Notif Drop Down*************************************************************-->
        <div class="reveal-modal small form" id ="viewNotif-modal" data-reveal>     		
-       	
+       		<%
+       			String notifId = request.getParameter("notifID");
+       			String appId = 	request.getParameter("appID");
+       			
+       			System.out.println("Notifid: "+ notifId);
+       			System.out.println("AppID: "+ appId);
+       		%>
+       		
+       		<div><%=appId%></div>
             <a class="close-reveal-modal">&#215;</a>
        </div>
 <!--*************************************************User Sign In Drop Down*******************************************************-->
@@ -138,6 +146,11 @@
           <script src = "Foundation/js/foundation/foundation.topbar.js"></script>
           <script src = "Foundation/js/foundation/foundation.reveal.js"></script> 
           <script src="Foundation/js/foundation/foundation.dropdown.js"></script>
+          <script src="Foundation/js/foundation/foundation.abide.js"></script>
+            <script src="Foundation/js/vendor/modernizr.js"></script>
 		  <script src = "javascript.js"></script> 
+		  
+      
+		
     </body>
 </html>

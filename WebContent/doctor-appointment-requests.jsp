@@ -17,6 +17,7 @@
         <link  type = "text/css" rel = "stylesheet" href = "Foundation/css/normalize.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.min.css">
         <link rel = "stylesheet" type="text/css" href="Foundation/css/foundation.css">
+        <link  type = "text/css" rel = "stylesheet" href = "CSS/jquery.datetimepicker.css"/>
 
     </head>
     <%
@@ -80,7 +81,6 @@
                         <div class= "large-8 columns"> <h6>Appointment Request Info</h6></div>
                     </div>
                     <%
-
                         Doctor d = con.getDoctorByUserId(user.getUserID());
                         Iterator<Appointment> appointments = con.getRequestAppointment(d.getLicenseID());
                         Appointment app = null;
@@ -116,24 +116,47 @@
         <!----------------------------------------------------- VIEW REQUEST MODAL------------------------------------------------------>
 
         <div class="reveal-modal small form" id ="viewRequest-modal" data-reveal>
+        	
             <%
                 String success = request.getParameter("Success");
                 String msg = "";
                 if (success != null) {
-                    if (success.equals("1")) {
+                    if (success.equals("0")) {
                         msg = "<span style= \"color: #119525;\">Appointment has successfully been approved!</span>";
-                    } else if (success.equals("2")) {
-                        msg = "<span style= \"color: #119525;\">Appointment has been rejected! <br>"
-                                + "A notification will be sent to the patient concerning the status of the appointment!</span>";
-                    } else {
-                        msg = "<span style= \"color: red;\">Error: The status of this appointment has failed to change.</span>";
                     }
-
+                    else if(success.equals("-1")){
+                        msg = "<span style= \"color: red;\">Error: The status of this appointment has failed to change.</span>";
+                    }else if(success.equals("-2")){
+                    	 msg = "<span style= \"color: #119525;\">Appointment has been rescheduled! <br>"
+ 		                        + "A notification will be sent to the patient concerning the rescheduled appointment!</span>";
+                    }
+           			else{  
+           				
+           				System.out.println("SUCCESS ID: "+ success);
+               
             %>
-            <div id="request-message"><%=msg%></div>
-            <%
+           			<form action = "RejectRequestServlet" method = "post">
+           				<div class = "request-modal-content">
+           					<label>State reason for unavailability: </label>
+           					<textarea id = "notifContent" name = "notifContent" cols = "45" rows = "5"></textarea>
+           					<label>Suggested Appointment Schedule: </label>
+           				    <label>Date of Appointment: </label>
+	                        <input id = "date" name = "date" type = "date">
+	                        <small id = "dateTimeError" name = "dateError"> </small>
+	                            
+	                        <label>Start Time: </label>
+		                    <input id = "startTime" name = "startTime" type="text" required autocomplete = "off">
+		                    <small id = "startTimeError" name = "startTimeError"> </small>
+		                    <small class = "error">Reschedule start time is required.</small>
+		                    <input type = "submit" id = <%=success%> name = <%=success%> class="appointment-request-button" value="SUBMIT" onClick = "getReSchedID(this);">	
+           					<input type = "hidden" name = "reSchedID" id = "reSchedID">
+           				</div>
+           			</form>	
+            <%		} 
+           
                 }
             %>
+            	<div id="request-message"><%=msg%></div>
             <%
                 String appId = request.getParameter("requestID");
                 int id = -1;
@@ -150,15 +173,14 @@
                     <h6>Requested on <%=a.getRequestedDate()%> </h6>
                     <hr>
                     <label>	
-                        Area of Concern :  <%=a.getConcern()%> <br>
-                        Appointment Date:  <%=a.getAppointmentDate()%><br>
-                        Appointment Time:  <%=a.getStartTime()%>
+                        <b style = "color: #44749d;"> Area of Concern :</b>  <%=a.getConcern()%> <br>
+                        <b style = "color: #44749d;"> Appointment Date:</b>  <%=a.getAppointmentDate()%><br>
+                        <b style = "color: #44749d;"> Appointment Time:</b>  <%=a.getStartTime()%>
                     </label>
 
                     <%if (a.getRemarks().equals("") == false)%>
                     <label>
-                        Remarks   : <br>
-                        <%=a.getRemarks()%>
+                        <b>Remarks   :</b> <%=a.getRemarks()%>
                     </label>
                     <input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Approve" onClick = "getApproveID(this);">
                     <input type="submit" class = "appointment-request-button" id = "<%=a.getAppID()%>" name = "<%=a.getAppID()%>" value="Reject" onClick = "getRejectID(this);">
@@ -180,6 +202,8 @@
         <script src= "Foundation/js/foundation/foundation.reveal.js"></script> 
         <script src="Foundation/js/vendor/modernizr.js"></script>
         <script src="Foundation/js/foundation/foundation.alert.js"></script>
-        <script src = "javascript.js"></script> 
+        <script src="jquery.datetimepicker.js"></script>
+        <script src = "javascript.js"></script>
+      
     </body>
 </html>
