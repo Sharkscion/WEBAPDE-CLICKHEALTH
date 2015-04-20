@@ -213,6 +213,7 @@ public class Controller {
         return ad.resolveDoctorAppointment(appId);
     }
 
+
     public boolean checkDay(String day, int doctor) {
         return sd.checkDay(day, doctor);
     }
@@ -225,7 +226,11 @@ public class Controller {
 
         return ad.checkDaySched(ds, time, date);
     }
-
+	
+	public String getDoctorScheduleDays(int doctorID)
+	{
+		return sd.getDoctorScheduleDays(doctorID);
+	}
     public boolean reschedAppointment(Appointment a)
     {
     	return ad.updateData(a);

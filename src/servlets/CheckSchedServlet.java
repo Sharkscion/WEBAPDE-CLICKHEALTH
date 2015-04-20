@@ -5,7 +5,6 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,8 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
 
 import model.Appointment;
 import model.DoctorSchedule;
@@ -36,18 +33,19 @@ public class CheckSchedServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		Controller con = new Controller();
+        Controller con = new Controller();
 
         String date = request.getParameter("schedDate");
         String time = request.getParameter("schedTime");
         int doctor = Integer.parseInt(request.getParameter("schedDoctor"));
-
+        System.out.println("date is " + date);
+        System.out.println("time is " + time);
+        
         Date mydate = null;
 		try {
 			mydate = new SimpleDateFormat("yyyy-mm-dd").parse(date);
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         String respMess = "";
@@ -71,7 +69,6 @@ public class CheckSchedServlet extends HttpServlet {
         
         // check if the schedule typed is part of the days of doc
         DoctorSchedule docsched = null;
-        System.out.println(""+ day);
         if(con.checkDay(day, doctor))
         {
         	docsched = con.getDoctorScheduleByDay(day, doctor);
